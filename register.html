@@ -11,35 +11,78 @@
   <div class="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md">
     <h1 class="text-3xl font-bold text-center text-green-600 mb-8">Create Account</h1>
 
-    <form class="space-y-5">
-      <input
+    <form id="registerForm" class="space-y-5">
+
+      <input id="name"
         type="text"
         placeholder="Full Name"
-        class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500"
+        class="w-full p-4 rounded-xl border"
       />
 
-      <input
+      <input id="email"
         type="email"
         placeholder="Email Address"
-        class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500"
+        class="w-full p-4 rounded-xl border"
       />
 
-      <input
+      <input id="password"
         type="password"
         placeholder="Password"
-        class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500"
+        class="w-full p-4 rounded-xl border"
       />
 
       <button class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700">
         Register
       </button>
+
     </form>
 
     <p class="text-center mt-6 text-gray-600">
       Already have an account?
       <a href="login.html" class="text-green-600 font-semibold">Login</a>
     </p>
+
+    <p id="msg" class="text-center mt-4 text-red-500"></p>
   </div>
+
+<script>
+const form = document.getElementById("registerForm");
+const msg = document.getElementById("msg");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    const res = await fetch("https://traderbackend.onrender.com/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      msg.style.color = "green";
+      msg.innerText = "Account created ✔ Redirecting...";
+
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1200);
+
+    } else {
+      msg.innerText = data.message || "Registration failed ❌";
+    }
+
+  } catch (err) {
+    msg.innerText = "Server error ❌";
+    console.error(err);
+  }
+});
+</script>
 
 </body>
 </html>
