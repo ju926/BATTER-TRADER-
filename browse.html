@@ -2,103 +2,168 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Browse Items - Swaply</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swaply - Exchange Second-Hand Items</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100 text-gray-800">
 
-  <!-- Navbar -->
-  <header class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<!-- Navbar -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-      <h1 class="text-3xl font-bold text-green-600">Swaply</h1>
+    <h1 class="text-3xl font-bold text-green-600">Swaply</h1>
 
-      <nav class="hidden md:flex gap-6 font-medium">
-        <a href="index.html" class="hover:text-green-600">Home</a>
-        <a href="browse.html" class="text-green-600 font-bold">Browse</a>
-        <a href="purchase.html" class="hover:text-green-600">Purchase</a>
-      </nav>
+    <nav class="hidden md:flex gap-8 font-medium">
+      <a href="index.html" class="hover:text-green-600">Home</a>
+      <a href="browse.html" class="hover:text-green-600">Browse</a>
+      <a href="about.html" class="hover:text-green-600">About</a>
+      <a href="help.html" class="hover:text-green-600">Help</a>
+    </nav>
 
+    <div class="flex gap-3">
+      <a href="login.html" class="px-5 py-2 rounded-xl border border-green-600 text-green-600">Login</a>
+      <a href="register.html" class="px-5 py-2 rounded-xl bg-green-600 text-white">Sign Up</a>
     </div>
-  </header>
 
-  <!-- Title -->
-  <section class="py-10 text-center">
-    <h2 class="text-4xl font-bold">Browse Items</h2>
-    <p class="text-gray-600 mt-2">Discover items uploaded by users in real time</p>
-  </section>
+  </div>
+</header>
 
-  <!-- Items -->
-  <section class="max-w-7xl mx-auto px-6 pb-20">
-    <div id="itemsContainer" class="grid md:grid-cols-3 gap-8"></div>
-  </section>
+<!-- HERO -->
+<section class="bg-green-600 text-white py-24">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <div>
+      <h2 class="text-5xl font-bold mb-6">Exchange Items Easily</h2>
+      <p class="text-green-100 mb-8">
+        Upload items, swap with others, and reduce waste.
+      </p>
 
-  <script>
-    // Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
-      authDomain: "swaply-85ea0.firebaseapp.com",
-      projectId: "swaply-85ea0",
-      storageBucket: "swaply-85ea0.appspot.com",
-      messagingSenderId: "450967672050",
-      appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
-    };
+      <div class="flex gap-4 flex-wrap">
+        <a href="browse.html" class="bg-white text-green-600 px-6 py-3 rounded-xl">Browse Items</a>
+        <a href="purchase.html" class="bg-yellow-400 text-black px-6 py-3 rounded-xl">Purchase Items</a>
+      </div>
+    </div>
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    <!-- UPLOAD FORM -->
+    <div class="bg-white text-black p-6 rounded-2xl shadow-xl">
 
-    const container = document.getElementById("itemsContainer");
+      <h3 class="text-2xl font-bold mb-4">Upload Item</h3>
 
-    // REAL TIME LISTENER
-    db.collection("items")
-      .orderBy("createdAt", "desc")
-      .onSnapshot(snapshot => {
+      <form id="itemForm" class="space-y-4">
 
-        container.innerHTML = "";
+        <input type="text" placeholder="Item Name"
+          class="w-full p-3 border rounded-xl" />
 
-        snapshot.forEach(doc => {
-          const item = doc.data();
+        <textarea placeholder="Describe your item"
+          class="w-full p-3 border rounded-xl"></textarea>
 
-          const card = document.createElement("div");
-          card.className = "bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition";
+        <select class="w-full p-3 border rounded-xl">
+          <option>Select Category</option>
+          <option>Kitchen</option>
+          <option>Electronics</option>
+          <option>Furniture</option>
+          <option>Books</option>
+          <option>Clothes</option>
+        </select>
 
-          card.innerHTML = `
-            <img src="${item.imageURL}" class="w-full h-56 object-cover" />
+        <input type="text" placeholder="What do you want in exchange?"
+          class="w-full p-3 border rounded-xl" />
 
-            <div class="p-5">
-              <h3 class="text-xl font-bold mb-2">${item.name}</h3>
+        <input type="file" id="itemImage" accept="image/*"
+          class="w-full p-3 border rounded-xl" />
 
-              <p class="text-gray-600 mb-2">${item.description}</p>
+        <button type="submit"
+          class="w-full bg-green-600 text-white py-3 rounded-xl font-bold">
+          Upload Item
+        </button>
 
-              <p class="text-sm text-gray-500 mb-1">
-                <span class="font-semibold">Category:</span> ${item.category}
-              </p>
+      </form>
+    </div>
 
-              <p class="text-sm text-gray-500 mb-4">
-                <span class="font-semibold">Wanted:</span> ${item.wanted}
-              </p>
+  </div>
+</section>
 
-              <button onclick="openRequest('${doc.id}')"
-                class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl">
-                Request Swap
-              </button>
-            </div>
-          `;
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 
-          container.appendChild(card);
-        });
-      });
+<script>
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
+    authDomain: "swaply-85ea0.firebaseapp.com",
+    projectId: "swaply-85ea0",
+    storageBucket: "swaply-85ea0.appspot.com",
+    messagingSenderId: "450967672050",
+    appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
+  };
 
-    function openRequest(id) {
-      alert("Swap request sent! Next step: build chat system or request approval.");
+  firebase.initializeApp(firebaseConfig);
+
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+
+  console.log("Firebase initialized 🚀");
+
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.getElementById("itemForm");
+
+    if (!form) {
+      console.error("Form not found!");
+      return;
     }
-  </script>
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      console.log("Upload clicked");
+
+      const name = form.querySelector('input[placeholder="Item Name"]').value;
+      const description = form.querySelector('textarea').value;
+      const category = form.querySelector('select').value;
+      const wanted = form.querySelector('input[placeholder="What do you want in exchange?"]').value;
+      const file = document.getElementById("itemImage").files[0];
+
+      if (!name || !description || !file) {
+        alert("Please fill all fields + upload image");
+        return;
+      }
+
+      try {
+        console.log("Uploading image...");
+
+        const fileRef = storage.ref("items/" + Date.now() + "_" + file.name);
+
+        const uploadTask = await fileRef.put(file);
+
+        const imageURL = await uploadTask.ref.getDownloadURL();
+
+        console.log("Image uploaded:", imageURL);
+
+        await db.collection("items").add({
+          name,
+          description,
+          category,
+          wanted,
+          imageURL,
+          createdAt: new Date()
+        });
+
+        alert("Item uploaded successfully 🚀");
+        form.reset();
+
+      } catch (error) {
+        console.error("Upload error:", error);
+        alert("Upload failed — check console");
+      }
+    });
+
+  });
+</script>
 
 </body>
 </html>
