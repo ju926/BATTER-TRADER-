@@ -3,92 +3,131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swaply Debug</title>
+  <title>Swaply - Browse Items</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-gray-800">
 
-  <div class="max-w-xl mx-auto mt-20 bg-white p-6 rounded-xl shadow">
+<!-- NAVBAR -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-    <h1 class="text-2xl font-bold mb-4">Swaply Upload Test</h1>
+    <h1 class="text-3xl font-bold text-green-600">Swaply</h1>
 
-    <form id="itemForm" class="space-y-4">
+    <nav class="hidden md:flex gap-8 font-medium">
+      <a href="index.html" class="hover:text-green-600">Home</a>
+      <a href="browse.html" class="text-green-600 font-semibold">Browse</a>
+      <a href="about.html" class="hover:text-green-600">About</a>
+      <a href="help.html" class="hover:text-green-600">Help</a>
+    </nav>
 
-      <input type="text" placeholder="Item Name"
-        class="w-full p-3 border rounded-xl" />
+    <div class="flex gap-3">
+      <a href="login.html" class="px-5 py-2 rounded-xl border border-green-600 text-green-600 hover:bg-green-50">
+        Login
+      </a>
 
-      <textarea placeholder="Description"
-        class="w-full p-3 border rounded-xl"></textarea>
-
-      <button type="submit"
-        class="w-full bg-green-600 text-white py-3 rounded-xl">
-        Upload Item
-      </button>
-
-    </form>
+      <a href="register.html" class="px-5 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
+        Sign Up
+      </a>
+    </div>
 
   </div>
+</header>
 
-  <!-- FIREBASE -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<!-- PAGE HEADER -->
+<section class="bg-green-600 text-white py-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-4xl font-bold mb-2">Browse Items</h2>
+    <p class="text-green-100">Find second-hand items available for swap or purchase</p>
+  </div>
+</section>
 
-  <script>
-    // 🔥 STEP 1: PROVE JS IS RUNNING
-    alert("JS IS RUNNING ✔");
+<!-- FILTER BAR (STATIC FOR NOW) -->
+<section class="py-6">
+  <div class="max-w-7xl mx-auto px-6 flex flex-wrap gap-4">
 
-    console.log("Page loaded");
+    <input type="text" placeholder="Search items..."
+      class="p-3 border rounded-xl w-full md:w-1/3">
 
-    // 🔥 FIREBASE INIT
-    const firebaseConfig = {
-      apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
-      authDomain: "swaply-85ea0.firebaseapp.com",
-      projectId: "swaply-85ea0",
-      storageBucket: "swaply-85ea0.appspot.com",
-      messagingSenderId: "450967672050",
-      appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
-    };
+    <select class="p-3 border rounded-xl">
+      <option>All Categories</option>
+      <option>Kitchen</option>
+      <option>Electronics</option>
+      <option>Furniture</option>
+      <option>Books</option>
+      <option>Clothes</option>
+    </select>
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    <button class="bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700">
+      Filter
+    </button>
 
-    console.log("Firebase ready ✔");
+  </div>
+</section>
 
-    // 🔥 FORM LOGIC
-    const form = document.getElementById("itemForm");
+<!-- ITEMS GRID (STATIC PLACEHOLDER) -->
+<section class="pb-20">
+  <div class="max-w-7xl mx-auto px-6">
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    <div class="grid md:grid-cols-3 gap-8">
 
-      alert("BUTTON CLICKED ✔");
+      <!-- Card 1 -->
+      <div class="bg-white rounded-2xl shadow overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1517673400267-0251440c45dc"
+          class="w-full h-48 object-cover">
 
-      const name = form.querySelector('input').value;
-      const desc = form.querySelector('textarea').value;
+        <div class="p-5">
+          <h3 class="text-xl font-bold">Kitchen Spoon Set</h3>
+          <p class="text-gray-600 mt-2">Good condition kitchen items for swap.</p>
 
-      if (!name || !desc) {
-        alert("Fill all fields");
-        return;
-      }
+          <button class="mt-4 w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700">
+            Request Swap
+          </button>
+        </div>
+      </div>
 
-      try {
-        await db.collection("items").add({
-          name,
-          description: desc,
-          createdAt: new Date()
-        });
+      <!-- Card 2 -->
+      <div class="bg-white rounded-2xl shadow overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
+          class="w-full h-48 object-cover">
 
-        alert("UPLOAD SUCCESS 🚀");
+        <div class="p-5">
+          <h3 class="text-xl font-bold">Winter Jacket</h3>
+          <p class="text-gray-600 mt-2">Warm jacket available for exchange.</p>
 
-        form.reset();
+          <button class="mt-4 w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700">
+            Request Swap
+          </button>
+        </div>
+      </div>
 
-      } catch (err) {
-        console.error(err);
-        alert("FIREBASE ERROR ❌ (check console)");
-      }
-    });
+      <!-- Card 3 -->
+      <div class="bg-white rounded-2xl shadow overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1517336714739-489689fd1ca8"
+          class="w-full h-48 object-cover">
 
-  </script>
+        <div class="p-5">
+          <h3 class="text-xl font-bold">Old Laptop</h3>
+          <p class="text-gray-600 mt-2">Works perfectly, looking for phone swap.</p>
+
+          <button class="mt-4 w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700">
+            Request Swap
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-300 py-10">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+    <p>© 2026 Swaply. All rights reserved.</p>
+  </div>
+</footer>
 
 </body>
 </html>
