@@ -49,7 +49,6 @@
           Save money, reduce waste, and build community.
         </p>
 
-        <!-- UPDATED BUTTONS -->
         <div class="flex gap-4 flex-wrap">
 
           <a href="browse.html" class="bg-white text-green-600 px-8 py-4 rounded-2xl font-semibold hover:bg-gray-100">
@@ -69,9 +68,10 @@
 
       <!-- Upload Card -->
       <div class="bg-white text-gray-800 rounded-3xl p-8 shadow-2xl">
+
         <h3 class="text-3xl font-bold mb-6">Quick Item Upload</h3>
 
-        <form class="space-y-5">
+        <form id="itemForm" class="space-y-5">
 
           <input type="text" placeholder="Item Name"
             class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500" />
@@ -91,11 +91,17 @@
           <input type="text" placeholder="What do you want in exchange?"
             class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500" />
 
-          <button class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700">
+          <!-- IMAGE UPLOAD -->
+          <input type="file" id="itemImage" accept="image/*"
+            class="w-full p-4 rounded-xl border" />
+
+          <button type="submit"
+            class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700">
             Upload Item
           </button>
 
         </form>
+
       </div>
 
     </div>
@@ -158,48 +164,36 @@
 
       <div class="grid md:grid-cols-3 gap-8">
 
-        <!-- Card 1 -->
         <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition">
-          <img src="https://images.unsplash.com/photo-1517673400267-0251440c45dc?q=80&w=1200&auto=format&fit=crop"
+          <img src="https://images.unsplash.com/photo-1517673400267-0251440c45dc?q=80&w=1200"
             class="w-full h-56 object-cover" />
 
           <div class="p-6">
             <h3 class="text-2xl font-bold mb-2">Kitchen Spoon Set</h3>
             <p class="text-gray-600 mb-4">Looking to exchange for cups or plates.</p>
-
-            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
-              Request Swap
-            </button>
+            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">Request Swap</button>
           </div>
         </div>
 
-        <!-- Card 2 -->
         <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition">
-          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop"
+          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200"
             class="w-full h-56 object-cover" />
 
           <div class="p-6">
             <h3 class="text-2xl font-bold mb-2">Winter Jacket</h3>
             <p class="text-gray-600 mb-4">Interested in swapping for sneakers.</p>
-
-            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
-              Request Swap
-            </button>
+            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">Request Swap</button>
           </div>
         </div>
 
-        <!-- Card 3 -->
         <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition">
-          <img src="https://images.unsplash.com/photo-1517336714739-489689fd1ca8?q=80&w=1200&auto=format&fit=crop"
+          <img src="https://images.unsplash.com/photo-1517336714739-489689fd1ca8?q=80&w=1200"
             class="w-full h-56 object-cover" />
 
           <div class="p-6">
             <h3 class="text-2xl font-bold mb-2">Old Laptop</h3>
             <p class="text-gray-600 mb-4">Looking for a smartphone in exchange.</p>
-
-            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
-              Request Swap
-            </button>
+            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">Request Swap</button>
           </div>
         </div>
 
@@ -227,51 +221,65 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300 py-16">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 
-      <div>
-        <h2 class="text-3xl font-bold text-white mb-4">Swaply</h2>
-        <p class="text-gray-400 mb-6">A modern platform for exchanging second-hand items safely and easily.</p>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
+      authDomain: "swaply-85ea0.firebaseapp.com",
+      projectId: "swaply-85ea0",
+      storageBucket: "swaply-85ea0.appspot.com",
+      messagingSenderId: "450967672050",
+      appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
+    };
 
-        <a href="https://wa.me/254780204730"
-          class="inline-block bg-green-600 px-5 py-3 rounded-xl text-white font-semibold">
-          WhatsApp Support
-        </a>
-      </div>
+    firebase.initializeApp(firebaseConfig);
 
-      <div>
-        <h3 class="text-white font-semibold mb-4">Company</h3>
-        <ul class="space-y-2">
-          <li><a href="about.html">About</a></li>
-          <li><a href="careers.html">Careers</a></li>
-          <li><a href="blog.html">Blog</a></li>
-        </ul>
-      </div>
+    const db = firebase.firestore();
+    const storage = firebase.storage();
 
-      <div>
-        <h3 class="text-white font-semibold mb-4">Support</h3>
-        <ul class="space-y-2">
-          <li><a href="help.html">Help Center</a></li>
-          <li><a href="safety.html">Safety</a></li>
-          <li><a href="terms.html">Terms</a></li>
-        </ul>
-      </div>
+    document.getElementById("itemForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
 
-      <div>
-        <h3 class="text-white font-semibold mb-4">Contact</h3>
-        <p>Email: mikemizan254@gmail.com</p>
-        <p>WhatsApp: +254780204730</p>
-        <p>Nairobi, Kenya</p>
-      </div>
+      const name = this.querySelector('input[placeholder="Item Name"]').value;
+      const description = this.querySelector('textarea').value;
+      const category = this.querySelector('select').value;
+      const wanted = this.querySelector('input[placeholder="What do you want in exchange?"]').value;
+      const file = document.getElementById("itemImage").files[0];
 
-    </div>
+      if (!name || !description || !file) {
+        alert("Please fill all fields and upload image");
+        return;
+      }
 
-    <div class="text-center text-gray-500 mt-10">
-      © 2026 Swaply
-    </div>
-  </footer>
+      try {
+        const storageRef = storage.ref("items/" + Date.now() + "_" + file.name);
+        const uploadTask = await storageRef.put(file);
+
+        const imageURL = await uploadTask.ref.getDownloadURL();
+
+        await db.collection("items").add({
+          name,
+          description,
+          category,
+          wanted,
+          imageURL,
+          createdAt: new Date()
+        });
+
+        alert("Item uploaded successfully 🚀");
+        this.reset();
+
+      } catch (error) {
+        console.error(error);
+        alert("Upload failed");
+      }
+    });
+
+  </script>
 
 </body>
-    </html>
+      </html>
