@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Swaply</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+  <div class="flex min-h-screen">
+
+    <aside class="w-72 bg-green-700 text-white p-8 hidden md:block">
+      <h1 class="text-3xl font-bold mb-10">Swaply</h1>
+
+      <nav class="space-y-5">
+        <a href="#" class="block hover:text-green-200">Dashboard</a>
+        <a href="#" class="block hover:text-green-200">My Items</a>
+        <a href="#" class="block hover:text-green-200">Swap Requests</a>
+        <a href="#" class="block hover:text-green-200">Messages</a>
+        <a href="#" class="block hover:text-green-200">Profile</a>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-8">
+
+      <div class="flex justify-between items-center mb-10">
+        <div>
+          <h2 class="text-4xl font-bold">Dashboard</h2>
+          <p class="text-gray-600 mt-2">Manage your items and swaps</p>
+        </div>
+
+        <button class="bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700">
+          Add Item
+        </button>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 mb-10">
+
+        <div class="bg-white rounded-3xl p-8 shadow-md">
+          <h3 class="text-lg text-gray-500 mb-2">Total Items</h3>
+          <p class="text-4xl font-bold">12</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-md">
+          <h3 class="text-lg text-gray-500 mb-2">Swap Requests</h3>
+          <p class="text-4xl font-bold">5</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-md">
+          <h3 class="text-lg text-gray-500 mb-2">Messages</h3>
+          <p class="text-4xl font-bold">8</p>
+        </div>
+
+      </div>
+
+      <div class="bg-white rounded-3xl p-8 shadow-md">
+        <h3 class="text-2xl font-bold mb-6">Recent Items</h3>
+
+        <div class="space-y-5">
+
+          <div class="flex items-center justify-between border-b pb-4">
+            <div>
+              <h4 class="font-semibold">Kitchen Spoon Set</h4>
+              <p class="text-gray-500">Wanted: Cups</p>
+            </div>
+
+            <button class="text-green-600 font-semibold">Edit</button>
+          </div>
+
+          <div class="flex items-center justify-between border-b pb-4">
+            <div>
+              <h4 class="font-semibold">Old Laptop</h4>
+              <p class="text-gray-500">Wanted: Smartphone</p>
+            </div>
+
+            <button class="text-green-600 font-semibold">Edit</button>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+</body>
+</html>
