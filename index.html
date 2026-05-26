@@ -3,124 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swaply - Upload Items</title>
+  <title>Swaply</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100">
 
-<!-- PAGE -->
-<div class="max-w-xl mx-auto mt-20 bg-white p-6 rounded-xl shadow">
-
-  <h1 class="text-2xl font-bold mb-6">Upload Item</h1>
+  <!-- HEADER -->
+  <div class="bg-green-600 text-white p-6 text-center">
+    <h1 class="text-3xl font-bold">Swaply Upload System</h1>
+  </div>
 
   <!-- FORM -->
-  <form id="itemForm" class="space-y-4">
+  <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-xl shadow">
 
-    <input type="text" placeholder="Item Name"
-      class="w-full p-3 border rounded-xl">
+    <h2 class="text-xl font-bold mb-4">Upload Item</h2>
 
-    <textarea placeholder="Description"
-      class="w-full p-3 border rounded-xl"></textarea>
+    <form id="itemForm" class="space-y-4">
 
-    <input type="text" placeholder="What do you want in exchange?"
-      class="w-full p-3 border rounded-xl">
+      <input type="text" placeholder="Item Name"
+        class="w-full p-3 border rounded-xl" />
 
-    <!-- FILE INPUT (HIDDEN) -->
-    <input type="file" id="itemImage" class="hidden" />
+      <textarea placeholder="Description"
+        class="w-full p-3 border rounded-xl"></textarea>
 
-    <!-- BUTTON THAT OPENS FILES -->
-    <button type="button"
-      onclick="document.getElementById('itemImage').click()"
-      class="w-full bg-gray-200 text-black py-3 rounded-xl font-bold hover:bg-gray-300">
-      📁 Choose Image
-    </button>
+      <select class="w-full p-3 border rounded-xl">
+        <option>Select Category</option>
+        <option>Kitchen</option>
+        <option>Electronics</option>
+        <option>Furniture</option>
+        <option>Books</option>
+        <option>Clothes</option>
+      </select>
 
-    <!-- FILE NAME -->
-    <p id="fileName" class="text-sm text-gray-500">
-      No file selected
-    </p>
+      <input type="text" placeholder="What do you want in exchange?"
+        class="w-full p-3 border rounded-xl" />
 
-    <!-- UPLOAD BUTTON -->
-    <button type="submit"
-      class="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700">
-      Upload Item
-    </button>
+      <button type="submit"
+        class="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700">
+        Upload Item
+      </button>
 
-  </form>
+    </form>
 
-</div>
+  </div>
 
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-<script>
-console.log("Page loaded ✔");
+  <script>
+    console.log("Page loaded ✔");
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
-  authDomain: "swaply-85ea0.firebaseapp.com",
-  projectId: "swaply-85ea0",
-  storageBucket: "swaply-85ea0.appspot.com",
-  messagingSenderId: "450967672050",
-  appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
-};
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
+      authDomain: "swaply-85ea0.firebaseapp.com",
+      projectId: "swaply-85ea0",
+      storageBucket: "swaply-85ea0.appspot.com",
+      messagingSenderId: "450967672050",
+      appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
+    };
 
-// INIT FIREBASE
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-const form = document.getElementById("itemForm");
-const fileInput = document.getElementById("itemImage");
-const fileName = document.getElementById("fileName");
+    console.log("Firebase connected ✔");
 
-// FILE NAME DISPLAY
-fileInput.addEventListener("change", () => {
-  if (fileInput.files.length > 0) {
-    fileName.textContent = "Selected: " + fileInput.files[0].name;
-  } else {
-    fileName.textContent = "No file selected";
-  }
-});
+    const form = document.getElementById("itemForm");
 
-// FORM SUBMIT
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-  const name = form.querySelector('input[type="text"]').value;
-  const desc = form.querySelector('textarea').value;
-  const wanted = form.querySelectorAll('input[type="text"]')[1].value;
+      console.log("Upload clicked ✔");
 
-  const file = fileInput.files[0];
+      const name = form.querySelector('input[type="text"]').value;
+      const description = form.querySelector('textarea').value;
+      const category = form.querySelector('select').value;
+      const wanted = form.querySelectorAll('input[type="text"]')[1].value;
 
-  console.log("Upload clicked");
+      if (!name || !description) {
+        alert("Please fill required fields");
+        return;
+      }
 
-  if (!name || !desc) {
-    alert("Fill all required fields");
-    return;
-  }
+      try {
+        await db.collection("items").add({
+          name,
+          description,
+          category,
+          wanted,
+          createdAt: new Date()
+        });
 
-  try {
-    await db.collection("items").add({
-      name,
-      description: desc,
-      wanted,
-      createdAt: new Date()
+        alert("UPLOAD SUCCESS 🚀");
+        form.reset();
+
+      } catch (error) {
+        console.error("Firebase error:", error);
+        alert("Upload failed — check console");
+      }
+
     });
-
-    alert("Uploaded successfully 🚀");
-
-    form.reset();
-    fileName.textContent = "No file selected";
-
-  } catch (err) {
-    console.error(err);
-    alert("Upload failed ❌");
-  }
-});
-</script>
+  </script>
 
 </body>
 </html>
