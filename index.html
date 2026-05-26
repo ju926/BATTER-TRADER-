@@ -11,7 +11,7 @@
 
   <!-- HEADER -->
   <div class="bg-green-600 text-white p-6 text-center">
-    <h1 class="text-3xl font-bold">Swaply Upload System</h1>
+    <h1 class="text-3xl font-bold">Swaply Live Marketplace</h1>
   </div>
 
   <!-- FORM -->
@@ -45,7 +45,13 @@
       </button>
 
     </form>
+  </div>
 
+  <!-- LIVE ITEMS -->
+  <div class="max-w-5xl mx-auto mt-10 px-4">
+    <h2 class="text-2xl font-bold mb-4">📦 Available Items</h2>
+
+    <div id="itemsContainer" class="grid md:grid-cols-3 gap-6"></div>
   </div>
 
   <!-- FIREBASE -->
@@ -53,9 +59,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
   <script>
-    console.log("Page loaded ✔");
-
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
       authDomain: "swaply-85ea0.firebaseapp.com",
@@ -68,24 +71,17 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    console.log("Firebase connected ✔");
-
     const form = document.getElementById("itemForm");
+    const container = document.getElementById("itemsContainer");
 
+    // 🔥 SAVE ITEM
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      console.log("Upload clicked ✔");
-
-      const name = form.querySelector('input[type="text"]').value;
+      const name = form.querySelector('input').value;
       const description = form.querySelector('textarea').value;
       const category = form.querySelector('select').value;
-      const wanted = form.querySelectorAll('input[type="text"]')[1].value;
-
-      if (!name || !description) {
-        alert("Please fill required fields");
-        return;
-      }
+      const wanted = form.querySelectorAll('input')[1].value;
 
       try {
         await db.collection("items").add({
@@ -96,15 +92,40 @@
           createdAt: new Date()
         });
 
-        alert("UPLOAD SUCCESS 🚀");
+        alert("Item uploaded 🚀");
         form.reset();
 
-      } catch (error) {
-        console.error("Firebase error:", error);
-        alert("Upload failed — check console");
+      } catch (err) {
+        console.error(err);
+        alert("Upload failed");
       }
-
     });
+
+    // 🔥 LIVE FETCH ITEMS
+    db.collection("items")
+      .orderBy("createdAt", "desc")
+      .onSnapshot(snapshot => {
+
+        container.innerHTML = "";
+
+        snapshot.forEach(doc => {
+          const item = doc.data();
+
+          const card = document.createElement("div");
+          card.className = "bg-white p-4 rounded-xl shadow";
+
+          card.innerHTML = `
+            <h3 class="text-xl font-bold mb-2">${item.name}</h3>
+            <p class="text-gray-600 mb-2">${item.description}</p>
+            <p class="text-sm text-gray-500">Category: ${item.category}</p>
+            <p class="text-sm text-gray-500">Wanted: ${item.wanted}</p>
+          `;
+
+          container.appendChild(card);
+        });
+
+      });
+
   </script>
 
 </body>
