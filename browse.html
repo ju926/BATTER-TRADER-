@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Items - Swaply</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+  <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-green-600">Swaply</h1>
+
+      <nav class="flex gap-6">
+        <a href="index.html" class="hover:text-green-600">Home</a>
+        <a href="dashboard.html" class="hover:text-green-600">Dashboard</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="max-w-7xl mx-auto px-6 py-12">
+
+    <div class="flex flex-col md:flex-row gap-4 justify-between mb-10">
+      <input
+        type="text"
+        placeholder="Search items..."
+        class="p-4 rounded-xl border w-full md:w-1/2"
+      />
+
+      <select class="p-4 rounded-xl border">
+        <option>All Categories</option>
+        <option>Kitchen</option>
+        <option>Electronics</option>
+        <option>Clothes</option>
+      </select>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="bg-white rounded-3xl shadow-md overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1517673400267-0251440c45dc?q=80&w=1200&auto=format&fit=crop"
+          class="w-full h-56 object-cover"
+        />
+
+        <div class="p-6">
+          <h2 class="text-2xl font-bold mb-2">Spoon Set</h2>
+          <p class="text-gray-600 mb-4">Looking for cups in exchange.</p>
+
+          <button class="bg-green-600 text-white px-5 py-3 rounded-xl hover:bg-green-700">
+            Request Swap
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+</html>
