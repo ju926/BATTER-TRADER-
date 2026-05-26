@@ -3,35 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swaply</title>
+  <title>Swaply - Exchange Items</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-gray-800">
 
 <!-- HERO -->
-<section class="bg-green-600 text-white p-10">
+<section class="bg-green-600 text-white py-20">
+  <div class="max-w-4xl mx-auto px-6">
 
-  <h1 class="text-4xl font-bold mb-6">Swaply Upload Test</h1>
+    <h1 class="text-4xl font-bold mb-8">Upload Your Item</h1>
 
-  <!-- UPLOAD FORM -->
-  <div class="bg-white text-black p-6 rounded-xl max-w-xl">
+    <!-- FORM -->
+    <div class="bg-white text-black p-6 rounded-2xl shadow-xl">
 
-    <form id="itemForm" class="space-y-4">
+      <form id="itemForm" class="space-y-5">
 
-      <input type="text" placeholder="Item Name"
-        class="w-full p-3 border rounded-xl" />
+        <input type="text" placeholder="Item Name"
+          class="w-full p-3 border rounded-xl" />
 
-      <textarea placeholder="Description"
-        class="w-full p-3 border rounded-xl"></textarea>
+        <textarea placeholder="Describe your item"
+          class="w-full p-3 border rounded-xl"></textarea>
 
-      <button type="submit"
-        class="w-full bg-green-600 text-white py-3 rounded-xl font-bold">
-        Upload Item
-      </button>
+        <select class="w-full p-3 border rounded-xl">
+          <option>Select Category</option>
+          <option>Kitchen</option>
+          <option>Electronics</option>
+          <option>Furniture</option>
+          <option>Books</option>
+          <option>Clothes</option>
+        </select>
 
-    </form>
+        <input type="text" placeholder="What do you want in exchange?"
+          class="w-full p-3 border rounded-xl" />
 
+        <!-- BEAUTIFUL FILE UPLOAD -->
+        <div>
+          <label class="block text-sm font-medium mb-2 text-gray-700">
+            Upload Item Image
+          </label>
+
+          <input type="file" id="itemImage" accept="image/*" class="hidden" />
+
+          <button type="button"
+            onclick="document.getElementById('itemImage').click()"
+            class="w-full bg-gray-100 border border-gray-300 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition">
+            📁 Choose Image
+          </button>
+
+          <p id="fileName" class="text-sm text-gray-500 mt-2">No file selected</p>
+        </div>
+
+        <button type="submit"
+          class="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700">
+          Upload Item
+        </button>
+
+      </form>
+
+    </div>
   </div>
 </section>
 
@@ -56,25 +87,33 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-console.log("Firebase initialized ✔");
-
-// WAIT FOR DOM
 document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById("itemForm");
+  const fileInput = document.getElementById("itemImage");
+  const fileNameText = document.getElementById("fileName");
 
-  console.log("Form detected:", form);
+  console.log("Form ready ✔");
 
+  // Show file name
+  fileInput.addEventListener("change", function () {
+    fileNameText.textContent = this.files.length > 0
+      ? "Selected: " + this.files[0].name
+      : "No file selected";
+  });
+
+  // Upload
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    console.log("Button clicked ✔");
-
-    const name = form.querySelector('input').value;
+    const name = form.querySelector('input[type="text"]').value;
     const desc = form.querySelector('textarea').value;
+    const category = form.querySelector('select').value;
+    const wanted = form.querySelectorAll('input[type="text"]')[1].value;
+    const file = fileInput.files[0];
 
     if (!name || !desc) {
-      alert("Fill all fields");
+      alert("Fill required fields");
       return;
     }
 
@@ -82,18 +121,19 @@ document.addEventListener("DOMContentLoaded", () => {
       await db.collection("items").add({
         name,
         description: desc,
+        category,
+        wanted,
         createdAt: new Date()
       });
 
       alert("Uploaded successfully 🚀");
-
       form.reset();
+      fileNameText.textContent = "No file selected";
 
     } catch (err) {
-      console.error("Firebase error:", err);
-      alert("Upload failed — check console");
+      console.error(err);
+      alert("Upload failed");
     }
-
   });
 
 });
