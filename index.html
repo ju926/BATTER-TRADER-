@@ -39,18 +39,16 @@
     <input type="text" placeholder="What do you want in exchange?"
       class="w-full p-3 border rounded-xl" />
 
-    <!-- IMAGE BUTTON -->
-    <div>
-      <input type="file" id="itemImage" accept="image/*" class="hidden">
+    <!-- IMAGE -->
+    <input type="file" id="itemImage" accept="image/*" class="hidden">
 
-      <button type="button"
-        onclick="document.getElementById('itemImage').click()"
-        class="w-full bg-gray-100 border p-3 rounded-xl hover:bg-gray-200">
-        📷 Choose Image
-      </button>
+    <button type="button"
+      onclick="document.getElementById('itemImage').click()"
+      class="w-full bg-gray-100 border p-3 rounded-xl hover:bg-gray-200">
+      📷 Choose Image
+    </button>
 
-      <p id="fileName" class="text-sm text-gray-500 mt-2">No image selected</p>
-    </div>
+    <p id="fileName" class="text-sm text-gray-500">No image selected</p>
 
     <button type="submit"
       class="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700">
@@ -58,10 +56,9 @@
     </button>
 
   </form>
-
 </div>
 
-<!-- ITEMS DISPLAY -->
+<!-- ITEMS -->
 <div class="max-w-6xl mx-auto mt-10 px-4">
   <h2 class="text-2xl font-bold mb-4">📦 Available Items</h2>
   <div id="itemsContainer" class="grid md:grid-cols-3 gap-6"></div>
@@ -95,14 +92,14 @@ const container = document.getElementById("itemsContainer");
 const fileInput = document.getElementById("itemImage");
 const fileName = document.getElementById("fileName");
 
-// Show file name
+// show file name
 fileInput.addEventListener("change", () => {
   fileName.textContent = fileInput.files.length
     ? fileInput.files[0].name
     : "No image selected";
 });
 
-// UPLOAD ITEM
+// UPLOAD
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -113,28 +110,27 @@ form.addEventListener("submit", async (e) => {
   const file = fileInput.files[0];
 
   if (!file) {
-    alert("Please select an image");
+    alert("Please select image");
     return;
   }
 
   try {
-    // Upload image to Firebase Storage
-    const storageRef = storage.ref("items/" + Date.now() + "_" + file.name);
-    const uploadTask = await storageRef.put(file);
-    const imageURL = await uploadTask.ref.getDownloadURL();
+    // upload image
+    const ref = storage.ref("items/" + Date.now() + "_" + file.name);
+    const upload = await ref.put(file);
+    const imageURL = await upload.ref.getDownloadURL();
 
-    // Save item to Firestore
+    // save data
     await db.collection("items").add({
       name,
       description,
       category,
       wanted,
       imageURL,
-      createdAt: new Date()
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
 
-    alert("Item uploaded 🚀");
-
+    alert("Uploaded successfully 🚀");
     form.reset();
     fileName.textContent = "No image selected";
 
@@ -144,9 +140,8 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-// LIVE ITEMS
+// LIVE DISPLAY (FIXED)
 db.collection("items")
-  .orderBy("createdAt", "desc")
   .onSnapshot(snapshot => {
 
     container.innerHTML = "";
