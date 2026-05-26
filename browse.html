@@ -3,141 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swaply - Exchange Items</title>
+  <title>Swaply Debug</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100">
 
-<!-- HERO -->
-<section class="bg-green-600 text-white py-20">
-  <div class="max-w-4xl mx-auto px-6">
+  <div class="max-w-xl mx-auto mt-20 bg-white p-6 rounded-xl shadow">
 
-    <h1 class="text-4xl font-bold mb-8">Upload Your Item</h1>
+    <h1 class="text-2xl font-bold mb-4">Swaply Upload Test</h1>
 
-    <!-- FORM -->
-    <div class="bg-white text-black p-6 rounded-2xl shadow-xl">
+    <form id="itemForm" class="space-y-4">
 
-      <form id="itemForm" class="space-y-5">
+      <input type="text" placeholder="Item Name"
+        class="w-full p-3 border rounded-xl" />
 
-        <input type="text" placeholder="Item Name"
-          class="w-full p-3 border rounded-xl" />
+      <textarea placeholder="Description"
+        class="w-full p-3 border rounded-xl"></textarea>
 
-        <textarea placeholder="Describe your item"
-          class="w-full p-3 border rounded-xl"></textarea>
+      <button type="submit"
+        class="w-full bg-green-600 text-white py-3 rounded-xl">
+        Upload Item
+      </button>
 
-        <select class="w-full p-3 border rounded-xl">
-          <option>Select Category</option>
-          <option>Kitchen</option>
-          <option>Electronics</option>
-          <option>Furniture</option>
-          <option>Books</option>
-          <option>Clothes</option>
-        </select>
+    </form>
 
-        <input type="text" placeholder="What do you want in exchange?"
-          class="w-full p-3 border rounded-xl" />
-
-        <!-- BEAUTIFUL FILE UPLOAD -->
-        <div>
-          <label class="block text-sm font-medium mb-2 text-gray-700">
-            Upload Item Image
-          </label>
-
-          <input type="file" id="itemImage" accept="image/*" class="hidden" />
-
-          <button type="button"
-            onclick="document.getElementById('itemImage').click()"
-            class="w-full bg-gray-100 border border-gray-300 hover:bg-gray-200 text-gray-700 py-3 rounded-xl font-medium transition">
-            📁 Choose Image
-          </button>
-
-          <p id="fileName" class="text-sm text-gray-500 mt-2">No file selected</p>
-        </div>
-
-        <button type="submit"
-          class="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700">
-          Upload Item
-        </button>
-
-      </form>
-
-    </div>
   </div>
-</section>
 
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
-<script>
-console.log("Page loaded ✔");
+  <script>
+    // 🔥 STEP 1: PROVE JS IS RUNNING
+    alert("JS IS RUNNING ✔");
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
-  authDomain: "swaply-85ea0.firebaseapp.com",
-  projectId: "swaply-85ea0",
-  storageBucket: "swaply-85ea0.appspot.com",
-  messagingSenderId: "450967672050",
-  appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
-};
+    console.log("Page loaded");
 
-// INIT FIREBASE
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+    // 🔥 FIREBASE INIT
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
+      authDomain: "swaply-85ea0.firebaseapp.com",
+      projectId: "swaply-85ea0",
+      storageBucket: "swaply-85ea0.appspot.com",
+      messagingSenderId: "450967672050",
+      appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
+    };
 
-document.addEventListener("DOMContentLoaded", () => {
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-  const form = document.getElementById("itemForm");
-  const fileInput = document.getElementById("itemImage");
-  const fileNameText = document.getElementById("fileName");
+    console.log("Firebase ready ✔");
 
-  console.log("Form ready ✔");
+    // 🔥 FORM LOGIC
+    const form = document.getElementById("itemForm");
 
-  // Show file name
-  fileInput.addEventListener("change", function () {
-    fileNameText.textContent = this.files.length > 0
-      ? "Selected: " + this.files[0].name
-      : "No file selected";
-  });
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-  // Upload
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+      alert("BUTTON CLICKED ✔");
 
-    const name = form.querySelector('input[type="text"]').value;
-    const desc = form.querySelector('textarea').value;
-    const category = form.querySelector('select').value;
-    const wanted = form.querySelectorAll('input[type="text"]')[1].value;
-    const file = fileInput.files[0];
+      const name = form.querySelector('input').value;
+      const desc = form.querySelector('textarea').value;
 
-    if (!name || !desc) {
-      alert("Fill required fields");
-      return;
-    }
+      if (!name || !desc) {
+        alert("Fill all fields");
+        return;
+      }
 
-    try {
-      await db.collection("items").add({
-        name,
-        description: desc,
-        category,
-        wanted,
-        createdAt: new Date()
-      });
+      try {
+        await db.collection("items").add({
+          name,
+          description: desc,
+          createdAt: new Date()
+        });
 
-      alert("Uploaded successfully 🚀");
-      form.reset();
-      fileNameText.textContent = "No file selected";
+        alert("UPLOAD SUCCESS 🚀");
 
-    } catch (err) {
-      console.error(err);
-      alert("Upload failed");
-    }
-  });
+        form.reset();
 
-});
-</script>
+      } catch (err) {
+        console.error(err);
+        alert("FIREBASE ERROR ❌ (check console)");
+      }
+    });
+
+  </script>
 
 </body>
 </html>
