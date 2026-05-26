@@ -3,130 +3,177 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swaply</title>
+  <title>Swaply Marketplace</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100">
 
-  <!-- HEADER -->
-  <div class="bg-green-600 text-white p-6 text-center">
-    <h1 class="text-3xl font-bold">Swaply Live Marketplace</h1>
-  </div>
+<!-- HEADER -->
+<div class="bg-green-600 text-white p-6 text-center">
+  <h1 class="text-3xl font-bold">Swaply Marketplace</h1>
+</div>
 
-  <!-- FORM -->
-  <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-xl shadow">
+<!-- FORM -->
+<div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-xl shadow">
 
-    <h2 class="text-xl font-bold mb-4">Upload Item</h2>
+  <h2 class="text-xl font-bold mb-4">Upload Item</h2>
 
-    <form id="itemForm" class="space-y-4">
+  <form id="itemForm" class="space-y-4">
 
-      <input type="text" placeholder="Item Name"
-        class="w-full p-3 border rounded-xl" />
+    <input type="text" placeholder="Item Name"
+      class="w-full p-3 border rounded-xl" />
 
-      <textarea placeholder="Description"
-        class="w-full p-3 border rounded-xl"></textarea>
+    <textarea placeholder="Description"
+      class="w-full p-3 border rounded-xl"></textarea>
 
-      <select class="w-full p-3 border rounded-xl">
-        <option>Select Category</option>
-        <option>Kitchen</option>
-        <option>Electronics</option>
-        <option>Furniture</option>
-        <option>Books</option>
-        <option>Clothes</option>
-      </select>
+    <select class="w-full p-3 border rounded-xl">
+      <option>Select Category</option>
+      <option>Kitchen</option>
+      <option>Electronics</option>
+      <option>Furniture</option>
+      <option>Books</option>
+      <option>Clothes</option>
+    </select>
 
-      <input type="text" placeholder="What do you want in exchange?"
-        class="w-full p-3 border rounded-xl" />
+    <input type="text" placeholder="What do you want in exchange?"
+      class="w-full p-3 border rounded-xl" />
 
-      <button type="submit"
-        class="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700">
-        Upload Item
+    <!-- IMAGE BUTTON -->
+    <div>
+      <input type="file" id="itemImage" accept="image/*" class="hidden">
+
+      <button type="button"
+        onclick="document.getElementById('itemImage').click()"
+        class="w-full bg-gray-100 border p-3 rounded-xl hover:bg-gray-200">
+        📷 Choose Image
       </button>
 
-    </form>
-  </div>
+      <p id="fileName" class="text-sm text-gray-500 mt-2">No image selected</p>
+    </div>
 
-  <!-- LIVE ITEMS -->
-  <div class="max-w-5xl mx-auto mt-10 px-4">
-    <h2 class="text-2xl font-bold mb-4">📦 Available Items</h2>
+    <button type="submit"
+      class="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700">
+      Upload Item
+    </button>
 
-    <div id="itemsContainer" class="grid md:grid-cols-3 gap-6"></div>
-  </div>
+  </form>
 
-  <!-- FIREBASE -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</div>
 
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
-      authDomain: "swaply-85ea0.firebaseapp.com",
-      projectId: "swaply-85ea0",
-      storageBucket: "swaply-85ea0.appspot.com",
-      messagingSenderId: "450967672050",
-      appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
-    };
+<!-- ITEMS DISPLAY -->
+<div class="max-w-6xl mx-auto mt-10 px-4">
+  <h2 class="text-2xl font-bold mb-4">📦 Available Items</h2>
+  <div id="itemsContainer" class="grid md:grid-cols-3 gap-6"></div>
+</div>
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 
-    const form = document.getElementById("itemForm");
-    const container = document.getElementById("itemsContainer");
+<script>
+console.log("Swaply loaded ✔");
 
-    // 🔥 SAVE ITEM
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyDpVWpHBk7KIimjKOH3TuY-BNk_2JSsuJM",
+  authDomain: "swaply-85ea0.firebaseapp.com",
+  projectId: "swaply-85ea0",
+  storageBucket: "swaply-85ea0.appspot.com",
+  messagingSenderId: "450967672050",
+  appId: "1:450967672050:web:db926b43a9b9986b00ec6b"
+};
 
-      const name = form.querySelector('input').value;
-      const description = form.querySelector('textarea').value;
-      const category = form.querySelector('select').value;
-      const wanted = form.querySelectorAll('input')[1].value;
+// INIT
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const storage = firebase.storage();
 
-      try {
-        await db.collection("items").add({
-          name,
-          description,
-          category,
-          wanted,
-          createdAt: new Date()
-        });
+const form = document.getElementById("itemForm");
+const container = document.getElementById("itemsContainer");
+const fileInput = document.getElementById("itemImage");
+const fileName = document.getElementById("fileName");
 
-        alert("Item uploaded 🚀");
-        form.reset();
+// Show file name
+fileInput.addEventListener("change", () => {
+  fileName.textContent = fileInput.files.length
+    ? fileInput.files[0].name
+    : "No image selected";
+});
 
-      } catch (err) {
-        console.error(err);
-        alert("Upload failed");
-      }
+// UPLOAD ITEM
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = form.querySelector('input[type="text"]').value;
+  const description = form.querySelector('textarea').value;
+  const category = form.querySelector('select').value;
+  const wanted = form.querySelectorAll('input[type="text"]')[1].value;
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Please select an image");
+    return;
+  }
+
+  try {
+    // Upload image to Firebase Storage
+    const storageRef = storage.ref("items/" + Date.now() + "_" + file.name);
+    const uploadTask = await storageRef.put(file);
+    const imageURL = await uploadTask.ref.getDownloadURL();
+
+    // Save item to Firestore
+    await db.collection("items").add({
+      name,
+      description,
+      category,
+      wanted,
+      imageURL,
+      createdAt: new Date()
     });
 
-    // 🔥 LIVE FETCH ITEMS
-    db.collection("items")
-      .orderBy("createdAt", "desc")
-      .onSnapshot(snapshot => {
+    alert("Item uploaded 🚀");
 
-        container.innerHTML = "";
+    form.reset();
+    fileName.textContent = "No image selected";
 
-        snapshot.forEach(doc => {
-          const item = doc.data();
+  } catch (err) {
+    console.error(err);
+    alert("Upload failed");
+  }
+});
 
-          const card = document.createElement("div");
-          card.className = "bg-white p-4 rounded-xl shadow";
+// LIVE ITEMS
+db.collection("items")
+  .orderBy("createdAt", "desc")
+  .onSnapshot(snapshot => {
 
-          card.innerHTML = `
-            <h3 class="text-xl font-bold mb-2">${item.name}</h3>
-            <p class="text-gray-600 mb-2">${item.description}</p>
-            <p class="text-sm text-gray-500">Category: ${item.category}</p>
-            <p class="text-sm text-gray-500">Wanted: ${item.wanted}</p>
-          `;
+    container.innerHTML = "";
 
-          container.appendChild(card);
-        });
+    snapshot.forEach(doc => {
+      const item = doc.data();
 
-      });
+      const card = document.createElement("div");
+      card.className = "bg-white rounded-xl shadow overflow-hidden";
 
-  </script>
+      card.innerHTML = `
+        <img src="${item.imageURL}" class="w-full h-40 object-cover" />
+
+        <div class="p-4">
+          <h3 class="text-xl font-bold mb-2">${item.name}</h3>
+          <p class="text-gray-600 mb-2">${item.description}</p>
+          <p class="text-sm text-gray-500">Category: ${item.category}</p>
+          <p class="text-sm text-gray-500">Wanted: ${item.wanted}</p>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+  });
+
+</script>
 
 </body>
 </html>
