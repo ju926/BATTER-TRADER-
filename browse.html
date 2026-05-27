@@ -1,474 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Browse Items - Swaply</title>
 
-  <title>Browse Items - Swaply</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-
-    *{
-      font-family:'Inter',sans-serif;
-    }
-
-    body{
-      background:#f3f4f6;
-    }
-
-    .card{
-      transition:0.3s;
-    }
-
-    .card:hover{
-      transform:translateY(-8px);
-    }
-
-    .gradient{
-      background:linear-gradient(to right,#16a34a,#22c55e);
-    }
-
-  </style>
+<script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
-<body>
+<body class="bg-gray-100 text-gray-800">
 
-<!-- NAVBAR -->
-<header class="bg-white shadow-sm sticky top-0 z-50">
+<header class="bg-white shadow sticky top-0 z-50">
 
-  <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-    <a href="index.html" class="text-4xl font-black text-green-600">
-      Swaply
-    </a>
+<h1 class="text-3xl font-black text-green-600">
+Swaply
+</h1>
 
-    <nav class="hidden md:flex items-center gap-8 font-semibold">
+<nav class="flex gap-8 font-semibold">
 
-      <a href="index.html" class="hover:text-green-600">
-        Home
-      </a>
+<a href="index.html">Home</a>
+<a href="browse.html" class="text-green-600">Browse</a>
+<a href="chat.html">Chat</a>
 
-      <a href="browse.html" class="text-green-600">
-        Browse
-      </a>
+</nav>
 
-      <a href="chat.html" class="hover:text-green-600">
-        Messages
-      </a>
-
-      <a href="about.html" class="hover:text-green-600">
-        About
-      </a>
-
-      <a href="help.html" class="hover:text-green-600">
-        Help
-      </a>
-
-    </nav>
-
-    <div class="flex items-center gap-4">
-
-      <a href="login.html"
-      class="px-5 py-3 rounded-xl border border-green-600 text-green-600 font-semibold">
-        Login
-      </a>
-
-      <a href="register.html"
-      class="gradient px-6 py-3 rounded-xl text-white font-bold shadow-lg">
-        Sign Up
-      </a>
-
-    </div>
-
-  </div>
+</div>
 
 </header>
 
-<!-- HERO -->
-<section class="gradient text-white py-20">
+<section class="py-20">
 
-  <div class="max-w-7xl mx-auto px-6">
+<div class="max-w-7xl mx-auto px-6">
 
-    <div class="max-w-3xl">
+<div class="mb-12">
 
-      <h1 class="text-6xl font-black leading-tight mb-6">
-        Discover Amazing Marketplace Deals
-      </h1>
+<h2 class="text-5xl font-black mb-3">
+Marketplace Items
+</h2>
 
-      <p class="text-xl text-green-100 leading-relaxed">
-        Browse electronics, fashion, furniture, vehicles and more from trusted sellers.
-      </p>
+<p class="text-gray-600">
+Browse all uploaded products
+</p>
 
-    </div>
+</div>
 
-  </div>
+<div id="itemsContainer"
+class="grid md:grid-cols-3 gap-8">
 
-</section>
+</div>
 
-<!-- FILTERS -->
-<section class="py-10 bg-white border-b">
-
-  <div class="max-w-7xl mx-auto px-6">
-
-    <div class="grid md:grid-cols-4 gap-5">
-
-      <input
-      type="text"
-      id="searchInput"
-      placeholder="Search items..."
-      class="bg-gray-100 p-4 rounded-2xl outline-none">
-
-      <select
-      id="categoryFilter"
-      class="bg-gray-100 p-4 rounded-2xl outline-none">
-
-        <option value="">All Categories</option>
-        <option>Electronics</option>
-        <option>Fashion</option>
-        <option>Furniture</option>
-        <option>Books</option>
-        <option>Vehicles</option>
-
-      </select>
-
-      <select
-      id="sortFilter"
-      class="bg-gray-100 p-4 rounded-2xl outline-none">
-
-        <option value="">Sort By</option>
-        <option value="low">Lowest Price</option>
-        <option value="high">Highest Price</option>
-
-      </select>
-
-      <button
-      onclick="loadItems()"
-      class="gradient text-white rounded-2xl font-bold text-lg">
-        Search
-      </button>
-
-    </div>
-
-  </div>
+</div>
 
 </section>
-
-<!-- ITEMS -->
-<section class="py-16">
-
-  <div class="max-w-7xl mx-auto px-6">
-
-    <div class="flex items-center justify-between mb-12">
-
-      <div>
-
-        <h2 class="text-5xl font-black mb-3">
-          Marketplace Listings
-        </h2>
-
-        <p class="text-gray-500 text-lg">
-          Real items uploaded from Swaply admin portal
-        </p>
-
-      </div>
-
-      <div class="bg-white px-6 py-4 rounded-2xl shadow-sm">
-
-        <span id="totalItems" class="font-black text-2xl">
-          0
-        </span>
-
-        <span class="text-gray-500">
-          items
-        </span>
-
-      </div>
-
-    </div>
-
-    <!-- GRID -->
-    <div id="itemsContainer"
-    class="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-black text-gray-300 py-16 mt-20">
-
-  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
-
-    <div>
-
-      <h2 class="text-4xl font-black text-white mb-5">
-        Swaply
-      </h2>
-
-      <p class="leading-relaxed text-gray-400">
-        A modern production marketplace for buying, selling and swapping items securely.
-      </p>
-
-    </div>
-
-    <div>
-
-      <h3 class="text-white font-bold mb-5">
-        Company
-      </h3>
-
-      <ul class="space-y-3">
-
-        <li><a href="#">About</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Blog</a></li>
-
-      </ul>
-
-    </div>
-
-    <div>
-
-      <h3 class="text-white font-bold mb-5">
-        Support
-      </h3>
-
-      <ul class="space-y-3">
-
-        <li><a href="#">Help Center</a></li>
-        <li><a href="#">Safety</a></li>
-        <li><a href="#">Terms</a></li>
-
-      </ul>
-
-    </div>
-
-    <div>
-
-      <h3 class="text-white font-bold mb-5">
-        Contact
-      </h3>
-
-      <p class="mb-2">
-        Nairobi, Kenya
-      </p>
-
-      <p class="mb-2">
-        support@swaply.com
-      </p>
-
-      <p>
-        +254 780 204 730
-      </p>
-
-    </div>
-
-  </div>
-
-</footer>
 
 <script>
 
 const API = "https://traderbackend.onrender.com";
 
-let allItems = [];
-
 async function loadItems(){
 
-  try{
+const res =
+await fetch(`${API}/items`);
 
-    const res = await fetch(`${API}/items`);
+const items =
+await res.json();
 
-    const items = await res.json();
+const container =
+document.getElementById("itemsContainer");
 
-    allItems = items;
+container.innerHTML = "";
 
-    renderItems(items);
+items.forEach(item=>{
 
-  }catch(err){
+container.innerHTML += `
 
-    console.log(err);
+<div class="bg-white rounded-3xl overflow-hidden shadow-xl">
 
-    document.getElementById("itemsContainer").innerHTML = `
-      <div class="text-red-500 text-2xl font-bold">
-        Failed to load marketplace items
-      </div>
-    `;
+<img
+src="${item.image}"
+class="w-full h-64 object-cover"/>
 
-  }
+<div class="p-6">
 
-}
+<h2 class="text-2xl font-black mb-2">
+${item.name}
+</h2>
 
-function renderItems(items){
+<p class="text-gray-600 mb-4">
+${item.description}
+</p>
 
-  const container = document.getElementById("itemsContainer");
+<div class="flex justify-between items-center mb-5">
 
-  document.getElementById("totalItems").innerText = items.length;
+<span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold">
+${item.category}
+</span>
 
-  if(items.length === 0){
+</div>
 
-    container.innerHTML = `
-      <div class="text-2xl font-bold text-gray-500">
-        No items found
-      </div>
-    `;
+<a href="chat.html"
+class="block bg-green-600 text-white py-3 rounded-2xl text-center font-black">
 
-    return;
+Chat Seller
 
-  }
+</a>
 
-  container.innerHTML = items.map(item => `
+</div>
 
-    <div class="card bg-white rounded-[35px] overflow-hidden shadow-md">
+</div>
 
-      <img
-      src="${item.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9'}"
-      class="w-full h-72 object-cover">
+`;
 
-      <div class="p-8">
-
-        <div class="flex items-center justify-between mb-4">
-
-          <span class="bg-green-100 text-green-700 px-4 py-2 rounded-xl text-sm font-bold">
-            ${item.category || 'General'}
-          </span>
-
-          <span class="text-gray-500 text-sm">
-            ${item.location || 'Kenya'}
-          </span>
-
-        </div>
-
-        <h3 class="text-3xl font-black mb-3">
-          ${item.title}
-        </h3>
-
-        <p class="text-gray-600 leading-relaxed mb-6">
-          ${item.description}
-        </p>
-
-        <div class="flex items-center justify-between mb-6">
-
-          <div>
-
-            <p class="text-gray-500 text-sm">
-              Price
-            </p>
-
-            <h4 class="text-3xl font-black text-green-600">
-              KSh ${item.price}
-            </h4>
-
-          </div>
-
-          <div class="flex items-center gap-2">
-
-            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-
-            <span class="font-semibold">
-              Available
-            </span>
-
-          </div>
-
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-
-          <button
-          onclick="openChat('${item._id}')"
-          class="gradient text-white py-4 rounded-2xl font-black">
-
-            Chat Seller
-
-          </button>
-
-          <button
-          class="border-2 border-green-600 text-green-600 py-4 rounded-2xl font-black">
-
-            View Details
-
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `).join("");
-
-}
-
-function openChat(id){
-
-  localStorage.setItem("currentItem",id);
-
-  window.location.href = "chat.html";
-
-}
-
-document.getElementById("searchInput")
-.addEventListener("input", filterItems);
-
-document.getElementById("categoryFilter")
-.addEventListener("change", filterItems);
-
-document.getElementById("sortFilter")
-.addEventListener("change", filterItems);
-
-function filterItems(){
-
-  let filtered = [...allItems];
-
-  const search = document.getElementById("searchInput").value.toLowerCase();
-
-  const category = document.getElementById("categoryFilter").value;
-
-  const sort = document.getElementById("sortFilter").value;
-
-  if(search){
-
-    filtered = filtered.filter(item =>
-
-      item.title.toLowerCase().includes(search)
-
-    );
-
-  }
-
-  if(category){
-
-    filtered = filtered.filter(item =>
-
-      item.category === category
-
-    );
-
-  }
-
-  if(sort === "low"){
-
-    filtered.sort((a,b)=>a.price - b.price);
-
-  }
-
-  if(sort === "high"){
-
-    filtered.sort((a,b)=>b.price - a.price);
-
-  }
-
-  renderItems(filtered);
+});
 
 }
 
