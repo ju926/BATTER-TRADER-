@@ -72,12 +72,13 @@
 
         <form>
           <input type="text" placeholder="Item Name"
-            class="w-full p-4 rounded-xl border mb-4 focus:ring-2 focus:ring-green-500"/>
+            class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500 mb-4" />
 
           <textarea placeholder="Describe your item"
-            class="w-full p-4 rounded-xl border h-32 mb-4 focus:ring-2 focus:ring-green-500"></textarea>
+            class="w-full p-4 rounded-xl border h-32 focus:outline-none focus:ring-2 focus:ring-green-500 mb-4"></textarea>
 
-          <select class="w-full p-4 rounded-xl border mb-4 focus:ring-2 focus:ring-green-500">
+          <select class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500 mb-4">
+            <option>Select Category</option>
             <option>Kitchen</option>
             <option>Electronics</option>
             <option>Furniture</option>
@@ -86,10 +87,9 @@
           </select>
 
           <input type="text" placeholder="What do you want in exchange?"
-            class="w-full p-4 rounded-xl border mb-4 focus:ring-2 focus:ring-green-500"/>
+            class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500 mb-4" />
 
-          <button type="submit"
-            class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700">
+          <button class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700">
             Upload Item
           </button>
         </form>
@@ -110,17 +110,17 @@
 
       <div class="grid md:grid-cols-3 gap-8">
 
-        <div class="bg-white rounded-3xl p-8 shadow-md">
+        <div class="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition">
           <div class="text-5xl mb-5">♻️</div>
           <h3 class="text-2xl font-bold mb-4">Eco Friendly</h3>
         </div>
 
-        <div class="bg-white rounded-3xl p-8 shadow-md">
+        <div class="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition">
           <div class="text-5xl mb-5">🤝</div>
           <h3 class="text-2xl font-bold mb-4">Trusted Swaps</h3>
         </div>
 
-        <div class="bg-white rounded-3xl p-8 shadow-md">
+        <div class="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition">
           <div class="text-5xl mb-5">💬</div>
           <h3 class="text-2xl font-bold mb-4">Easy Communication</h3>
         </div>
@@ -146,11 +146,10 @@
 
       <div class="grid md:grid-cols-3 gap-8">
 
-        <!-- YOUR STATIC CARDS (UNCHANGED) -->
+        <!-- Static Cards (UNCHANGED) -->
         <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
           <img src="https://images.unsplash.com/photo-1517673400267-0251440c45dc"
             class="w-full h-56 object-cover" />
-
           <div class="p-6">
             <h3 class="text-2xl font-bold mb-2">Kitchen Spoon Set</h3>
             <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
@@ -162,7 +161,6 @@
         <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
           <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
             class="w-full h-56 object-cover" />
-
           <div class="p-6">
             <h3 class="text-2xl font-bold mb-2">Winter Jacket</h3>
             <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
@@ -174,7 +172,6 @@
         <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
           <img src="https://images.unsplash.com/photo-1517336714739-489689fd1ca8"
             class="w-full h-56 object-cover" />
-
           <div class="p-6">
             <h3 class="text-2xl font-bold mb-2">Old Laptop</h3>
             <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
@@ -185,7 +182,7 @@
 
       </div>
 
-      <!-- DYNAMIC ITEMS GO HERE -->
+      <!-- DYNAMIC ITEMS FROM BACKEND -->
       <div id="dynamic-items" class="grid md:grid-cols-3 gap-8 mt-10"></div>
 
     </div>
@@ -203,68 +200,74 @@
     </a>
   </section>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer class="bg-gray-900 text-gray-300 py-16 text-center">
     © 2026 Swaply
   </footer>
 
-<script>
-const API = "http://localhost:5000";
-let token = localStorage.getItem("token");
+  <!-- ================= BACKEND CONNECTION ================= -->
+  <script>
+    const API = "http://localhost:5000";
+    let token = localStorage.getItem("token");
 
-/* LOAD ITEMS */
-async function loadItems() {
-  const res = await fetch(`${API}/items`);
-  const items = await res.json();
+    // LOAD ITEMS
+    async function loadItems() {
+      try {
+        const res = await fetch(`${API}/items`);
+        const items = await res.json();
 
-  const container = document.getElementById("dynamic-items");
+        const container = document.getElementById("dynamic-items");
 
-  items.forEach(item => {
-    container.innerHTML += `
-      <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
-        <img src="https://source.unsplash.com/600x400/?${item.category || 'item'}"
-          class="w-full h-56 object-cover" />
+        items.forEach(item => {
+          container.innerHTML += `
+            <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
+              <img src="https://source.unsplash.com/600x400/?${item.category || 'item'}"
+                class="w-full h-56 object-cover" />
 
-        <div class="p-6">
-          <h3 class="text-2xl font-bold mb-2">${item.name}</h3>
-          <p class="text-gray-600 mb-4">${item.description}</p>
+              <div class="p-6">
+                <h3 class="text-2xl font-bold mb-2">${item.name}</h3>
+                <p class="text-gray-600 mb-4">${item.description}</p>
 
-          <p class="text-green-600 font-semibold">${item.wanted}</p>
+                <p class="text-green-600 font-semibold">${item.wanted}</p>
 
-          <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full mt-4">
-            Request Swap
-          </button>
-        </div>
-      </div>
-    `;
-  });
-}
+                <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full mt-4">
+                  Request Swap
+                </button>
+              </div>
+            </div>
+          `;
+        });
 
-/* UPLOAD ITEM */
-document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
-  const inputs = document.querySelectorAll("form input, form textarea, form select");
+    // UPLOAD ITEM
+    document.querySelector("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-  await fetch(`${API}/items`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": token
-    },
-    body: JSON.stringify({
-      name: inputs[0].value,
-      description: inputs[1].value,
-      category: inputs[2].value,
-      wanted: inputs[3].value
-    })
-  });
+      const inputs = document.querySelectorAll("form input, form textarea, form select");
 
-  loadItems();
-});
+      await fetch(`${API}/items`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": token
+        },
+        body: JSON.stringify({
+          name: inputs[0].value,
+          description: inputs[1].value,
+          category: inputs[2].value,
+          wanted: inputs[3].value
+        })
+      });
 
-loadItems();
-</script>
+      loadItems();
+    });
+
+    loadItems();
+  </script>
 
 </body>
-</html>
+  </html>
