@@ -2,119 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swaply - Exchange Second-Hand Items</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Swaply - Marketplace</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100 text-gray-800">
 
-  <!-- NAVBAR -->
-  <header class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-      <h1 class="text-3xl font-bold text-green-600">Swaply</h1>
-
-      <nav class="hidden md:flex gap-8 font-medium">
-        <a href="index.html">Home</a>
-        <a href="browse.html">Browse</a>
-        <a href="about.html">About</a>
-        <a href="help.html">Help</a>
-        <a href="terms.html">Terms</a>
-        <a href="chat.html" class="text-green-600 font-bold">Chat</a>
-      </nav>
-
-      <div class="flex gap-3">
-        <a href="login.html" class="px-5 py-2 border border-green-600 text-green-600 rounded-xl">
-          Login
-        </a>
-        <a href="register.html" class="px-5 py-2 bg-green-600 text-white rounded-xl">
-          Sign Up
-        </a>
-      </div>
-
+<!-- NAV -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between">
+    <h1 class="text-3xl font-bold text-green-600">Swaply</h1>
+    <div class="flex gap-3">
+      <button onclick="loadItems()" class="px-4 py-2 bg-green-600 text-white rounded-xl">
+        Refresh
+      </button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- HERO -->
-  <section class="bg-green-600 text-white py-24">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+<!-- MAIN -->
+<section class="max-w-7xl mx-auto p-6 grid md:grid-cols-2 gap-8">
 
-      <div>
-        <h2 class="text-5xl font-bold mb-6">
-          Exchange & Sell Second-Hand Items Easily
-        </h2>
+  <!-- UPLOAD -->
+  <div class="bg-white p-6 rounded-2xl shadow-md">
+    <h2 class="text-2xl font-bold mb-4">Upload Item</h2>
 
-        <p class="text-green-100 mb-8">
-          Connect buyers and sellers instantly with live chat and secure marketplace tools.
-        </p>
+    <input id="name" class="w-full p-3 border rounded-xl mb-3" placeholder="Item Name">
+    <textarea id="desc" class="w-full p-3 border rounded-xl mb-3" placeholder="Description"></textarea>
 
-        <div class="flex gap-4 flex-wrap">
-          <a href="browse.html" class="bg-white text-green-600 px-8 py-4 rounded-2xl">
-            Browse Items
-          </a>
+    <select id="category" class="w-full p-3 border rounded-xl mb-3">
+      <option>Kitchen</option>
+      <option>Electronics</option>
+      <option>Furniture</option>
+      <option>Clothes</option>
+    </select>
 
-          <a href="register.html" class="border border-white px-8 py-4 rounded-2xl">
-            Start Selling
-          </a>
+    <input id="wanted" class="w-full p-3 border rounded-xl mb-3" placeholder="What do you want in exchange?">
 
-          <a href="chat.html" class="bg-yellow-400 text-black px-8 py-4 rounded-2xl">
-            Live Chat
-          </a>
-        </div>
+    <button onclick="uploadItem()" class="w-full bg-green-600 text-white py-3 rounded-xl">
+      Post Item
+    </button>
+  </div>
+
+  <!-- ITEMS -->
+  <div class="bg-white p-6 rounded-2xl shadow-md">
+    <h2 class="text-2xl font-bold mb-4">Marketplace</h2>
+    <div id="items" class="space-y-4"></div>
+  </div>
+
+</section>
+
+<script>
+const API = "http://localhost:5000";
+let token = localStorage.getItem("token");
+
+/* LOAD ITEMS */
+async function loadItems() {
+  const res = await fetch(`${API}/items`);
+  const data = await res.json();
+
+  const container = document.getElementById("items");
+  container.innerHTML = "";
+
+  data.forEach(item => {
+    container.innerHTML += `
+      <div class="border p-4 rounded-xl">
+        <h3 class="text-xl font-bold">${item.name}</h3>
+        <p>${item.description}</p>
+        <p class="text-sm text-gray-500">${item.category}</p>
+        <p class="text-green-600 font-bold">${item.wanted}</p>
       </div>
+    `;
+  });
+}
 
-      <!-- UPLOAD BOX -->
-      <div class="bg-white text-black p-8 rounded-3xl shadow-xl">
-        <h3 class="text-2xl font-bold mb-4">Upload Item</h3>
+/* UPLOAD ITEM */
+async function uploadItem() {
+  const name = document.getElementById("name").value;
+  const description = document.getElementById("desc").value;
+  const category = document.getElementById("category").value;
+  const wanted = document.getElementById("wanted").value;
 
-        <form id="uploadForm" class="space-y-4">
+  if (!name || !description) return alert("Fill all fields");
 
-          <input id="name" class="w-full p-3 border rounded-xl" placeholder="Item name" />
+  await fetch(`${API}/items`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": token
+    },
+    body: JSON.stringify({
+      name,
+      description,
+      category,
+      wanted
+    })
+  });
 
-          <textarea id="desc" class="w-full p-3 border rounded-xl" placeholder="Description"></textarea>
+  loadItems();
+}
 
-          <select id="category" class="w-full p-3 border rounded-xl">
-            <option>Category</option>
-            <option>Electronics</option>
-            <option>Clothes</option>
-            <option>Furniture</option>
-          </select>
-
-          <input type="file" id="image" class="w-full p-3 border rounded-xl" />
-
-          <input id="want" class="w-full p-3 border rounded-xl" placeholder="What do you want in exchange?" />
-
-          <button class="w-full bg-green-600 text-white py-3 rounded-xl">
-            Upload Item
-          </button>
-
-        </form>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- JS -->
-  <script>
-    const API = "https://traderbackend.onrender.com";
-
-    function getToken() {
-      return localStorage.getItem("token");
-    }
-
-    document.getElementById("uploadForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      if (!getToken()) {
-        alert("Login required");
-        window.location.href = "login.html";
-        return;
-      }
-
-      alert("Connect backend upload API here (Cloudinary ready)");
-    });
-  </script>
+/* INIT */
+loadItems();
+</script>
 
 </body>
 </html>
