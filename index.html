@@ -7,25 +7,12 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-
-body{
-  background:#f5f7fb;
-}
-
-.glass{
-  background:rgba(255,255,255,0.7);
-  backdrop-filter:blur(12px);
-}
-
-</style>
-
 </head>
 
-<body class="text-gray-800">
+<body class="bg-gray-100 text-gray-800">
 
 <!-- NAVBAR -->
-<header class="bg-white shadow sticky top-0 z-50">
+<header class="bg-white shadow-md sticky top-0 z-50">
 
 <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
@@ -35,29 +22,12 @@ Swaply
 
 <nav class="hidden md:flex gap-8 font-semibold">
 
-<a href="index.html" class="hover:text-green-600">
-Home
-</a>
-
-<a href="browse.html" class="hover:text-green-600">
-Browse
-</a>
-
-<a href="about.html" class="hover:text-green-600">
-About
-</a>
-
-<a href="help.html" class="hover:text-green-600">
-Help
-</a>
-
-<a href="terms.html" class="hover:text-green-600">
-Terms
-</a>
-
-<a href="chat.html" class="hover:text-green-600">
-Chat
-</a>
+<a href="index.html" class="hover:text-green-600">Home</a>
+<a href="browse.html" class="hover:text-green-600">Browse</a>
+<a href="chat.html" class="hover:text-green-600">Chat</a>
+<a href="about.html" class="hover:text-green-600">About</a>
+<a href="help.html" class="hover:text-green-600">Help</a>
+<a href="terms.html" class="hover:text-green-600">Terms</a>
 
 </nav>
 
@@ -65,12 +35,16 @@ Chat
 
 <a href="login.html"
 class="px-5 py-2 rounded-xl border border-green-600 text-green-600">
+
 Login
+
 </a>
 
 <a href="register.html"
 class="px-5 py-2 rounded-xl bg-green-600 text-white">
+
 Sign Up
+
 </a>
 
 </div>
@@ -80,96 +54,117 @@ Sign Up
 </header>
 
 <!-- HERO -->
-<section class="bg-gradient-to-r from-green-600 to-emerald-500 text-white py-24">
+<section class="bg-green-600 text-white py-24">
 
-<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
 <div>
 
-<div class="bg-white/20 inline-block px-5 py-2 rounded-full mb-6">
-🌍 Kenya's Marketplace
-</div>
-
 <h2 class="text-6xl font-black leading-tight mb-6">
-Buy, Sell & Swap
-Items Easily
+Buy, Sell & Swap Items Easily
 </h2>
 
-<p class="text-xl text-green-100 mb-10">
-Modern marketplace with live chat and real item uploads.
+<p class="text-xl text-green-100 mb-8">
+Kenya's modern marketplace platform with real-time chat and live listings.
 </p>
 
-<div class="flex flex-wrap gap-4">
+<div class="flex gap-4 flex-wrap">
 
 <a href="browse.html"
 class="bg-white text-green-600 px-8 py-4 rounded-2xl font-black">
+
 Browse Items
+
 </a>
 
 <a href="chat.html"
 class="bg-black text-white px-8 py-4 rounded-2xl font-black">
-Live Chat
+
+Marketplace Chat
+
+</a>
+
+<a href="https://wa.me/254780204730"
+class="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-black">
+
+Sell On Swaply
+
 </a>
 
 </div>
 
 </div>
 
-<!-- UPLOAD -->
-<div class="glass rounded-3xl p-8 shadow-2xl text-gray-800">
+<!-- RIGHT CARD -->
+<div class="bg-white text-gray-800 rounded-3xl p-10 shadow-2xl">
 
-<h3 class="text-3xl font-black mb-6">
-Upload Item
+<h3 class="text-4xl font-black mb-6">
+Why Swaply?
 </h3>
 
-<form id="uploadForm"
-enctype="multipart/form-data"
-class="space-y-5">
+<div class="space-y-6">
 
-<input
-type="text"
-id="itemName"
-placeholder="Item Name"
-class="w-full p-4 rounded-2xl border"/>
+<div class="flex gap-4">
 
-<textarea
-id="itemDesc"
-placeholder="Describe item"
-class="w-full p-4 rounded-2xl border h-32"></textarea>
+<div class="text-4xl">
+🛒
+</div>
 
-<select
-id="itemCategory"
-class="w-full p-4 rounded-2xl border">
+<div>
 
-<option>Electronics</option>
-<option>Fashion</option>
-<option>Furniture</option>
-<option>Vehicles</option>
-<option>Phones</option>
+<h4 class="font-black text-xl">
+Marketplace
+</h4>
 
-</select>
+<p class="text-gray-600">
+Buy and sell products instantly.
+</p>
 
-<input
-type="file"
-id="itemImage"
-accept="image/*"
-class="w-full p-4 rounded-2xl border bg-white"/>
+</div>
 
-<input
-type="text"
-id="itemWant"
-placeholder="Wanted Item"
-class="w-full p-4 rounded-2xl border"/>
+</div>
 
-<button
-type="submit"
-class="w-full bg-green-600 text-white py-4 rounded-2xl font-black">
+<div class="flex gap-4">
 
-Upload Item
+<div class="text-4xl">
+💬
+</div>
 
-</button>
+<div>
 
-</form>
+<h4 class="font-black text-xl">
+Live Chat
+</h4>
+
+<p class="text-gray-600">
+Chat with buyers and sellers directly.
+</p>
+
+</div>
+
+</div>
+
+<div class="flex gap-4">
+
+<div class="text-4xl">
+🔒
+</div>
+
+<div>
+
+<h4 class="font-black text-xl">
+Safe Trading
+</h4>
+
+<p class="text-gray-600">
+Trusted marketplace with real listings.
+</p>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
@@ -182,7 +177,7 @@ Upload Item
 
 <div class="max-w-7xl mx-auto px-6">
 
-<div class="flex justify-between items-center mb-12">
+<div class="flex items-center justify-between mb-12">
 
 <div>
 
@@ -190,14 +185,14 @@ Upload Item
 Latest Items
 </h2>
 
-<p class="text-gray-500 mt-2">
+<p class="text-gray-600 mt-2">
 Recently uploaded marketplace products
 </p>
 
 </div>
 
 <a href="browse.html"
-class="bg-green-600 text-white px-6 py-3 rounded-2xl font-black">
+class="bg-green-600 text-white px-6 py-3 rounded-xl font-bold">
 
 View All
 
@@ -225,7 +220,7 @@ class="grid md:grid-cols-3 gap-8">
 Swaply
 </h2>
 
-<p>
+<p class="text-gray-400">
 Modern marketplace platform.
 </p>
 
@@ -241,6 +236,7 @@ Company
 
 <li><a href="about.html">About</a></li>
 <li><a href="blog.html">Blog</a></li>
+<li><a href="careers.html">Careers</a></li>
 
 </ul>
 
@@ -256,6 +252,7 @@ Support
 
 <li><a href="help.html">Help</a></li>
 <li><a href="terms.html">Terms</a></li>
+<li><a href="safety.html">Safety</a></li>
 
 </ul>
 
@@ -267,6 +264,7 @@ Support
 Contact
 </h3>
 
+<p>Email: mikemizan254@gmail.com</p>
 <p>WhatsApp: +254780204730</p>
 
 </div>
@@ -279,8 +277,6 @@ Contact
 
 const API = "https://traderbackend.onrender.com";
 
-/* LOAD ITEMS */
-
 async function loadItems(){
 
 const res = await fetch(`${API}/items`);
@@ -292,11 +288,11 @@ document.getElementById("itemsContainer");
 
 container.innerHTML = "";
 
-items.forEach(item=>{
+items.forEach(item => {
 
 container.innerHTML += `
 
-<div class="bg-white rounded-3xl overflow-hidden shadow-xl">
+<div class="bg-gray-50 rounded-3xl overflow-hidden shadow-xl">
 
 <img
 src="${item.image}"
@@ -312,10 +308,14 @@ ${item.name}
 ${item.description}
 </p>
 
-<div class="flex justify-between items-center mb-5">
+<div class="flex justify-between items-center mb-4">
 
 <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold">
 ${item.category}
+</span>
+
+<span class="text-xl font-black text-green-600">
+KSh ${item.price || 0}
 </span>
 
 </div>
@@ -338,54 +338,6 @@ Chat Seller
 }
 
 loadItems();
-
-/* UPLOAD */
-
-document.getElementById("uploadForm")
-.addEventListener("submit", async(e)=>{
-
-e.preventDefault();
-
-const imageFile =
-document.getElementById("itemImage").files[0];
-
-const formData = new FormData();
-
-formData.append("name",
-document.getElementById("itemName").value);
-
-formData.append("description",
-document.getElementById("itemDesc").value);
-
-formData.append("category",
-document.getElementById("itemCategory").value);
-
-formData.append("wanted",
-document.getElementById("itemWant").value);
-
-formData.append("sellerName","Swaply");
-
-formData.append("sellerPhone","254780204730");
-
-formData.append("image", imageFile);
-
-const res = await fetch(`${API}/upload`,{
-
-method:"POST",
-
-body:formData
-
-});
-
-await res.json();
-
-alert("Item Uploaded");
-
-loadItems();
-
-document.getElementById("uploadForm").reset();
-
-});
 
 </script>
 
