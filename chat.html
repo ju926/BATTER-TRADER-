@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Swaply Chat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 h-screen flex flex-col">
+
+<!-- TOP BAR -->
+<header class="bg-white shadow-md p-4 flex justify-between items-center">
+  <h1 class="text-2xl font-bold text-green-600">Swaply Chat</h1>
+  <a href="browse.html" class="text-green-600">← Back</a>
+</header>
+
+<div class="flex flex-1 overflow-hidden">
+
+  <!-- USERS LIST -->
+  <div class="w-1/3 bg-white border-r overflow-y-auto">
+    <h2 class="p-4 font-bold border-b">Chats</h2>
+    <div id="usersList"></div>
+  </div>
+
+  <!-- CHAT BOX -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- messages -->
+    <div id="messages"
+      class="flex-1 p-4 overflow-y-auto space-y-3 bg-gray-50">
+    </div>
+
+    <!-- input -->
+    <div class="p-4 bg-white flex gap-2 border-t">
+      <input id="msgInput"
+        class="flex-1 p-3 border rounded-xl"
+        placeholder="Type message..." />
+
+      <button onclick="sendMessage()"
+        class="bg-green-600 text-white px-6 rounded-xl">
+        Send
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const API = "https://traderbackend.onrender.com";
+
+let currentChatUser = null;
+
+// JWT
+function token() {
+  return localStorage.getItem("token");
+}
+
+// decode simple JWT payload (no backend change needed)
+function parseToken() {
+  try {
+    return JSON.parse(atob(token().split(".")[1]));
+  } catch {
+    return null;
+  }
+}
+
+// LOAD USERS (dummy from items owners)
+async function loadUsers() {
+  const res = await fetch(API + "/items");
+  const items = await res.json();
+
+  const uniqueUsers = [...new Set(items.map(i => i.userId))];
+
+  const list = document.getElementById("usersList");
+
+  list.innerHTML = uniqueUsers.map(u => `
+    <div onclick="openChat('${u}')"
+      class="p-4 border-b cursor-pointer hover:bg-gray-100">
+      👤 User ${u.slice(0, 6)}
+    </div>
+  `).join("");
+}
+
+// OPEN CHAT
+function openChat(userId) {
+  currentChatUser = userId;
+  loadMessages();
+}
+
+// LOAD MESSAGES (simple polling system)
+async function loadMessages() {
+  if (!currentChatUser) return;
+
+  const res = await fetch(API + "/messages?user=" + currentChatUser);
+  const msgs = await res.json();
+
+  const box = document.getElementById("messages");
+
+  box.innerHTML = msgs.map(m => `
+    <div class="p-3 rounded-xl max-w-xs ${
+      m.from === parseToken()?.id
+        ? "bg-green-600 text-white ml-auto"
+        : "bg-white"
+    }">
+      ${m.text}
+    </div>
+  `).join("");
+
+  box.scrollTop = box.scrollHeight;
+}
+
+// SEND MESSAGE
+async function sendMessage() {
+  if (!currentChatUser) return alert("Select user");
+
+  const text = document.getElementById("msgInput").value;
+
+  await fetch(API + "/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": token()
+    },
+    body: JSON.stringify({
+      to: currentChatUser,
+      text
+    })
+  });
+
+  document.getElementById("msgInput").value = "";
+  loadMessages();
+}
+
+// AUTO REFRESH CHAT
+setInterval(loadMessages, 3000);
+
+loadUsers();
+</script>
+
+</body>
+</html>
