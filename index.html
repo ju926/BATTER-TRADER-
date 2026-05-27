@@ -3,49 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Swaply - Exchange Second-Hand Items</title>
+  <title>Swaply - Modern Marketplace</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
+    *{
+      font-family: 'Inter', sans-serif;
+    }
+
     body{
-      font-family: Arial, sans-serif;
+      overflow-x:hidden;
     }
 
     .glass{
-      backdrop-filter: blur(12px);
       background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
     }
 
     .hero-bg{
       background:
-      linear-gradient(to right, rgba(0,0,0,.6), rgba(0,0,0,.3)),
-      url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop');
+      linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.3)),
+      url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1800&auto=format&fit=crop');
       background-size: cover;
-      background-position: center;
+      background-position:center;
     }
 
     .card-hover{
-      transition: .3s;
+      transition:0.4s;
     }
 
     .card-hover:hover{
-      transform: translateY(-6px);
+      transform:translateY(-8px);
     }
 
-    .loader{
-      border:4px solid #eee;
-      border-top:4px solid #16a34a;
-      border-radius:50%;
-      width:24px;
-      height:24px;
-      animation:spin 1s linear infinite;
-    }
-
-    @keyframes spin{
-      100%{
-        transform:rotate(360deg);
-      }
+    .gradient-text{
+      background:linear-gradient(to right,#22c55e,#16a34a);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
   </style>
 </head>
@@ -53,191 +51,235 @@
 <body class="bg-gray-100 text-gray-800">
 
 <!-- NAVBAR -->
-<header class="bg-white shadow-md sticky top-0 z-50">
+<header class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-gray-200">
+
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-    <h1 class="text-3xl font-bold text-green-600">
-      Swaply
-    </h1>
+    <div class="flex items-center gap-3">
+      <div class="w-11 h-11 bg-green-600 rounded-2xl flex items-center justify-center text-white font-black text-xl">
+        S
+      </div>
 
-    <nav class="hidden md:flex gap-8 font-medium">
-      <a href="index.html" class="hover:text-green-600">Home</a>
-      <a href="browse.html" class="hover:text-green-600">Browse</a>
-      <a href="chat.html" class="hover:text-green-600">Chat</a>
-      <a href="about.html" class="hover:text-green-600">About</a>
-      <a href="help.html" class="hover:text-green-600">Help</a>
-      <a href="terms.html" class="hover:text-green-600">Terms</a>
-      <a href="blog.html" class="hover:text-green-600">Blog</a>
+      <div>
+        <h1 class="text-2xl font-black text-green-600">
+          Swaply
+        </h1>
+
+        <p class="text-xs text-gray-500">
+          Buy • Sell • Swap
+        </p>
+      </div>
+    </div>
+
+    <nav class="hidden lg:flex items-center gap-8 font-medium">
+
+      <a href="index.html" class="hover:text-green-600 transition">
+        Home
+      </a>
+
+      <a href="browse.html" class="hover:text-green-600 transition">
+        Browse
+      </a>
+
+      <a href="chat.html" class="hover:text-green-600 transition">
+        Messages
+      </a>
+
+      <a href="about.html" class="hover:text-green-600 transition">
+        About
+      </a>
+
+      <a href="help.html" class="hover:text-green-600 transition">
+        Help
+      </a>
+
+      <a href="terms.html" class="hover:text-green-600 transition">
+        Terms
+      </a>
+
+      <a href="blog.html" class="hover:text-green-600 transition">
+        Blog
+      </a>
+
     </nav>
 
-    <div class="flex gap-3">
+    <div class="flex items-center gap-3">
+
       <a href="login.html"
-        class="px-5 py-2 rounded-xl border border-green-600 text-green-600 hover:bg-green-50">
+      class="px-5 py-2.5 rounded-xl border border-green-600 text-green-600 font-semibold hover:bg-green-50 transition">
         Login
       </a>
 
       <a href="register.html"
-        class="px-5 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
+      class="px-5 py-2.5 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition shadow-lg shadow-green-200">
         Sign Up
       </a>
+
     </div>
 
   </div>
+
 </header>
 
 <!-- HERO -->
-<section class="hero-bg text-white py-24">
+<section class="hero-bg min-h-screen flex items-center text-white">
 
-  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
 
-    <!-- LEFT -->
     <div>
 
-      <div class="inline-block px-4 py-2 rounded-full bg-green-500/20 border border-green-300 mb-6">
-        ♻️ Kenya's Smart Marketplace
+      <div class="inline-flex items-center gap-3 glass border border-white/20 rounded-full px-5 py-2 mb-8">
+
+        <div class="w-3 h-3 rounded-full bg-green-400 animate-pulse"></div>
+
+        <span class="text-sm font-medium">
+          Trusted marketplace platform
+        </span>
+
       </div>
 
-      <h2 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
-        Buy, Sell & Swap
-        Items Easily
+      <h2 class="text-6xl lg:text-7xl font-black leading-tight mb-8">
+
+        Discover
+        <span class="text-green-400">
+          Amazing
+        </span>
+
+        Second-Hand Deals
+
       </h2>
 
-      <p class="text-xl text-gray-200 mb-10 leading-relaxed">
-        Upload items instantly, chat with buyers live, negotiate deals,
-        and grow your marketplace business on Swaply.
+      <p class="text-xl text-gray-200 leading-relaxed mb-10 max-w-2xl">
+
+        Buy, sell and swap quality items with verified users.
+        Chat live with sellers and discover great deals near you.
+
       </p>
 
-      <div class="flex gap-4 flex-wrap">
+      <div class="flex flex-wrap gap-5 mb-14">
 
         <a href="browse.html"
-          class="bg-white text-green-600 px-8 py-4 rounded-2xl font-bold hover:bg-gray-100">
-          Browse Items
+        class="bg-green-600 hover:bg-green-700 px-9 py-5 rounded-2xl text-lg font-bold transition shadow-2xl shadow-green-500/30">
+
+          Browse Marketplace
+
         </a>
 
         <a href="register.html"
-          class="border border-white px-8 py-4 rounded-2xl hover:bg-white hover:text-black">
-          Start Selling
-        </a>
+        class="glass border border-white/20 hover:bg-white/10 px-9 py-5 rounded-2xl text-lg font-bold transition">
 
-        <a href="purchase.html"
-          class="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold hover:bg-yellow-300">
-          Purchase Items
+          Start Selling
+
         </a>
 
       </div>
 
-      <!-- STATS -->
-      <div class="grid grid-cols-3 gap-5 mt-14">
+      <div class="grid grid-cols-3 gap-8">
 
-        <div class="glass p-5 rounded-2xl text-center">
-          <h3 class="text-3xl font-bold">10K+</h3>
-          <p class="text-sm text-gray-200">Users</p>
+        <div>
+          <h3 class="text-4xl font-black">
+            10K+
+          </h3>
+
+          <p class="text-gray-300">
+            Listings
+          </p>
         </div>
 
-        <div class="glass p-5 rounded-2xl text-center">
-          <h3 class="text-3xl font-bold">25K+</h3>
-          <p class="text-sm text-gray-200">Products</p>
+        <div>
+          <h3 class="text-4xl font-black">
+            5K+
+          </h3>
+
+          <p class="text-gray-300">
+            Users
+          </p>
         </div>
 
-        <div class="glass p-5 rounded-2xl text-center">
-          <h3 class="text-3xl font-bold">24/7</h3>
-          <p class="text-sm text-gray-200">Support</p>
+        <div>
+          <h3 class="text-4xl font-black">
+            24/7
+          </h3>
+
+          <p class="text-gray-300">
+            Support
+          </p>
         </div>
 
       </div>
 
     </div>
 
-    <!-- RIGHT -->
-    <div class="bg-white text-gray-800 rounded-3xl p-8 shadow-2xl">
+    <!-- HERO CARD -->
+    <div class="relative">
 
-      <div class="flex items-center justify-between mb-6">
-        <div>
-          <h3 class="text-3xl font-bold">
-            Upload Item
-          </h3>
+      <div class="bg-white rounded-[35px] p-8 shadow-2xl text-gray-800">
 
-          <p class="text-gray-500 mt-1">
-            Cloudinary Production Upload
-          </p>
+        <div class="flex items-center justify-between mb-8">
+
+          <div>
+            <h3 class="text-3xl font-black">
+              Featured Product
+            </h3>
+
+            <p class="text-gray-500 mt-1">
+              Trending this week
+            </p>
+          </div>
+
+          <span class="bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold">
+            VERIFIED
+          </span>
+
         </div>
 
-        <div class="bg-green-100 text-green-700 px-4 py-2 rounded-xl text-sm font-bold">
-          LIVE
+        <img
+        src="https://images.unsplash.com/photo-1517336714739-489689fd1ca8?q=80&w=1200&auto=format&fit=crop"
+        class="w-full h-80 object-cover rounded-3xl mb-8">
+
+        <div class="flex justify-between items-start mb-6">
+
+          <div>
+            <h4 class="text-3xl font-black mb-2">
+              MacBook Pro M2
+            </h4>
+
+            <p class="text-gray-500">
+              Excellent condition • Nairobi
+            </p>
+          </div>
+
+          <div class="text-right">
+
+            <h3 class="text-4xl font-black text-green-600">
+              KSh 95K
+            </h3>
+
+            <p class="text-gray-500 text-sm">
+              negotiable
+            </p>
+
+          </div>
+
         </div>
+
+        <div class="flex gap-4">
+
+          <a href="chat.html"
+          class="flex-1 bg-green-600 text-white py-4 rounded-2xl font-bold text-center hover:bg-green-700 transition">
+
+            Chat Seller
+
+          </a>
+
+          <button
+          class="w-16 h-16 rounded-2xl border border-gray-200 hover:bg-gray-100 text-2xl transition">
+            ❤️
+          </button>
+
+        </div>
+
       </div>
-
-      <form id="uploadForm" class="space-y-5">
-
-        <input
-          type="text"
-          id="itemName"
-          placeholder="Item Name"
-          class="w-full p-4 rounded-2xl border focus:outline-none focus:ring-2 focus:ring-green-500"
-          required
-        />
-
-        <textarea
-          id="itemDesc"
-          placeholder="Describe your item"
-          class="w-full p-4 rounded-2xl border h-32 focus:outline-none focus:ring-2 focus:ring-green-500"
-          required
-        ></textarea>
-
-        <select
-          id="itemCategory"
-          class="w-full p-4 rounded-2xl border focus:outline-none focus:ring-2 focus:ring-green-500"
-          required
-        >
-          <option value="">Select Category</option>
-          <option>Electronics</option>
-          <option>Phones</option>
-          <option>Furniture</option>
-          <option>Clothes</option>
-          <option>Vehicles</option>
-          <option>Books</option>
-          <option>Kitchen</option>
-        </select>
-
-        <!-- IMAGE -->
-        <div class="border-2 border-dashed border-green-300 rounded-2xl p-6 bg-green-50">
-
-          <input
-            type="file"
-            id="itemImage"
-            accept="image/*"
-            class="w-full"
-            required
-          />
-
-          <p class="text-sm text-gray-500 mt-3">
-            JPG, PNG supported
-          </p>
-
-        </div>
-
-        <input
-          type="text"
-          id="itemWant"
-          placeholder="What do you want in exchange?"
-          class="w-full p-4 rounded-2xl border focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-
-        <button
-          type="submit"
-          id="uploadBtn"
-          class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold hover:bg-green-700 flex items-center justify-center gap-3"
-        >
-          Upload Item
-        </button>
-
-      </form>
-
-      <!-- PREVIEW -->
-      <img
-        id="preview"
-        class="hidden mt-6 rounded-2xl w-full h-60 object-cover"
-      />
 
     </div>
 
@@ -245,89 +287,306 @@
 
 </section>
 
-<!-- FEATURES -->
-<section class="py-20">
+<!-- CATEGORIES -->
+<section class="py-24 bg-white">
+
   <div class="max-w-7xl mx-auto px-6">
 
     <div class="text-center mb-16">
-      <h2 class="text-5xl font-bold mb-4">
-        Why Swaply?
+
+      <h2 class="text-5xl font-black mb-5">
+
+        Browse By
+        <span class="gradient-text">
+          Category
+        </span>
+
       </h2>
 
-      <p class="text-gray-600 max-w-2xl mx-auto">
-        Full production marketplace system designed for modern buyers and sellers.
+      <p class="text-xl text-gray-500">
+        Discover thousands of quality products
       </p>
+
     </div>
 
-    <div class="grid md:grid-cols-4 gap-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-      <div class="bg-white p-8 rounded-3xl shadow-md card-hover">
-        <div class="text-5xl mb-5">⚡</div>
-        <h3 class="text-2xl font-bold mb-3">Fast Uploads</h3>
-        <p class="text-gray-600">
-          Cloudinary powered image uploads with instant previews.
+      <div class="card-hover bg-gray-50 rounded-3xl p-10 text-center shadow-sm hover:shadow-2xl">
+
+        <div class="text-6xl mb-6">
+          💻
+        </div>
+
+        <h3 class="text-2xl font-black mb-3">
+          Electronics
+        </h3>
+
+        <p class="text-gray-500 mb-6">
+          Phones, laptops & gadgets
         </p>
+
+        <a href="browse.html"
+        class="text-green-600 font-bold">
+          Explore →
+        </a>
+
       </div>
 
-      <div class="bg-white p-8 rounded-3xl shadow-md card-hover">
-        <div class="text-5xl mb-5">💬</div>
-        <h3 class="text-2xl font-bold mb-3">Live Chat</h3>
-        <p class="text-gray-600">
-          Real-time Socket.IO messaging between buyers and sellers.
+      <div class="card-hover bg-gray-50 rounded-3xl p-10 text-center shadow-sm hover:shadow-2xl">
+
+        <div class="text-6xl mb-6">
+          👕
+
+        </div>
+
+        <h3 class="text-2xl font-black mb-3">
+          Fashion
+        </h3>
+
+        <p class="text-gray-500 mb-6">
+          Clothes, shoes & accessories
         </p>
+
+        <a href="browse.html"
+        class="text-green-600 font-bold">
+          Explore →
+        </a>
+
       </div>
 
-      <div class="bg-white p-8 rounded-3xl shadow-md card-hover">
-        <div class="text-5xl mb-5">🔐</div>
-        <h3 class="text-2xl font-bold mb-3">Secure Login</h3>
-        <p class="text-gray-600">
-          JWT protected accounts and secure marketplace actions.
+      <div class="card-hover bg-gray-50 rounded-3xl p-10 text-center shadow-sm hover:shadow-2xl">
+
+        <div class="text-6xl mb-6">
+          🛋️
+        </div>
+
+        <h3 class="text-2xl font-black mb-3">
+          Furniture
+        </h3>
+
+        <p class="text-gray-500 mb-6">
+          Modern home essentials
         </p>
+
+        <a href="browse.html"
+        class="text-green-600 font-bold">
+          Explore →
+        </a>
+
       </div>
 
-      <div class="bg-white p-8 rounded-3xl shadow-md card-hover">
-        <div class="text-5xl mb-5">📱</div>
-        <h3 class="text-2xl font-bold mb-3">Mobile Ready</h3>
-        <p class="text-gray-600">
-          Fully responsive production design for all devices.
+      <div class="card-hover bg-gray-50 rounded-3xl p-10 text-center shadow-sm hover:shadow-2xl">
+
+        <div class="text-6xl mb-6">
+          📚
+        </div>
+
+        <h3 class="text-2xl font-black mb-3">
+          Books
+        </h3>
+
+        <p class="text-gray-500 mb-6">
+          Education & entertainment
         </p>
+
+        <a href="browse.html"
+        class="text-green-600 font-bold">
+          Explore →
+        </a>
+
       </div>
 
     </div>
 
   </div>
+
 </section>
 
-<!-- LIVE ITEMS -->
-<section class="py-20 bg-white">
+<!-- FEATURED PRODUCTS -->
+<section class="py-24 bg-gray-100">
 
   <div class="max-w-7xl mx-auto px-6">
 
-    <div class="flex items-center justify-between mb-12">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
 
       <div>
-        <h2 class="text-5xl font-bold">
-          Latest Uploads
+
+        <h2 class="text-5xl font-black mb-5">
+
+          Featured
+          <span class="gradient-text">
+            Listings
+          </span>
+
         </h2>
 
-        <p class="text-gray-500 mt-3">
-          Recently uploaded marketplace items
+        <p class="text-xl text-gray-500">
+          Fresh marketplace deals updated daily
         </p>
+
       </div>
 
       <a href="browse.html"
-        class="bg-green-600 text-white px-6 py-3 rounded-2xl hover:bg-green-700">
-        View All
+      class="mt-8 lg:mt-0 bg-green-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-green-700 transition">
+        View Marketplace
       </a>
 
     </div>
 
-    <div
-      id="itemsContainer"
-      class="grid md:grid-cols-3 gap-8"
-    >
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
 
-      <!-- ITEMS LOAD HERE -->
+      <!-- ITEM -->
+      <div class="card-hover bg-white rounded-[30px] overflow-hidden shadow-lg">
+
+        <div class="relative">
+
+          <img
+          src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop"
+          class="w-full h-72 object-cover">
+
+          <div class="absolute top-5 left-5 bg-green-600 text-white px-4 py-2 rounded-full font-semibold">
+            Electronics
+          </div>
+
+        </div>
+
+        <div class="p-7">
+
+          <div class="flex justify-between items-center mb-4">
+
+            <h3 class="text-3xl font-black">
+              iPhone 13
+            </h3>
+
+            <span class="text-green-600 text-3xl font-black">
+              78K
+            </span>
+
+          </div>
+
+          <p class="text-gray-500 leading-relaxed mb-7">
+            Excellent condition with original accessories and warranty.
+          </p>
+
+          <div class="flex gap-4">
+
+            <a href="item.html"
+            class="flex-1 bg-gray-100 hover:bg-gray-200 py-4 rounded-2xl text-center font-bold transition">
+              View
+            </a>
+
+            <a href="chat.html"
+            class="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl text-center font-bold transition">
+              Chat
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="card-hover bg-white rounded-[30px] overflow-hidden shadow-lg">
+
+        <div class="relative">
+
+          <img
+          src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1200&auto=format&fit=crop"
+          class="w-full h-72 object-cover">
+
+          <div class="absolute top-5 left-5 bg-blue-600 text-white px-4 py-2 rounded-full font-semibold">
+            Audio
+          </div>
+
+        </div>
+
+        <div class="p-7">
+
+          <div class="flex justify-between items-center mb-4">
+
+            <h3 class="text-3xl font-black">
+              AirPods Max
+            </h3>
+
+            <span class="text-green-600 text-3xl font-black">
+              45K
+            </span>
+
+          </div>
+
+          <p class="text-gray-500 leading-relaxed mb-7">
+            Premium wireless headphones with immersive sound quality.
+          </p>
+
+          <div class="flex gap-4">
+
+            <a href="item.html"
+            class="flex-1 bg-gray-100 hover:bg-gray-200 py-4 rounded-2xl text-center font-bold transition">
+              View
+            </a>
+
+            <a href="chat.html"
+            class="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl text-center font-bold transition">
+              Chat
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ITEM -->
+      <div class="card-hover bg-white rounded-[30px] overflow-hidden shadow-lg">
+
+        <div class="relative">
+
+          <img
+          src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=1200&auto=format&fit=crop"
+          class="w-full h-72 object-cover">
+
+          <div class="absolute top-5 left-5 bg-purple-600 text-white px-4 py-2 rounded-full font-semibold">
+            Camera
+          </div>
+
+        </div>
+
+        <div class="p-7">
+
+          <div class="flex justify-between items-center mb-4">
+
+            <h3 class="text-3xl font-black">
+              Canon EOS
+            </h3>
+
+            <span class="text-green-600 text-3xl font-black">
+              120K
+            </span>
+
+          </div>
+
+          <p class="text-gray-500 leading-relaxed mb-7">
+            Professional DSLR camera perfect for creators and photography.
+          </p>
+
+          <div class="flex gap-4">
+
+            <a href="item.html"
+            class="flex-1 bg-gray-100 hover:bg-gray-200 py-4 rounded-2xl text-center font-bold transition">
+              View
+            </a>
+
+            <a href="chat.html"
+            class="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl text-center font-bold transition">
+              Chat
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
 
@@ -336,28 +595,37 @@
 </section>
 
 <!-- CTA -->
-<section class="py-24 bg-green-600 text-white text-center">
+<section class="py-28 bg-green-600 text-white text-center">
 
-  <div class="max-w-4xl mx-auto px-6">
+  <div class="max-w-5xl mx-auto px-6">
 
-    <h2 class="text-5xl font-bold mb-6">
-      Ready To Start Selling?
+    <h2 class="text-6xl font-black leading-tight mb-8">
+
+      Ready To Start
+      Buying & Selling?
+
     </h2>
 
-    <p class="text-xl text-green-100 mb-10">
-      Join thousands of users already using Swaply marketplace.
+    <p class="text-2xl text-green-100 mb-12">
+
+      Join thousands of users already trading on Swaply marketplace.
+
     </p>
 
-    <div class="flex gap-5 justify-center flex-wrap">
+    <div class="flex flex-wrap justify-center gap-5">
 
       <a href="register.html"
-        class="bg-white text-green-600 px-10 py-5 rounded-2xl font-bold">
+      class="bg-white text-green-600 px-10 py-5 rounded-2xl font-black text-lg hover:bg-gray-100 transition">
+
         Create Account
+
       </a>
 
-      <a href="chat.html"
-        class="border border-white px-10 py-5 rounded-2xl font-bold">
-        Open Chat
+      <a href="browse.html"
+      class="border border-white/30 px-10 py-5 rounded-2xl font-black text-lg hover:bg-white/10 transition">
+
+        Browse Items
+
       </a>
 
     </div>
@@ -367,243 +635,144 @@
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-gray-900 text-gray-300 py-16">
+<footer class="bg-black text-gray-400 py-20">
 
-  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-16">
 
     <div>
-      <h2 class="text-3xl font-bold text-white mb-4">
+
+      <h2 class="text-4xl font-black text-white mb-6">
         Swaply
       </h2>
 
-      <p class="text-gray-400 mb-6">
-        A modern platform for exchanging second-hand items safely and easily.
+      <p class="leading-relaxed mb-8">
+        Modern marketplace platform for buying, selling and swapping products securely.
       </p>
 
-      <a href="https://wa.me/254780204730"
-        class="inline-block bg-green-600 px-5 py-3 rounded-xl text-white font-semibold">
-        WhatsApp Support
-      </a>
+      <div class="flex gap-4 text-2xl">
+
+        <a href="#">
+          📘
+        </a>
+
+        <a href="#">
+          📸
+        </a>
+
+        <a href="#">
+          🐦
+        </a>
+
+      </div>
+
     </div>
 
     <div>
-      <h3 class="text-white font-semibold mb-4">Company</h3>
 
-      <ul class="space-y-2">
-        <li><a href="about.html">About</a></li>
-        <li><a href="careers.html">Careers</a></li>
-        <li><a href="blog.html">Blog</a></li>
+      <h3 class="text-white font-black text-xl mb-6">
+        Marketplace
+      </h3>
+
+      <ul class="space-y-4">
+
+        <li>
+          <a href="browse.html" class="hover:text-white transition">
+            Browse Items
+          </a>
+        </li>
+
+        <li>
+          <a href="chat.html" class="hover:text-white transition">
+            Messages
+          </a>
+        </li>
+
+        <li>
+          <a href="wishlist.html" class="hover:text-white transition">
+            Wishlist
+          </a>
+        </li>
+
       </ul>
+
     </div>
 
     <div>
-      <h3 class="text-white font-semibold mb-4">Support</h3>
 
-      <ul class="space-y-2">
-        <li><a href="help.html">Help Center</a></li>
-        <li><a href="safety.html">Safety</a></li>
-        <li><a href="terms.html">Terms</a></li>
+      <h3 class="text-white font-black text-xl mb-6">
+        Company
+      </h3>
+
+      <ul class="space-y-4">
+
+        <li>
+          <a href="about.html" class="hover:text-white transition">
+            About
+          </a>
+        </li>
+
+        <li>
+          <a href="blog.html" class="hover:text-white transition">
+            Blog
+          </a>
+        </li>
+
+        <li>
+          <a href="careers.html" class="hover:text-white transition">
+            Careers
+          </a>
+        </li>
+
       </ul>
+
     </div>
 
     <div>
-      <h3 class="text-white font-semibold mb-4">Contact</h3>
 
-      <p>Email: mikemizan254@gmail.com</p>
-      <p>WhatsApp: +254780204730</p>
-      <p>Nairobi, Kenya</p>
+      <h3 class="text-white font-black text-xl mb-6">
+        Support
+      </h3>
+
+      <ul class="space-y-4">
+
+        <li>
+          <a href="help.html" class="hover:text-white transition">
+            Help Center
+          </a>
+        </li>
+
+        <li>
+          <a href="terms.html" class="hover:text-white transition">
+            Terms
+          </a>
+        </li>
+
+        <li>
+          <a href="safety.html" class="hover:text-white transition">
+            Safety
+          </a>
+        </li>
+
+      </ul>
+
     </div>
 
   </div>
 
-  <div class="text-center text-gray-500 mt-10">
-    © 2026 Swaply Marketplace
+  <div class="border-t border-gray-800 mt-20 pt-10 text-center text-gray-500">
+
+    © 2026 Swaply Marketplace. All rights reserved.
+
   </div>
 
 </footer>
 
-<!-- SCRIPT -->
 <script>
+  const token = localStorage.getItem("token");
 
-const API = "https://traderbackend.onrender.com";
-
-const CLOUD_NAME = "YOUR_CLOUD_NAME";
-const UPLOAD_PRESET = "YOUR_UPLOAD_PRESET";
-
-function isLoggedIn() {
-  return localStorage.getItem("token");
-}
-
-function requestSwap() {
-
-  if(!isLoggedIn()){
-    alert("Please login first");
-    window.location.href = "login.html";
-    return;
+  if(token){
+    console.log("User logged in");
   }
-
-  window.location.href = "chat.html";
-}
-
-const preview = document.getElementById("preview");
-
-document.getElementById("itemImage").addEventListener("change", e => {
-
-  const file = e.target.files[0];
-
-  if(file){
-    preview.src = URL.createObjectURL(file);
-    preview.classList.remove("hidden");
-  }
-
-});
-
-document.getElementById("uploadForm").addEventListener("submit", async (e) => {
-
-  e.preventDefault();
-
-  if(!isLoggedIn()){
-    alert("Please login first");
-    window.location.href = "login.html";
-    return;
-  }
-
-  const btn = document.getElementById("uploadBtn");
-
-  btn.innerHTML = `
-    <div class="loader"></div>
-    Uploading...
-  `;
-
-  try{
-
-    const file = document.getElementById("itemImage").files[0];
-
-    // CLOUDINARY UPLOAD
-    const formData = new FormData();
-
-    formData.append("file", file);
-    formData.append("upload_preset", UPLOAD_PRESET);
-
-    const cloudRes = await fetch(
-      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-      {
-        method:"POST",
-        body:formData
-      }
-    );
-
-    const cloudData = await cloudRes.json();
-
-    // SAVE ITEM
-    const res = await fetch(`${API}/items`, {
-
-      method:"POST",
-
-      headers:{
-        "Content-Type":"application/json",
-        "Authorization": localStorage.getItem("token")
-      },
-
-      body:JSON.stringify({
-
-        name: document.getElementById("itemName").value,
-        description: document.getElementById("itemDesc").value,
-        category: document.getElementById("itemCategory").value,
-        wanted: document.getElementById("itemWant").value,
-        imageURL: cloudData.secure_url
-
-      })
-
-    });
-
-    const data = await res.json();
-
-    alert("✅ Item uploaded successfully");
-
-    location.reload();
-
-  }catch(err){
-
-    console.log(err);
-
-    alert("❌ Upload failed");
-
-  }
-
-  btn.innerHTML = `Upload Item`;
-
-});
-
-async function loadItems(){
-
-  try{
-
-    const res = await fetch(`${API}/items`);
-
-    const items = await res.json();
-
-    const container = document.getElementById("itemsContainer");
-
-    container.innerHTML = "";
-
-    items.reverse().slice(0,6).forEach(item => {
-
-      container.innerHTML += `
-
-      <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md card-hover">
-
-        <img
-          src="${item.imageURL}"
-          class="w-full h-60 object-cover"
-        />
-
-        <div class="p-6">
-
-          <div class="flex items-center justify-between mb-4">
-
-            <h3 class="text-2xl font-bold">
-              ${item.name}
-            </h3>
-
-            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-              ${item.category}
-            </span>
-
-          </div>
-
-          <p class="text-gray-600 mb-5">
-            ${item.description}
-          </p>
-
-          <div class="bg-gray-100 p-4 rounded-2xl mb-5">
-            <span class="font-bold">Wants:</span>
-            ${item.wanted}
-          </div>
-
-          <button
-            onclick="requestSwap()"
-            class="w-full bg-green-600 text-white py-3 rounded-2xl hover:bg-green-700 font-bold"
-          >
-            Chat Seller
-          </button>
-
-        </div>
-
-      </div>
-
-      `;
-
-    });
-
-  }catch(err){
-    console.log(err);
-  }
-
-}
-
-loadItems();
-
 </script>
 
 </body>
