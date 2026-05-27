@@ -2,56 +2,211 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Swaply - Marketplace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swaply - Exchange Second-Hand Items</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-100 text-gray-800">
 
-<!-- NAV -->
-<header class="bg-white shadow-md sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between">
-    <h1 class="text-3xl font-bold text-green-600">Swaply</h1>
-    <div class="flex gap-3">
-      <button onclick="loadItems()" class="px-4 py-2 bg-green-600 text-white rounded-xl">
-        Refresh
-      </button>
+  <!-- Navbar -->
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+      <h1 class="text-3xl font-bold text-green-600">Swaply</h1>
+
+      <nav class="hidden md:flex gap-8 font-medium">
+        <a href="index.html" class="hover:text-green-600">Home</a>
+        <a href="browse.html" class="hover:text-green-600">Browse</a>
+        <a href="about.html" class="hover:text-green-600">About</a>
+        <a href="help.html" class="hover:text-green-600">Help</a>
+      </nav>
+
+      <div class="flex gap-3">
+        <a href="login.html" class="px-5 py-2 rounded-xl border border-green-600 text-green-600 hover:bg-green-50">
+          Login
+        </a>
+
+        <a href="register.html" class="px-5 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
+          Sign Up
+        </a>
+      </div>
+
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- MAIN -->
-<section class="max-w-7xl mx-auto p-6 grid md:grid-cols-2 gap-8">
+  <!-- Hero Section -->
+  <section class="bg-green-600 text-white py-24">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
-  <!-- UPLOAD -->
-  <div class="bg-white p-6 rounded-2xl shadow-md">
-    <h2 class="text-2xl font-bold mb-4">Upload Item</h2>
+      <div>
+        <h2 class="text-5xl font-bold leading-tight mb-6">
+          Exchange And Purchase Second-Hand Items Easily
+        </h2>
 
-    <input id="name" class="w-full p-3 border rounded-xl mb-3" placeholder="Item Name">
-    <textarea id="desc" class="w-full p-3 border rounded-xl mb-3" placeholder="Description"></textarea>
+        <p class="text-lg text-green-100 mb-8 leading-relaxed">
+          Connect with people nearby and swap unused items instead of buying new ones.
+          Save money, reduce waste, and build community.
+        </p>
 
-    <select id="category" class="w-full p-3 border rounded-xl mb-3">
-      <option>Kitchen</option>
-      <option>Electronics</option>
-      <option>Furniture</option>
-      <option>Clothes</option>
-    </select>
+        <div class="flex gap-4 flex-wrap">
 
-    <input id="wanted" class="w-full p-3 border rounded-xl mb-3" placeholder="What do you want in exchange?">
+          <a href="browse.html" class="bg-white text-green-600 px-8 py-4 rounded-2xl font-semibold hover:bg-gray-100">
+            Browse Items
+          </a>
 
-    <button onclick="uploadItem()" class="w-full bg-green-600 text-white py-3 rounded-xl">
-      Post Item
-    </button>
-  </div>
+          <a href="register.html" class="border border-white px-8 py-4 rounded-2xl hover:bg-green-700">
+            Start Swapping
+          </a>
 
-  <!-- ITEMS -->
-  <div class="bg-white p-6 rounded-2xl shadow-md">
-    <h2 class="text-2xl font-bold mb-4">Marketplace</h2>
-    <div id="items" class="space-y-4"></div>
-  </div>
+          <a href="purchase.html" class="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-semibold hover:bg-yellow-300">
+            Purchase Items
+          </a>
 
-</section>
+        </div>
+      </div>
+
+      <!-- Upload Card -->
+      <div class="bg-white text-gray-800 rounded-3xl p-8 shadow-2xl">
+        <h3 class="text-3xl font-bold mb-6">Quick Item Upload</h3>
+
+        <form>
+          <input type="text" placeholder="Item Name"
+            class="w-full p-4 rounded-xl border mb-4 focus:ring-2 focus:ring-green-500"/>
+
+          <textarea placeholder="Describe your item"
+            class="w-full p-4 rounded-xl border h-32 mb-4 focus:ring-2 focus:ring-green-500"></textarea>
+
+          <select class="w-full p-4 rounded-xl border mb-4 focus:ring-2 focus:ring-green-500">
+            <option>Kitchen</option>
+            <option>Electronics</option>
+            <option>Furniture</option>
+            <option>Books</option>
+            <option>Clothes</option>
+          </select>
+
+          <input type="text" placeholder="What do you want in exchange?"
+            class="w-full p-4 rounded-xl border mb-4 focus:ring-2 focus:ring-green-500"/>
+
+          <button type="submit"
+            class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700">
+            Upload Item
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+
+      <h2 class="text-4xl font-bold mb-4">Why Choose Swaply?</h2>
+
+      <p class="text-gray-600 max-w-2xl mx-auto mb-16">
+        A trusted platform designed for safe and easy item exchanges.
+      </p>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="bg-white rounded-3xl p-8 shadow-md">
+          <div class="text-5xl mb-5">♻️</div>
+          <h3 class="text-2xl font-bold mb-4">Eco Friendly</h3>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-md">
+          <div class="text-5xl mb-5">🤝</div>
+          <h3 class="text-2xl font-bold mb-4">Trusted Swaps</h3>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-md">
+          <div class="text-5xl mb-5">💬</div>
+          <h3 class="text-2xl font-bold mb-4">Easy Communication</h3>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Items -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+
+      <div class="flex items-center justify-between mb-12">
+        <div>
+          <h2 class="text-4xl font-bold">Popular Items</h2>
+          <p class="text-gray-600 mt-2">Browse recently uploaded items</p>
+        </div>
+
+        <a href="browse.html" class="bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700">
+          View All
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- YOUR STATIC CARDS (UNCHANGED) -->
+        <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
+          <img src="https://images.unsplash.com/photo-1517673400267-0251440c45dc"
+            class="w-full h-56 object-cover" />
+
+          <div class="p-6">
+            <h3 class="text-2xl font-bold mb-2">Kitchen Spoon Set</h3>
+            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
+              Request Swap
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
+          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
+            class="w-full h-56 object-cover" />
+
+          <div class="p-6">
+            <h3 class="text-2xl font-bold mb-2">Winter Jacket</h3>
+            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
+              Request Swap
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
+          <img src="https://images.unsplash.com/photo-1517336714739-489689fd1ca8"
+            class="w-full h-56 object-cover" />
+
+          <div class="p-6">
+            <h3 class="text-2xl font-bold mb-2">Old Laptop</h3>
+            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
+              Request Swap
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DYNAMIC ITEMS GO HERE -->
+      <div id="dynamic-items" class="grid md:grid-cols-3 gap-8 mt-10"></div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 bg-green-600 text-white text-center">
+    <h2 class="text-5xl font-bold mb-6">
+      Turn Unused Items Into Something Valuable
+    </h2>
+
+    <a href="register.html"
+      class="bg-white text-green-600 px-10 py-5 rounded-2xl font-bold inline-block">
+      Join Now
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-gray-300 py-16 text-center">
+    © 2026 Swaply
+  </footer>
 
 <script>
 const API = "http://localhost:5000";
@@ -60,31 +215,36 @@ let token = localStorage.getItem("token");
 /* LOAD ITEMS */
 async function loadItems() {
   const res = await fetch(`${API}/items`);
-  const data = await res.json();
+  const items = await res.json();
 
-  const container = document.getElementById("items");
-  container.innerHTML = "";
+  const container = document.getElementById("dynamic-items");
 
-  data.forEach(item => {
+  items.forEach(item => {
     container.innerHTML += `
-      <div class="border p-4 rounded-xl">
-        <h3 class="text-xl font-bold">${item.name}</h3>
-        <p>${item.description}</p>
-        <p class="text-sm text-gray-500">${item.category}</p>
-        <p class="text-green-600 font-bold">${item.wanted}</p>
+      <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
+        <img src="https://source.unsplash.com/600x400/?${item.category || 'item'}"
+          class="w-full h-56 object-cover" />
+
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2">${item.name}</h3>
+          <p class="text-gray-600 mb-4">${item.description}</p>
+
+          <p class="text-green-600 font-semibold">${item.wanted}</p>
+
+          <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full mt-4">
+            Request Swap
+          </button>
+        </div>
       </div>
     `;
   });
 }
 
 /* UPLOAD ITEM */
-async function uploadItem() {
-  const name = document.getElementById("name").value;
-  const description = document.getElementById("desc").value;
-  const category = document.getElementById("category").value;
-  const wanted = document.getElementById("wanted").value;
+document.querySelector("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  if (!name || !description) return alert("Fill all fields");
+  const inputs = document.querySelectorAll("form input, form textarea, form select");
 
   await fetch(`${API}/items`, {
     method: "POST",
@@ -93,17 +253,16 @@ async function uploadItem() {
       "Authorization": token
     },
     body: JSON.stringify({
-      name,
-      description,
-      category,
-      wanted
+      name: inputs[0].value,
+      description: inputs[1].value,
+      category: inputs[2].value,
+      wanted: inputs[3].value
     })
   });
 
   loadItems();
-}
+});
 
-/* INIT */
 loadItems();
 </script>
 
