@@ -2,272 +2,609 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Swaply - Exchange Second-Hand Items</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+    }
+
+    .glass{
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero-bg{
+      background:
+      linear-gradient(to right, rgba(0,0,0,.6), rgba(0,0,0,.3)),
+      url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-hover{
+      transition: .3s;
+    }
+
+    .card-hover:hover{
+      transform: translateY(-6px);
+    }
+
+    .loader{
+      border:4px solid #eee;
+      border-top:4px solid #16a34a;
+      border-radius:50%;
+      width:24px;
+      height:24px;
+      animation:spin 1s linear infinite;
+    }
+
+    @keyframes spin{
+      100%{
+        transform:rotate(360deg);
+      }
+    }
+  </style>
 </head>
 
 <body class="bg-gray-100 text-gray-800">
 
-  <!-- Navbar -->
-  <header class="bg-white shadow-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<!-- NAVBAR -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
-      <h1 class="text-3xl font-bold text-green-600">Swaply</h1>
+    <h1 class="text-3xl font-bold text-green-600">
+      Swaply
+    </h1>
 
-      <nav class="hidden md:flex gap-8 font-medium">
-        <a href="index.html" class="hover:text-green-600">Home</a>
-        <a href="browse.html" class="hover:text-green-600">Browse</a>
-        <a href="about.html" class="hover:text-green-600">About</a>
-        <a href="help.html" class="hover:text-green-600">Help</a>
-      </nav>
+    <nav class="hidden md:flex gap-8 font-medium">
+      <a href="index.html" class="hover:text-green-600">Home</a>
+      <a href="browse.html" class="hover:text-green-600">Browse</a>
+      <a href="chat.html" class="hover:text-green-600">Chat</a>
+      <a href="about.html" class="hover:text-green-600">About</a>
+      <a href="help.html" class="hover:text-green-600">Help</a>
+      <a href="terms.html" class="hover:text-green-600">Terms</a>
+      <a href="blog.html" class="hover:text-green-600">Blog</a>
+    </nav>
 
-      <div class="flex gap-3">
-        <a href="login.html" class="px-5 py-2 rounded-xl border border-green-600 text-green-600 hover:bg-green-50">
-          Login
-        </a>
+    <div class="flex gap-3">
+      <a href="login.html"
+        class="px-5 py-2 rounded-xl border border-green-600 text-green-600 hover:bg-green-50">
+        Login
+      </a>
 
-        <a href="register.html" class="px-5 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
-          Sign Up
-        </a>
-      </div>
-
+      <a href="register.html"
+        class="px-5 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
+        Sign Up
+      </a>
     </div>
-  </header>
 
-  <!-- Hero Section -->
-  <section class="bg-green-600 text-white py-24">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+  </div>
+</header>
 
-      <div>
-        <h2 class="text-5xl font-bold leading-tight mb-6">
-          Exchange And Purchase Second-Hand Items Easily
-        </h2>
+<!-- HERO -->
+<section class="hero-bg text-white py-24">
 
-        <p class="text-lg text-green-100 mb-8 leading-relaxed">
-          Connect with people nearby and swap unused items instead of buying new ones.
-          Save money, reduce waste, and build community.
-        </p>
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
 
-        <div class="flex gap-4 flex-wrap">
+    <!-- LEFT -->
+    <div>
 
-          <a href="browse.html" class="bg-white text-green-600 px-8 py-4 rounded-2xl font-semibold hover:bg-gray-100">
-            Browse Items
-          </a>
-
-          <a href="register.html" class="border border-white px-8 py-4 rounded-2xl hover:bg-green-700">
-            Start Swapping
-          </a>
-
-          <a href="purchase.html" class="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-semibold hover:bg-yellow-300">
-            Purchase Items
-          </a>
-
-        </div>
+      <div class="inline-block px-4 py-2 rounded-full bg-green-500/20 border border-green-300 mb-6">
+        ♻️ Kenya's Smart Marketplace
       </div>
 
-      <!-- Upload Card -->
-      <div class="bg-white text-gray-800 rounded-3xl p-8 shadow-2xl">
-        <h3 class="text-3xl font-bold mb-6">Quick Item Upload</h3>
+      <h2 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+        Buy, Sell & Swap
+        Items Easily
+      </h2>
 
-        <form>
-          <input type="text" placeholder="Item Name"
-            class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500 mb-4" />
-
-          <textarea placeholder="Describe your item"
-            class="w-full p-4 rounded-xl border h-32 focus:outline-none focus:ring-2 focus:ring-green-500 mb-4"></textarea>
-
-          <select class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500 mb-4">
-            <option>Select Category</option>
-            <option>Kitchen</option>
-            <option>Electronics</option>
-            <option>Furniture</option>
-            <option>Books</option>
-            <option>Clothes</option>
-          </select>
-
-          <input type="text" placeholder="What do you want in exchange?"
-            class="w-full p-4 rounded-xl border focus:outline-none focus:ring-2 focus:ring-green-500 mb-4" />
-
-          <button class="w-full bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700">
-            Upload Item
-          </button>
-        </form>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section class="py-20">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-
-      <h2 class="text-4xl font-bold mb-4">Why Choose Swaply?</h2>
-
-      <p class="text-gray-600 max-w-2xl mx-auto mb-16">
-        A trusted platform designed for safe and easy item exchanges.
+      <p class="text-xl text-gray-200 mb-10 leading-relaxed">
+        Upload items instantly, chat with buyers live, negotiate deals,
+        and grow your marketplace business on Swaply.
       </p>
 
-      <div class="grid md:grid-cols-3 gap-8">
+      <div class="flex gap-4 flex-wrap">
 
-        <div class="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition">
-          <div class="text-5xl mb-5">♻️</div>
-          <h3 class="text-2xl font-bold mb-4">Eco Friendly</h3>
-        </div>
-
-        <div class="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition">
-          <div class="text-5xl mb-5">🤝</div>
-          <h3 class="text-2xl font-bold mb-4">Trusted Swaps</h3>
-        </div>
-
-        <div class="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl transition">
-          <div class="text-5xl mb-5">💬</div>
-          <h3 class="text-2xl font-bold mb-4">Easy Communication</h3>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Popular Items -->
-  <section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-
-      <div class="flex items-center justify-between mb-12">
-        <div>
-          <h2 class="text-4xl font-bold">Popular Items</h2>
-          <p class="text-gray-600 mt-2">Browse recently uploaded items</p>
-        </div>
-
-        <a href="browse.html" class="bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700">
-          View All
+        <a href="browse.html"
+          class="bg-white text-green-600 px-8 py-4 rounded-2xl font-bold hover:bg-gray-100">
+          Browse Items
         </a>
-      </div>
 
-      <div class="grid md:grid-cols-3 gap-8">
+        <a href="register.html"
+          class="border border-white px-8 py-4 rounded-2xl hover:bg-white hover:text-black">
+          Start Selling
+        </a>
 
-        <!-- Static Cards (UNCHANGED) -->
-        <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
-          <img src="https://images.unsplash.com/photo-1517673400267-0251440c45dc"
-            class="w-full h-56 object-cover" />
-          <div class="p-6">
-            <h3 class="text-2xl font-bold mb-2">Kitchen Spoon Set</h3>
-            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
-              Request Swap
-            </button>
-          </div>
-        </div>
-
-        <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
-          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
-            class="w-full h-56 object-cover" />
-          <div class="p-6">
-            <h3 class="text-2xl font-bold mb-2">Winter Jacket</h3>
-            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
-              Request Swap
-            </button>
-          </div>
-        </div>
-
-        <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
-          <img src="https://images.unsplash.com/photo-1517336714739-489689fd1ca8"
-            class="w-full h-56 object-cover" />
-          <div class="p-6">
-            <h3 class="text-2xl font-bold mb-2">Old Laptop</h3>
-            <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full">
-              Request Swap
-            </button>
-          </div>
-        </div>
+        <a href="purchase.html"
+          class="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-bold hover:bg-yellow-300">
+          Purchase Items
+        </a>
 
       </div>
 
-      <!-- DYNAMIC ITEMS FROM BACKEND -->
-      <div id="dynamic-items" class="grid md:grid-cols-3 gap-8 mt-10"></div>
+      <!-- STATS -->
+      <div class="grid grid-cols-3 gap-5 mt-14">
+
+        <div class="glass p-5 rounded-2xl text-center">
+          <h3 class="text-3xl font-bold">10K+</h3>
+          <p class="text-sm text-gray-200">Users</p>
+        </div>
+
+        <div class="glass p-5 rounded-2xl text-center">
+          <h3 class="text-3xl font-bold">25K+</h3>
+          <p class="text-sm text-gray-200">Products</p>
+        </div>
+
+        <div class="glass p-5 rounded-2xl text-center">
+          <h3 class="text-3xl font-bold">24/7</h3>
+          <p class="text-sm text-gray-200">Support</p>
+        </div>
+
+      </div>
 
     </div>
-  </section>
 
-  <!-- CTA -->
-  <section class="py-24 bg-green-600 text-white text-center">
+    <!-- RIGHT -->
+    <div class="bg-white text-gray-800 rounded-3xl p-8 shadow-2xl">
+
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h3 class="text-3xl font-bold">
+            Upload Item
+          </h3>
+
+          <p class="text-gray-500 mt-1">
+            Cloudinary Production Upload
+          </p>
+        </div>
+
+        <div class="bg-green-100 text-green-700 px-4 py-2 rounded-xl text-sm font-bold">
+          LIVE
+        </div>
+      </div>
+
+      <form id="uploadForm" class="space-y-5">
+
+        <input
+          type="text"
+          id="itemName"
+          placeholder="Item Name"
+          class="w-full p-4 rounded-2xl border focus:outline-none focus:ring-2 focus:ring-green-500"
+          required
+        />
+
+        <textarea
+          id="itemDesc"
+          placeholder="Describe your item"
+          class="w-full p-4 rounded-2xl border h-32 focus:outline-none focus:ring-2 focus:ring-green-500"
+          required
+        ></textarea>
+
+        <select
+          id="itemCategory"
+          class="w-full p-4 rounded-2xl border focus:outline-none focus:ring-2 focus:ring-green-500"
+          required
+        >
+          <option value="">Select Category</option>
+          <option>Electronics</option>
+          <option>Phones</option>
+          <option>Furniture</option>
+          <option>Clothes</option>
+          <option>Vehicles</option>
+          <option>Books</option>
+          <option>Kitchen</option>
+        </select>
+
+        <!-- IMAGE -->
+        <div class="border-2 border-dashed border-green-300 rounded-2xl p-6 bg-green-50">
+
+          <input
+            type="file"
+            id="itemImage"
+            accept="image/*"
+            class="w-full"
+            required
+          />
+
+          <p class="text-sm text-gray-500 mt-3">
+            JPG, PNG supported
+          </p>
+
+        </div>
+
+        <input
+          type="text"
+          id="itemWant"
+          placeholder="What do you want in exchange?"
+          class="w-full p-4 rounded-2xl border focus:outline-none focus:ring-2 focus:ring-green-500"
+        />
+
+        <button
+          type="submit"
+          id="uploadBtn"
+          class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold hover:bg-green-700 flex items-center justify-center gap-3"
+        >
+          Upload Item
+        </button>
+
+      </form>
+
+      <!-- PREVIEW -->
+      <img
+        id="preview"
+        class="hidden mt-6 rounded-2xl w-full h-60 object-cover"
+      />
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FEATURES -->
+<section class="py-20">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="text-center mb-16">
+      <h2 class="text-5xl font-bold mb-4">
+        Why Swaply?
+      </h2>
+
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Full production marketplace system designed for modern buyers and sellers.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-4 gap-8">
+
+      <div class="bg-white p-8 rounded-3xl shadow-md card-hover">
+        <div class="text-5xl mb-5">⚡</div>
+        <h3 class="text-2xl font-bold mb-3">Fast Uploads</h3>
+        <p class="text-gray-600">
+          Cloudinary powered image uploads with instant previews.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl shadow-md card-hover">
+        <div class="text-5xl mb-5">💬</div>
+        <h3 class="text-2xl font-bold mb-3">Live Chat</h3>
+        <p class="text-gray-600">
+          Real-time Socket.IO messaging between buyers and sellers.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl shadow-md card-hover">
+        <div class="text-5xl mb-5">🔐</div>
+        <h3 class="text-2xl font-bold mb-3">Secure Login</h3>
+        <p class="text-gray-600">
+          JWT protected accounts and secure marketplace actions.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl shadow-md card-hover">
+        <div class="text-5xl mb-5">📱</div>
+        <h3 class="text-2xl font-bold mb-3">Mobile Ready</h3>
+        <p class="text-gray-600">
+          Fully responsive production design for all devices.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- LIVE ITEMS -->
+<section class="py-20 bg-white">
+
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="flex items-center justify-between mb-12">
+
+      <div>
+        <h2 class="text-5xl font-bold">
+          Latest Uploads
+        </h2>
+
+        <p class="text-gray-500 mt-3">
+          Recently uploaded marketplace items
+        </p>
+      </div>
+
+      <a href="browse.html"
+        class="bg-green-600 text-white px-6 py-3 rounded-2xl hover:bg-green-700">
+        View All
+      </a>
+
+    </div>
+
+    <div
+      id="itemsContainer"
+      class="grid md:grid-cols-3 gap-8"
+    >
+
+      <!-- ITEMS LOAD HERE -->
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CTA -->
+<section class="py-24 bg-green-600 text-white text-center">
+
+  <div class="max-w-4xl mx-auto px-6">
+
     <h2 class="text-5xl font-bold mb-6">
-      Turn Unused Items Into Something Valuable
+      Ready To Start Selling?
     </h2>
 
-    <a href="register.html"
-      class="bg-white text-green-600 px-10 py-5 rounded-2xl font-bold inline-block">
-      Join Now
-    </a>
-  </section>
+    <p class="text-xl text-green-100 mb-10">
+      Join thousands of users already using Swaply marketplace.
+    </p>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300 py-16 text-center">
-    © 2026 Swaply
-  </footer>
+    <div class="flex gap-5 justify-center flex-wrap">
 
-  <!-- ================= BACKEND CONNECTION ================= -->
-  <script>
-    const API = "http://localhost:5000";
-    let token = localStorage.getItem("token");
+      <a href="register.html"
+        class="bg-white text-green-600 px-10 py-5 rounded-2xl font-bold">
+        Create Account
+      </a>
 
-    // LOAD ITEMS
-    async function loadItems() {
-      try {
-        const res = await fetch(`${API}/items`);
-        const items = await res.json();
+      <a href="chat.html"
+        class="border border-white px-10 py-5 rounded-2xl font-bold">
+        Open Chat
+      </a>
 
-        const container = document.getElementById("dynamic-items");
+    </div>
 
-        items.forEach(item => {
-          container.innerHTML += `
-            <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md">
-              <img src="https://source.unsplash.com/600x400/?${item.category || 'item'}"
-                class="w-full h-56 object-cover" />
+  </div>
 
-              <div class="p-6">
-                <h3 class="text-2xl font-bold mb-2">${item.name}</h3>
-                <p class="text-gray-600 mb-4">${item.description}</p>
+</section>
 
-                <p class="text-green-600 font-semibold">${item.wanted}</p>
+<!-- FOOTER -->
+<footer class="bg-gray-900 text-gray-300 py-16">
 
-                <button class="bg-green-600 text-white px-5 py-3 rounded-xl w-full mt-4">
-                  Request Swap
-                </button>
-              </div>
-            </div>
-          `;
-        });
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
 
-      } catch (err) {
-        console.log(err);
+    <div>
+      <h2 class="text-3xl font-bold text-white mb-4">
+        Swaply
+      </h2>
+
+      <p class="text-gray-400 mb-6">
+        A modern platform for exchanging second-hand items safely and easily.
+      </p>
+
+      <a href="https://wa.me/254780204730"
+        class="inline-block bg-green-600 px-5 py-3 rounded-xl text-white font-semibold">
+        WhatsApp Support
+      </a>
+    </div>
+
+    <div>
+      <h3 class="text-white font-semibold mb-4">Company</h3>
+
+      <ul class="space-y-2">
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-white font-semibold mb-4">Support</h3>
+
+      <ul class="space-y-2">
+        <li><a href="help.html">Help Center</a></li>
+        <li><a href="safety.html">Safety</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-white font-semibold mb-4">Contact</h3>
+
+      <p>Email: mikemizan254@gmail.com</p>
+      <p>WhatsApp: +254780204730</p>
+      <p>Nairobi, Kenya</p>
+    </div>
+
+  </div>
+
+  <div class="text-center text-gray-500 mt-10">
+    © 2026 Swaply Marketplace
+  </div>
+
+</footer>
+
+<!-- SCRIPT -->
+<script>
+
+const API = "https://traderbackend.onrender.com";
+
+const CLOUD_NAME = "YOUR_CLOUD_NAME";
+const UPLOAD_PRESET = "YOUR_UPLOAD_PRESET";
+
+function isLoggedIn() {
+  return localStorage.getItem("token");
+}
+
+function requestSwap() {
+
+  if(!isLoggedIn()){
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  window.location.href = "chat.html";
+}
+
+const preview = document.getElementById("preview");
+
+document.getElementById("itemImage").addEventListener("change", e => {
+
+  const file = e.target.files[0];
+
+  if(file){
+    preview.src = URL.createObjectURL(file);
+    preview.classList.remove("hidden");
+  }
+
+});
+
+document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  if(!isLoggedIn()){
+    alert("Please login first");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const btn = document.getElementById("uploadBtn");
+
+  btn.innerHTML = `
+    <div class="loader"></div>
+    Uploading...
+  `;
+
+  try{
+
+    const file = document.getElementById("itemImage").files[0];
+
+    // CLOUDINARY UPLOAD
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+
+    const cloudRes = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+      {
+        method:"POST",
+        body:formData
       }
-    }
+    );
 
-    // UPLOAD ITEM
-    document.querySelector("form").addEventListener("submit", async (e) => {
-      e.preventDefault();
+    const cloudData = await cloudRes.json();
 
-      const inputs = document.querySelectorAll("form input, form textarea, form select");
+    // SAVE ITEM
+    const res = await fetch(`${API}/items`, {
 
-      await fetch(`${API}/items`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": token
-        },
-        body: JSON.stringify({
-          name: inputs[0].value,
-          description: inputs[1].value,
-          category: inputs[2].value,
-          wanted: inputs[3].value
-        })
-      });
+      method:"POST",
 
-      loadItems();
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization": localStorage.getItem("token")
+      },
+
+      body:JSON.stringify({
+
+        name: document.getElementById("itemName").value,
+        description: document.getElementById("itemDesc").value,
+        category: document.getElementById("itemCategory").value,
+        wanted: document.getElementById("itemWant").value,
+        imageURL: cloudData.secure_url
+
+      })
+
     });
 
-    loadItems();
-  </script>
+    const data = await res.json();
+
+    alert("✅ Item uploaded successfully");
+
+    location.reload();
+
+  }catch(err){
+
+    console.log(err);
+
+    alert("❌ Upload failed");
+
+  }
+
+  btn.innerHTML = `Upload Item`;
+
+});
+
+async function loadItems(){
+
+  try{
+
+    const res = await fetch(`${API}/items`);
+
+    const items = await res.json();
+
+    const container = document.getElementById("itemsContainer");
+
+    container.innerHTML = "";
+
+    items.reverse().slice(0,6).forEach(item => {
+
+      container.innerHTML += `
+
+      <div class="bg-gray-50 rounded-3xl overflow-hidden shadow-md card-hover">
+
+        <img
+          src="${item.imageURL}"
+          class="w-full h-60 object-cover"
+        />
+
+        <div class="p-6">
+
+          <div class="flex items-center justify-between mb-4">
+
+            <h3 class="text-2xl font-bold">
+              ${item.name}
+            </h3>
+
+            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+              ${item.category}
+            </span>
+
+          </div>
+
+          <p class="text-gray-600 mb-5">
+            ${item.description}
+          </p>
+
+          <div class="bg-gray-100 p-4 rounded-2xl mb-5">
+            <span class="font-bold">Wants:</span>
+            ${item.wanted}
+          </div>
+
+          <button
+            onclick="requestSwap()"
+            class="w-full bg-green-600 text-white py-3 rounded-2xl hover:bg-green-700 font-bold"
+          >
+            Chat Seller
+          </button>
+
+        </div>
+
+      </div>
+
+      `;
+
+    });
+
+  }catch(err){
+    console.log(err);
+  }
+
+}
+
+loadItems();
+
+</script>
 
 </body>
   </html>
