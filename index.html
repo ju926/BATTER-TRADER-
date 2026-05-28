@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 
-<meta charset="UTF-8"/>
+<meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Swaply Marketplace</title>
 
@@ -16,274 +17,265 @@
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-  font-family:'Inter',sans-serif;
+font-family:'Inter',sans-serif;
+background:#050505;
+overflow-x:hidden;
+}
+
+.hero-bg{
+background:
+linear-gradient(
+rgba(0,0,0,.82),
+rgba(0,0,0,.92)),
+url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop');
+
+background-size:cover;
+background-position:center;
+}
+
+.glass{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.07);
+}
+
+.card-hover{
+transition:.3s;
+}
+
+.card-hover:hover{
+transform:translateY(-6px);
 }
 
 ::-webkit-scrollbar{
-  width:6px;
+width:5px;
 }
 
 ::-webkit-scrollbar-thumb{
-  background:#16a34a;
-  border-radius:20px;
+background:#22c55e;
+border-radius:20px;
 }
 
 </style>
 
 </head>
 
-<body class="bg-gradient-to-br from-gray-100 via-white to-green-50 min-h-screen">
-
-<script>
-
-const token =
-localStorage.getItem("token");
-
-const currentUser =
-JSON.parse(localStorage.getItem("user"));
-
-</script>
+<body>
 
 <!-- NAVBAR -->
-<header class="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-200">
 
-<div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+<nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
 
-<!-- LOGO -->
-<div class="flex items-center gap-4">
-
-<div class="w-14 h-14 rounded-3xl bg-green-600 flex items-center justify-center text-white text-3xl font-black shadow-xl">
-
-S
-
-</div>
+<div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
 
 <div>
 
-<h1 class="text-3xl font-black text-gray-900">
+<h1 class="text-2xl md:text-3xl font-black text-white">
 
 Swaply
 
 </h1>
 
-<p class="text-gray-500">
+<p class="text-green-400 text-xs font-bold">
 
-Modern Marketplace
+Buy • Sell • Trade
 
 </p>
 
 </div>
 
-</div>
+<div class="hidden md:flex items-center gap-3">
 
-<!-- NAV LINKS -->
-<div class="hidden lg:flex items-center gap-8">
-
-<a href="index.html"
-class="font-bold text-green-600">
-
-Home
-
-</a>
-
-<a href="browse.html"
-class="font-bold text-gray-700 hover:text-green-600 transition-all">
+<a
+href="browse.html"
+class="text-white hover:text-green-400 transition-all font-semibold">
 
 Browse
 
 </a>
 
-<a href="blog.html"
-class="font-bold text-gray-700 hover:text-green-600 transition-all">
+<a
+href="chat.html"
+class="text-white hover:text-green-400 transition-all font-semibold">
+
+Chat
+
+</a>
+
+<a
+href="blog.html"
+class="text-white hover:text-green-400 transition-all font-semibold">
 
 Blog
 
 </a>
 
-<a href="about.html"
-class="font-bold text-gray-700 hover:text-green-600 transition-all">
+<a
+href="careers.html"
+class="text-white hover:text-green-400 transition-all font-semibold">
 
-About
+Careers
 
 </a>
 
-<a href="contact.html"
-class="font-bold text-gray-700 hover:text-green-600 transition-all">
+<a
+href="help.html"
+class="text-white hover:text-green-400 transition-all font-semibold">
 
-Contact
+Help
+
+</a>
+
+<a
+href="support.html"
+class="text-white hover:text-green-400 transition-all font-semibold">
+
+Support
+
+</a>
+
+<a
+href="terms.html"
+class="text-white hover:text-green-400 transition-all font-semibold">
+
+Terms
+
+</a>
+
+<a
+href="login.html"
+class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-2xl font-bold transition-all">
+
+Login
 
 </a>
 
 </div>
 
-<!-- AUTH -->
-<div id="authArea"></div>
-
 </div>
 
-</header>
+</nav>
 
 <!-- HERO -->
-<section class="max-w-7xl mx-auto px-6 py-20">
 
-<div class="grid lg:grid-cols-2 gap-14 items-center">
+<section class="hero-bg min-h-screen flex items-center pt-32">
 
-<!-- LEFT -->
+<div class="max-w-7xl mx-auto px-5 grid lg:grid-cols-2 gap-12 items-center">
+
 <div>
 
-<div class="inline-flex items-center gap-3 bg-green-100 text-green-700 px-5 py-3 rounded-full font-bold mb-8">
+<p class="text-green-400 font-black mb-4 tracking-widest">
 
-<div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-
-Live Marketplace
-
-</div>
-
-<h1 class="text-6xl lg:text-7xl font-black leading-tight text-gray-900 mb-8">
-
-Buy,
-Sell &
-Trade
-Smarter
-
-</h1>
-
-<p class="text-2xl text-gray-600 leading-relaxed mb-10">
-
-Discover products, connect with sellers instantly and enjoy secure real-time marketplace conversations.
+MODERN MARKETPLACE
 
 </p>
 
-<div class="flex flex-wrap gap-5">
+<h1 class="text-5xl md:text-7xl font-black text-white leading-tight">
 
-<a href="browse.html">
+Buy.
+Sell.
+Trade.
 
-<button class="bg-green-600 hover:bg-green-700 transition-all text-white px-10 py-5 rounded-2xl font-black text-xl shadow-2xl">
+</h1>
 
-Browse Marketplace
+<p class="text-gray-300 text-lg leading-relaxed mt-6 max-w-xl">
 
-</button>
+Swaply is a modern marketplace where people buy, sell and trade products instantly with live community chat and AI assistance.
+
+</p>
+
+<div class="flex flex-wrap gap-4 mt-8">
+
+<a
+href="browse.html"
+class="bg-green-500 hover:bg-green-600 transition-all text-white px-7 py-4 rounded-2xl font-black text-lg">
+
+Browse Items
 
 </a>
 
-<a href="chat.html?id=demo">
+<a
+href="chat.html"
+class="glass hover:bg-white/10 transition-all text-white px-7 py-4 rounded-2xl font-black text-lg">
 
-<button class="bg-black hover:bg-gray-900 transition-all text-white px-10 py-5 rounded-2xl font-black text-xl shadow-2xl">
-
-Open Chat
-
-</button>
+Community Chat
 
 </a>
 
 </div>
 
-<!-- STATS -->
-<div class="grid grid-cols-3 gap-5 mt-14">
+</div>
 
-<div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 text-center">
+<div class="grid grid-cols-2 gap-5">
 
-<h2 class="text-4xl font-black text-green-600">
+<div class="glass rounded-3xl p-6 card-hover">
+
+<h2 class="text-5xl font-black text-green-400">
 
 24/7
 
 </h2>
 
-<p class="text-gray-500 mt-2">
+<p class="text-white font-bold mt-3">
 
-Trading
+Live Marketplace
 
 </p>
 
 </div>
 
-<div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 text-center">
+<div class="glass rounded-3xl p-6 card-hover">
 
-<h2 class="text-4xl font-black text-green-600">
+<h2 class="text-5xl font-black text-green-400">
 
-Live
+AI
 
 </h2>
 
-<p class="text-gray-500 mt-2">
+<p class="text-white font-bold mt-3">
 
-Chat
+Smart Assistant
 
 </p>
 
 </div>
 
-<div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 text-center">
+<div class="glass rounded-3xl p-6 card-hover">
 
-<h2 class="text-4xl font-black text-green-600">
+<h2 class="text-5xl font-black text-green-400">
+
+Fast
+
+</h2>
+
+<p class="text-white font-bold mt-3">
+
+Real-time Chat
+
+</p>
+
+</div>
+
+<div class="glass rounded-3xl p-6 card-hover">
+
+<h2 class="text-5xl font-black text-green-400">
 
 Safe
 
 </h2>
 
-<p class="text-gray-500 mt-2">
+<p class="text-white font-bold mt-3">
 
-Accounts
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- RIGHT -->
-<div class="relative">
-
-<div class="absolute inset-0 bg-green-500/20 blur-3xl rounded-full"></div>
-
-<div class="relative bg-white rounded-[40px] shadow-2xl overflow-hidden border border-gray-100">
-
-<img
-src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop"
-class="w-full h-[550px] object-cover"/>
-
-<div class="p-8">
-
-<div class="flex items-center justify-between mb-6">
-
-<div>
-
-<h2 class="text-3xl font-black text-gray-900">
-
-Swaply Community
-
-</h2>
-
-<p class="text-gray-500 mt-2">
-
-Thousands of active traders
+Trusted Trading
 
 </p>
-
-</div>
-
-<div class="bg-green-100 text-green-700 px-5 py-3 rounded-2xl font-black">
-
-LIVE
-
-</div>
-
-</div>
-
-<div class="bg-gray-100 rounded-3xl p-6">
-
-<p class="text-gray-600 text-lg leading-relaxed">
-
-Join the next generation marketplace where buyers and sellers connect instantly through secure real-time conversations.
-
-</p>
-
-</div>
-
-</div>
 
 </div>
 
@@ -294,73 +286,76 @@ Join the next generation marketplace where buyers and sellers connect instantly 
 </section>
 
 <!-- FEATURES -->
-<section class="max-w-7xl mx-auto px-6 pb-20">
 
-<div class="grid md:grid-cols-3 gap-8">
+<section class="py-24 bg-black">
 
-<div class="bg-white rounded-[35px] shadow-xl p-10 border border-gray-100">
+<div class="max-w-7xl mx-auto px-5">
 
-<div class="w-20 h-20 rounded-3xl bg-green-100 flex items-center justify-center text-4xl mb-8">
+<div class="text-center mb-16">
 
-💬
+<p class="text-green-400 font-black tracking-widest mb-4">
+
+WHY SWAPLY
+
+</p>
+
+<h2 class="text-4xl md:text-6xl font-black text-white">
+
+Everything In One Place
+
+</h2>
 
 </div>
 
-<h2 class="text-3xl font-black text-gray-900 mb-5">
+<div class="grid md:grid-cols-3 gap-8">
+
+<div class="glass rounded-3xl p-8 card-hover">
+
+<h2 class="text-white text-2xl font-black mb-5">
+
+Marketplace
+
+</h2>
+
+<p class="text-gray-300 leading-relaxed">
+
+Buy and sell electronics, fashion, vehicles, furniture and more with ease.
+
+</p>
+
+</div>
+
+<div class="glass rounded-3xl p-8 card-hover">
+
+<h2 class="text-white text-2xl font-black mb-5">
 
 Live Chat
 
 </h2>
 
-<p class="text-gray-600 text-lg leading-relaxed">
+<p class="text-gray-300 leading-relaxed">
 
-Real-time messaging between buyers and sellers with secure authentication.
+Chat with buyers and sellers instantly in a modern community marketplace.
 
 </p>
 
 </div>
 
-<div class="bg-white rounded-[35px] shadow-xl p-10 border border-gray-100">
+<div class="glass rounded-3xl p-8 card-hover">
 
-<div class="w-20 h-20 rounded-3xl bg-green-100 flex items-center justify-center text-4xl mb-8">
+<h2 class="text-white text-2xl font-black mb-5">
 
-🔒
-
-</div>
-
-<h2 class="text-3xl font-black text-gray-900 mb-5">
-
-Secure Login
+AI Assistant
 
 </h2>
 
-<p class="text-gray-600 text-lg leading-relaxed">
+<p class="text-gray-300 leading-relaxed">
 
-Protected marketplace accounts with automatic login persistence.
+Use @ai in chats for smart negotiation tips and marketplace guidance.
 
 </p>
 
 </div>
-
-<div class="bg-white rounded-[35px] shadow-xl p-10 border border-gray-100">
-
-<div class="w-20 h-20 rounded-3xl bg-green-100 flex items-center justify-center text-4xl mb-8">
-
-⚡
-
-</div>
-
-<h2 class="text-3xl font-black text-gray-900 mb-5">
-
-Fast Trading
-
-</h2>
-
-<p class="text-gray-600 text-lg leading-relaxed">
-
-Modern marketplace experience optimized for mobile and desktop.
-
-</p>
 
 </div>
 
@@ -368,52 +363,85 @@ Modern marketplace experience optimized for mobile and desktop.
 
 </section>
 
-<!-- CTA -->
-<section class="max-w-7xl mx-auto px-6 pb-20">
+<!-- LINKS -->
 
-<div class="bg-gradient-to-r from-black to-gray-900 rounded-[40px] p-14 text-white shadow-2xl">
+<section class="py-24">
 
-<div class="grid lg:grid-cols-2 gap-10 items-center">
+<div class="max-w-7xl mx-auto px-5">
 
-<div>
+<div class="grid md:grid-cols-4 gap-6">
 
-<h2 class="text-5xl font-black leading-tight mb-6">
+<a
+href="about.html"
+class="glass rounded-3xl p-8 card-hover">
 
-Ready To Start Trading?
+<h2 class="text-white text-2xl font-black mb-3">
+
+About
 
 </h2>
 
-<p class="text-gray-300 text-xl leading-relaxed">
+<p class="text-gray-400">
 
-Join Swaply today and connect with buyers and sellers instantly.
+Learn more about Swaply.
 
 </p>
 
-</div>
+</a>
 
-<div class="flex flex-wrap gap-5 lg:justify-end">
+<a
+href="blog.html"
+class="glass rounded-3xl p-8 card-hover">
 
-<a href="register.html">
+<h2 class="text-white text-2xl font-black mb-3">
 
-<button class="bg-green-600 hover:bg-green-700 transition-all text-white px-10 py-5 rounded-2xl font-black text-xl shadow-2xl">
+Blog
 
-Create Account
+</h2>
 
-</button>
+<p class="text-gray-400">
+
+Marketplace news and tips.
+
+</p>
 
 </a>
 
-<a href="browse.html">
+<a
+href="support.html"
+class="glass rounded-3xl p-8 card-hover">
 
-<button class="bg-white hover:bg-gray-100 transition-all text-black px-10 py-5 rounded-2xl font-black text-xl shadow-2xl">
+<h2 class="text-white text-2xl font-black mb-3">
 
-Explore Items
+Support
 
-</button>
+</h2>
+
+<p class="text-gray-400">
+
+Get help from support.
+
+</p>
 
 </a>
 
-</div>
+<a
+href="terms.html"
+class="glass rounded-3xl p-8 card-hover">
+
+<h2 class="text-white text-2xl font-black mb-3">
+
+Terms
+
+</h2>
+
+<p class="text-gray-400">
+
+Read terms and policies.
+
+</p>
+
+</a>
 
 </div>
 
@@ -422,143 +450,76 @@ Explore Items
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-black text-white pt-16 pb-10">
 
-<div class="max-w-7xl mx-auto px-6">
+<footer class="border-t border-white/10 py-10">
 
-<div class="grid md:grid-cols-4 gap-10 pb-14 border-b border-gray-800">
+<div class="max-w-7xl mx-auto px-5 flex flex-col md:flex-row gap-5 items-center justify-between">
 
 <div>
 
-<h2 class="text-3xl font-black mb-5">
+<h2 class="text-white text-2xl font-black">
 
 Swaply
 
 </h2>
 
-<p class="text-gray-400 leading-relaxed">
+<p class="text-gray-500 text-sm mt-2">
 
-Next generation marketplace platform with secure live chat and trusted trading.
+© 2026 Swaply Marketplace
 
 </p>
 
 </div>
 
-<div>
+<div class="flex flex-wrap gap-5 text-sm">
 
-<h3 class="font-black text-xl mb-5">
+<a
+href="about.html"
+class="text-gray-400 hover:text-green-400">
 
-Marketplace
-
-</h3>
-
-<div class="space-y-3">
-
-<a href="browse.html" class="block text-gray-400 hover:text-white transition-all">
-
-Browse Items
+About
 
 </a>
 
-<a href="chat.html" class="block text-gray-400 hover:text-white transition-all">
+<a
+href="careers.html"
+class="text-gray-400 hover:text-green-400">
 
-Live Chat
-
-</a>
-
-<a href="register.html" class="block text-gray-400 hover:text-white transition-all">
-
-Create Account
+Careers
 
 </a>
 
-</div>
+<a
+href="help.html"
+class="text-gray-400 hover:text-green-400">
 
-</div>
-
-<div>
-
-<h3 class="font-black text-xl mb-5">
-
-Company
-
-</h3>
-
-<div class="space-y-3">
-
-<a href="about.html" class="block text-gray-400 hover:text-white transition-all">
-
-About Us
+Help
 
 </a>
 
-<a href="blog.html" class="block text-gray-400 hover:text-white transition-all">
+<a
+href="support.html"
+class="text-gray-400 hover:text-green-400">
 
-Blog
-
-</a>
-
-<a href="contact.html" class="block text-gray-400 hover:text-white transition-all">
-
-Contact
+Support
 
 </a>
 
-</div>
-
-</div>
-
-<div>
-
-<h3 class="font-black text-xl mb-5">
-
-Legal
-
-</h3>
-
-<div class="space-y-3">
-
-<a href="terms.html" class="block text-gray-400 hover:text-white transition-all">
+<a
+href="terms.html"
+class="text-gray-400 hover:text-green-400">
 
 Terms
 
 </a>
 
-<a href="privacy.html" class="block text-gray-400 hover:text-white transition-all">
+<a
+href="safety.html"
+class="text-gray-400 hover:text-green-400">
 
-Privacy Policy
-
-</a>
-
-<a href="faq.html" class="block text-gray-400 hover:text-white transition-all">
-
-FAQ
+Safety
 
 </a>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="flex flex-col md:flex-row items-center justify-between gap-5 pt-10">
-
-<p class="text-gray-500">
-
-© 2026 Swaply Marketplace. All rights reserved.
-
-</p>
-
-<div class="flex items-center gap-6 text-gray-500">
-
-<span>Secure</span>
-
-<span>Modern</span>
-
-<span>Real-Time</span>
-
-</div>
 
 </div>
 
@@ -566,99 +527,5 @@ FAQ
 
 </footer>
 
-<script>
-
-const authArea =
-document.getElementById("authArea");
-
-if(token && currentUser){
-
-authArea.innerHTML = `
-
-<div class="flex items-center gap-4">
-
-<div class="hidden md:flex items-center gap-3 bg-white px-5 py-3 rounded-2xl shadow-lg border">
-
-<img
-src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-class="w-10 h-10 rounded-full"/>
-
-<div>
-
-<h3 class="font-black text-gray-900">
-
-${currentUser.username}
-
-</h3>
-
-<p class="text-gray-500 text-sm">
-
-Logged In
-
-</p>
-
-</div>
-
-</div>
-
-<button
-onclick="logout()"
-class="bg-red-500 hover:bg-red-600 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
-
-Logout
-
-</button>
-
-</div>
-
-`;
-
-}else{
-
-authArea.innerHTML = `
-
-<div class="flex items-center gap-4">
-
-<a href="login.html">
-
-<button
-class="bg-green-600 hover:bg-green-700 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
-
-Login
-
-</button>
-
-</a>
-
-<a href="register.html">
-
-<button
-class="bg-black hover:bg-gray-900 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
-
-Register
-
-</button>
-
-</a>
-
-</div>
-
-`;
-
-}
-
-function logout(){
-
-localStorage.removeItem("token");
-
-localStorage.removeItem("user");
-
-window.location.href =
-"login.html";
-
-}
-
-</script>
-
 </body>
-  </html>
+</html>
