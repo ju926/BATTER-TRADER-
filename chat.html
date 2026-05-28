@@ -7,13 +7,11 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<title>Swaply Community Chat</title>
+<title>Swaply Chat</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -23,13 +21,13 @@ content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:'Inter',sans-serif;
 }
 
 html,
 body{
 height:100%;
 overflow:hidden;
-font-family:'Inter',sans-serif;
 background:#050505;
 }
 
@@ -38,22 +36,33 @@ display:flex;
 flex-direction:column;
 }
 
-.glass{
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.07);
+.topbar{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:75px;
+background:rgba(10,10,10,.95);
+backdrop-filter:blur(15px);
+border-bottom:1px solid rgba(255,255,255,.08);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 16px;
+z-index:999;
 }
 
-#messages{
+.messages{
 flex:1;
 overflow-y:auto;
-padding:120px 14px 130px;
-scroll-behavior:smooth;
+padding:90px 12px 120px;
 }
 
 .message{
-max-width:85%;
 margin-bottom:18px;
+display:flex;
+flex-direction:column;
+max-width:85%;
 animation:fade .2s ease;
 }
 
@@ -74,96 +83,136 @@ margin-left:auto;
 
 .bubble{
 padding:14px;
-border-radius:24px;
+border-radius:22px;
 word-wrap:break-word;
+position:relative;
 }
 
 .mine .bubble{
 background:#22c55e;
 color:white;
-border-bottom-right-radius:8px;
+border-bottom-right-radius:6px;
 }
 
 .other .bubble{
 background:#111827;
 color:white;
-border-bottom-left-radius:8px;
+border-bottom-left-radius:6px;
 }
 
 .admin .bubble{
-background:linear-gradient(135deg,#f59e0b,#f97316);
+background:linear-gradient(135deg,#f59e0b,#ea580c);
 color:white;
-border-bottom-left-radius:8px;
 }
 
 .ai .bubble{
-background:linear-gradient(135deg,#7c3aed,#4f46e5);
+background:linear-gradient(135deg,#7c3aed,#4338ca);
 color:white;
-border-bottom-left-radius:8px;
 }
 
 .username{
 font-size:12px;
 font-weight:800;
 margin-bottom:6px;
-opacity:.8;
+opacity:.9;
 }
 
 .time{
 font-size:10px;
+margin-top:7px;
 opacity:.7;
-margin-top:6px;
 }
 
-#chatForm{
+.reply-preview{
+background:rgba(255,255,255,.08);
+padding:8px;
+border-radius:12px;
+margin-bottom:10px;
+font-size:12px;
+}
+
+.reply-btn{
+font-size:12px;
+color:#4ade80;
+font-weight:700;
+margin-top:10px;
+cursor:pointer;
+}
+
+.input-area{
 position:fixed;
 bottom:0;
 left:0;
 right:0;
-padding:12px;
 background:#050505;
-z-index:50;
+padding:10px;
+border-top:1px solid rgba(255,255,255,.06);
+z-index:999;
+}
+
+.input-wrap{
+background:#111827;
+border-radius:30px;
+display:flex;
+align-items:center;
+padding:8px;
+gap:10px;
 }
 
 #messageInput{
-height:55px;
+flex:1;
+height:48px;
+background:transparent;
+border:none;
+outline:none;
+color:white;
 font-size:16px;
+padding:0 10px;
 }
 
-.tag-box{
-position:absolute;
-bottom:80px;
-left:14px;
-right:14px;
-max-height:200px;
-overflow-y:auto;
-display:none;
-z-index:100;
-}
-
-.tag-item{
-padding:14px;
+.send-btn{
+background:#22c55e;
+color:white;
+border:none;
+width:52px;
+height:52px;
+border-radius:50%;
+font-size:20px;
+font-weight:900;
 cursor:pointer;
-transition:.2s;
 }
 
-.tag-item:hover{
-background:rgba(255,255,255,.05);
-}
-
-.reply-box{
+.replying-box{
 display:none;
-margin-bottom:10px;
+background:#111827;
 padding:10px;
 border-radius:18px;
-background:rgba(255,255,255,.05);
+margin-bottom:10px;
 }
 
-.reply-line{
-font-size:12px;
-color:#22c55e;
+.tag-users{
+position:fixed;
+bottom:90px;
+left:10px;
+right:10px;
+background:#111827;
+border-radius:20px;
+overflow:hidden;
+display:none;
+z-index:999;
+border:1px solid rgba(255,255,255,.06);
+}
+
+.tag-user{
+padding:14px;
+color:white;
 font-weight:700;
-margin-bottom:4px;
+cursor:pointer;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.tag-user:hover{
+background:#1f2937;
 }
 
 .online-dot{
@@ -196,15 +245,12 @@ const API =
 const socket =
 io(API);
 
-const token =
-localStorage.getItem("token");
-
 const currentUser =
 JSON.parse(
 localStorage.getItem("user")
 );
 
-if(!token){
+if(!currentUser){
 
 window.location.href =
 "login.html";
@@ -212,19 +258,22 @@ window.location.href =
 }
 
 const isAdmin =
+
 currentUser?.role === "admin"
+
 ||
-currentUser?.username === "admin"
+
+currentUser?.email === "admin@swaply.com"
+
 ||
+
 currentUser?.username === "swaplyadmin";
 
 </script>
 
-<!-- TOP BAR -->
+<!-- TOP -->
 
-<div class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
-
-<div class="flex items-center justify-between px-4 py-4">
+<div class="topbar">
 
 <div class="flex items-center gap-3">
 
@@ -238,7 +287,7 @@ class="text-white text-2xl">
 
 <div>
 
-<h1 class="text-white text-xl font-black">
+<h1 class="text-white text-lg font-black">
 
 Swaply Chat
 
@@ -260,32 +309,25 @@ Community Online
 
 </div>
 
-<div class="flex items-center gap-3">
+<div class="text-right">
 
-<div class="hidden md:block text-right">
-
-<p class="text-white font-black text-sm">
+<p class="text-white text-sm font-black">
 
 ${currentUser?.username || "User"}
 
 </p>
 
-<p class="text-green-400 text-xs">
+<p class="${
+isAdmin
+?
+'text-orange-400'
+:
+'text-green-400'
+} text-xs font-bold">
 
-${isAdmin ? "🛡 ADMIN" : "Online"}
+${isAdmin ? "🛡 ADMIN" : "● Online"}
 
 </p>
-
-</div>
-
-<img
-src="${
-currentUser?.avatar ||
-'https://cdn-icons-png.flaticon.com/512/149/149071.png'
-}"
-class="w-11 h-11 rounded-full border-2 border-green-500 object-cover">
-
-</div>
 
 </div>
 
@@ -293,16 +335,18 @@ class="w-11 h-11 rounded-full border-2 border-green-500 object-cover">
 
 <!-- MESSAGES -->
 
-<div id="messages"></div>
+<div
+id="messages"
+class="messages"></div>
 
 <!-- TAG USERS -->
 
 <div
-id="tagBox"
-class="tag-box glass rounded-3xl">
+id="tagUsers"
+class="tag-users">
 
 <div
-class="tag-item text-white font-bold"
+class="tag-user"
 onclick="tagUser('ai')">
 
 🤖 AI Assistant
@@ -310,7 +354,7 @@ onclick="tagUser('ai')">
 </div>
 
 <div
-class="tag-item text-white font-bold"
+class="tag-user"
 onclick="tagUser('admin')">
 
 🛡 Admin
@@ -319,24 +363,19 @@ onclick="tagUser('admin')">
 
 </div>
 
-<!-- CHAT INPUT -->
+<!-- INPUT -->
 
-<form
-id="chatForm">
-
-<div class="max-w-5xl mx-auto">
-
-<!-- REPLY BOX -->
+<div class="input-area">
 
 <div
-id="replyBox"
-class="reply-box">
+id="replyingBox"
+class="replying-box">
 
 <div class="flex items-center justify-between">
 
 <div>
 
-<p class="reply-line">
+<p class="text-green-400 text-xs font-bold">
 
 Replying to
 
@@ -349,9 +388,8 @@ class="text-white text-sm"></p>
 </div>
 
 <button
-type="button"
 onclick="cancelReply()"
-class="text-red-400 font-bold">
+class="text-red-400 text-lg">
 
 ✕
 
@@ -361,11 +399,14 @@ class="text-red-400 font-bold">
 
 </div>
 
-<div class="glass rounded-[30px] p-3 flex items-center gap-3">
+<form
+id="chatForm">
+
+<div class="input-wrap">
 
 <button
 type="button"
-class="text-2xl text-gray-400">
+class="text-xl text-gray-400">
 
 😊
 
@@ -375,12 +416,11 @@ class="text-2xl text-gray-400">
 type="text"
 id="messageInput"
 placeholder="Type message..."
-autocomplete="off"
-class="flex-1 bg-transparent outline-none text-white placeholder:text-gray-500 px-2">
+autocomplete="off">
 
 <button
 type="button"
-class="text-2xl text-gray-400">
+class="text-xl text-gray-400">
 
 📎
 
@@ -388,17 +428,17 @@ class="text-2xl text-gray-400">
 
 <button
 type="submit"
-class="bg-green-500 hover:bg-green-600 text-white px-6 h-[55px] rounded-2xl font-black text-lg shrink-0">
+class="send-btn">
 
-Send
+➤
 
 </button>
 
 </div>
 
-</div>
-
 </form>
+
+</div>
 
 <script>
 
@@ -412,42 +452,53 @@ document.getElementById(
 "messageInput"
 );
 
-const tagBox =
+const tagUsers =
 document.getElementById(
-"tagBox"
+"tagUsers"
 );
 
 let replyTo = null;
 
-/* LOAD SAVED CHATS */
+/* ONLINE */
 
-const savedMessages =
-JSON.parse(
-localStorage.getItem(
-"swaply_messages"
-) || "[]"
+socket.emit(
+"userOnline",
+currentUser.username
 );
 
-savedMessages.forEach(msg => {
+/* LOAD MESSAGES */
+
+async function loadMessages(){
+
+try{
+
+const res =
+await fetch(
+`${API}/messages`
+);
+
+const data =
+await res.json();
+
+messages.innerHTML = "";
+
+data.forEach(msg => {
 
 appendMessage(msg);
 
 });
 
-/* SAVE */
+}catch(err){
 
-function saveMessage(msg){
-
-savedMessages.push(msg);
-
-localStorage.setItem(
-"swaply_messages",
-JSON.stringify(savedMessages)
-);
+console.log(err);
 
 }
 
-/* TAGGING */
+}
+
+loadMessages();
+
+/* TAGS */
 
 messageInput.addEventListener(
 "input",
@@ -456,30 +507,34 @@ messageInput.addEventListener(
 const value =
 messageInput.value;
 
-if(value.includes("@")){
+if(value.endsWith("@")){
 
-tagBox.style.display =
+tagUsers.style.display =
 "block";
 
 }else{
 
-tagBox.style.display =
+tagUsers.style.display =
 "none";
 
 }
+
+/* TYPING */
+
+socket.emit(
+"typing",
+currentUser.username
+);
 
 }
 );
 
 function tagUser(name){
 
-messageInput.value =
-messageInput.value.replace(
-/@\w*$/,
-`@${name} `
-);
+messageInput.value +=
+`${name} `;
 
-tagBox.style.display =
+tagUsers.style.display =
 "none";
 
 messageInput.focus();
@@ -508,16 +563,19 @@ const msg = {
 username:
 currentUser.username,
 
-message:text,
+senderId:
+currentUser.id,
 
-replyTo,
+message:text,
 
 admin:isAdmin,
 
+replyTo,
+
 time:new Date()
 .toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit'
+hour:"2-digit",
+minute:"2-digit"
 })
 
 };
@@ -527,24 +585,14 @@ socket.emit(
 msg
 );
 
-appendMessage(msg);
-
-saveMessage(msg);
-
 messageInput.value = "";
 
-replyTo = null;
+cancelReply();
 
-document
-.getElementById(
-"replyBox"
-)
-.style.display = "none";
-
-/* AI */
+/* AI RESPONSE */
 
 if(
-text.toLowerCase().includes("@ai")
+text.toLowerCase().includes("ai")
 ){
 
 setTimeout(() => {
@@ -554,21 +602,19 @@ const aiMsg = {
 username:"AI",
 
 message:
-getAIResponse(text),
+generateAIReply(text),
 
 ai:true,
 
 time:new Date()
 .toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit'
+hour:"2-digit",
+minute:"2-digit"
 })
 
 };
 
 appendMessage(aiMsg);
-
-saveMessage(aiMsg);
 
 },1000);
 
@@ -584,26 +630,22 @@ text.toLowerCase().includes("@admin")
 
 setTimeout(() => {
 
-const adminMsg = {
+appendMessage({
 
 username:"ADMIN",
 
 message:
-"🛡 Admin has received your message and will respond shortly.",
+"🛡 Admin has received your message.",
 
 admin:true,
 
 time:new Date()
 .toLocaleTimeString([],{
-hour:'2-digit',
-minute:'2-digit'
+hour:"2-digit",
+minute:"2-digit"
 })
 
-};
-
-appendMessage(adminMsg);
-
-saveMessage(adminMsg);
+});
 
 },1200);
 
@@ -623,6 +665,25 @@ appendMessage(msg);
 }
 );
 
+/* TYPING */
+
+socket.on(
+"userTyping",
+username => {
+
+if(
+username !== currentUser.username
+){
+
+console.log(
+`${username} typing...`
+);
+
+}
+
+}
+);
+
 /* APPEND */
 
 function appendMessage(data){
@@ -634,7 +695,9 @@ document.createElement(
 
 let type = "other";
 
-if(data.username === currentUser.username){
+if(
+data.username === currentUser.username
+){
 
 type = "mine";
 
@@ -657,9 +720,7 @@ div.className =
 
 div.innerHTML = `
 
-<div
-class="bubble"
-onclick='replyMessage(${JSON.stringify(data.message)})'>
+<div class="bubble">
 
 <div class="username">
 
@@ -681,8 +742,16 @@ ${
 data.replyTo
 ?
 `
-<div class="glass rounded-2xl p-2 mb-3 text-sm opacity-80">
-↩ ${data.replyTo}
+<div class="reply-preview">
+
+↩ ${
+data.replyTo.username || ""
+}
+
+<br>
+
+${data.replyTo.message || ""}
+
 </div>
 `
 :
@@ -692,6 +761,13 @@ data.replyTo
 <div class="text-[15px] leading-relaxed">
 
 ${data.message}
+
+</div>
+
+<div class="reply-btn"
+onclick='replyMessage(${JSON.stringify(data).replace(/'/g,"&apos;")})'>
+
+↩ Reply
 
 </div>
 
@@ -714,13 +790,19 @@ messages.scrollHeight;
 
 /* REPLY */
 
-function replyMessage(text){
+function replyMessage(data){
 
-replyTo = text;
+replyTo = {
+
+username:data.username,
+
+message:data.message
+
+};
 
 document
 .getElementById(
-"replyBox"
+"replyingBox"
 )
 .style.display = "block";
 
@@ -728,7 +810,8 @@ document
 .getElementById(
 "replyText"
 )
-innerText = text;
+innerText =
+`${data.username}: ${data.message}`;
 
 messageInput.focus();
 
@@ -740,7 +823,7 @@ replyTo = null;
 
 document
 .getElementById(
-"replyBox"
+"replyingBox"
 )
 .style.display = "none";
 
@@ -748,54 +831,56 @@ document
 
 /* AI */
 
-function getAIResponse(text){
+function generateAIReply(text){
 
-text = text.toLowerCase();
+text =
+text.toLowerCase();
 
-if(text.includes("phone")){
+if(
+text.includes("phone")
+){
 
-return "📱 You can browse phones in the marketplace section.";
+return "📱 You can browse phones in the marketplace.";
 
 }
 
-if(text.includes("price")){
+if(
+text.includes("laptop")
+){
+
+return "💻 Check the browse page for available laptops.";
+
+}
+
+if(
+text.includes("price")
+){
 
 return "💰 Compare multiple listings before buying.";
 
 }
 
-if(text.includes("laptop")){
-
-return "💻 Many laptops are available in browse section.";
-
-}
-
-if(text.includes("hello")){
-
-return "👋 Hello! How can I assist you today?";
-
-}
-
-if(text.includes("scam")){
+if(
+text.includes("scam")
+){
 
 return "⚠ Never pay before meeting seller physically.";
 
 }
 
-return "🤖 AI Assistant is here to help you trade safely.";
+if(
+text.includes("hello")
+){
+
+return "👋 Hello! How can I help you today?";
 
 }
 
-/* MOBILE FIX */
+return "🤖 AI Assistant is here to help.";
 
-setTimeout(() => {
-
-messages.scrollTop =
-messages.scrollHeight;
-
-},500);
+}
 
 </script>
 
 </body>
-   </html>
+</html>
