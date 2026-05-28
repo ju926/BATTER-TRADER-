@@ -5,9 +5,9 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-<title>Swaply Chat</title>
+<title>Swaply Community Chat</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -33,21 +33,144 @@ font-family:'Inter',sans-serif;
 background:#050505;
 }
 
-.chat-bg{
-background:
-linear-gradient(
-rgba(0,0,0,.88),
-rgba(0,0,0,.92)),
-url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop');
-
-background-size:cover;
-background-position:center;
+body{
+display:flex;
+flex-direction:column;
 }
 
 .glass{
 background:rgba(255,255,255,.05);
 backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.07);
+}
+
+#messages{
+flex:1;
+overflow-y:auto;
+padding:120px 14px 130px;
+scroll-behavior:smooth;
+}
+
+.message{
+max-width:85%;
+margin-bottom:18px;
+animation:fade .2s ease;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.mine{
+margin-left:auto;
+}
+
+.bubble{
+padding:14px;
+border-radius:24px;
+word-wrap:break-word;
+}
+
+.mine .bubble{
+background:#22c55e;
+color:white;
+border-bottom-right-radius:8px;
+}
+
+.other .bubble{
+background:#111827;
+color:white;
+border-bottom-left-radius:8px;
+}
+
+.admin .bubble{
+background:linear-gradient(135deg,#f59e0b,#f97316);
+color:white;
+border-bottom-left-radius:8px;
+}
+
+.ai .bubble{
+background:linear-gradient(135deg,#7c3aed,#4f46e5);
+color:white;
+border-bottom-left-radius:8px;
+}
+
+.username{
+font-size:12px;
+font-weight:800;
+margin-bottom:6px;
+opacity:.8;
+}
+
+.time{
+font-size:10px;
+opacity:.7;
+margin-top:6px;
+}
+
+#chatForm{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+padding:12px;
+background:#050505;
+z-index:50;
+}
+
+#messageInput{
+height:55px;
+font-size:16px;
+}
+
+.tag-box{
+position:absolute;
+bottom:80px;
+left:14px;
+right:14px;
+max-height:200px;
+overflow-y:auto;
+display:none;
+z-index:100;
+}
+
+.tag-item{
+padding:14px;
+cursor:pointer;
+transition:.2s;
+}
+
+.tag-item:hover{
+background:rgba(255,255,255,.05);
+}
+
+.reply-box{
+display:none;
+margin-bottom:10px;
+padding:10px;
+border-radius:18px;
+background:rgba(255,255,255,.05);
+}
+
+.reply-line{
+font-size:12px;
+color:#22c55e;
+font-weight:700;
+margin-bottom:4px;
+}
+
+.online-dot{
+width:8px;
+height:8px;
+background:#22c55e;
+border-radius:50%;
 }
 
 ::-webkit-scrollbar{
@@ -59,51 +182,11 @@ background:#22c55e;
 border-radius:20px;
 }
 
-.mention{
-color:#22c55e;
-font-weight:800;
-}
-
-.message{
-animation:fade .2s ease;
-}
-
-@keyframes fade{
-
-from{
-opacity:0;
-transform:translateY(10px);
-}
-
-to{
-opacity:1;
-transform:translateY(0);
-}
-
-}
-
-.reply-box{
-border-left:3px solid #22c55e;
-}
-
-#messages{
-scroll-behavior:smooth;
-padding-bottom:120px;
-}
-
-.mobile-input{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-z-index:999;
-}
-
 </style>
 
 </head>
 
-<body class="chat-bg">
+<body>
 
 <script>
 
@@ -121,200 +204,154 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
-if(!token || !currentUser){
+if(!token){
 
 window.location.href =
 "login.html";
 
 }
 
+const isAdmin =
+currentUser?.role === "admin"
+||
+currentUser?.username === "admin"
+||
+currentUser?.username === "swaplyadmin";
+
 </script>
 
-<div class="flex h-screen overflow-hidden">
+<!-- TOP BAR -->
 
-<!-- SIDEBAR -->
-<div class="hidden lg:flex w-[260px] glass border-r border-white/10 flex-col">
+<div class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
 
-<div class="p-5 border-b border-white/10">
-
-<h1 class="text-2xl font-black text-white">
-
-Swaply
-
-</h1>
-
-<p class="text-green-400 text-sm font-bold">
-
-Community Chat
-
-</p>
-
-</div>
-
-<div class="p-5">
-
-<div class="glass rounded-3xl p-4">
+<div class="flex items-center justify-between px-4 py-4">
 
 <div class="flex items-center gap-3">
 
+<a
+href="index.html"
+class="text-white text-2xl">
+
+←
+
+</a>
+
+<div>
+
+<h1 class="text-white text-xl font-black">
+
+Swaply Chat
+
+</h1>
+
+<div class="flex items-center gap-2 mt-1">
+
+<div class="online-dot"></div>
+
+<p class="text-green-400 text-xs font-bold">
+
+Community Online
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="flex items-center gap-3">
+
+<div class="hidden md:block text-right">
+
+<p class="text-white font-black text-sm">
+
+${currentUser?.username || "User"}
+
+</p>
+
+<p class="text-green-400 text-xs">
+
+${isAdmin ? "🛡 ADMIN" : "Online"}
+
+</p>
+
+</div>
+
 <img
 src="${
-currentUser.avatar ||
+currentUser?.avatar ||
 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
 }"
-class="w-14 h-14 rounded-full object-cover border-2 border-green-500">
-
-<div>
-
-<h2 class="text-white font-black">
-
-${currentUser.username}
-
-</h2>
-
-<p class="text-green-400 text-sm">
-
-Online
-
-</p>
+class="w-11 h-11 rounded-full border-2 border-green-500 object-cover">
 
 </div>
-
-</div>
-
-</div>
-
-<div class="mt-5 space-y-3">
-
-<a
-href="index.html"
-class="block bg-white/5 hover:bg-white/10 text-white text-center py-3 rounded-2xl text-sm font-bold">
-
-Home
-
-</a>
-
-<a
-href="browse.html"
-class="block bg-green-500 hover:bg-green-600 text-white text-center py-3 rounded-2xl text-sm font-bold">
-
-Browse
-
-</a>
-
-<button
-onclick="logout()"
-class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-2xl text-sm font-bold">
-
-Logout
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- MAIN -->
-<div class="flex-1 flex flex-col h-screen">
-
-<!-- TOP -->
-<div class="glass border-b border-white/10 px-4 py-4 flex items-center justify-between shrink-0">
-
-<div>
-
-<h2 class="text-lg md:text-2xl font-black text-white">
-
-Swaply Community
-
-</h2>
-
-<p class="text-green-400 text-xs md:text-sm font-bold">
-
-Buy • Sell • Negotiate • AI
-
-</p>
-
-</div>
-
-<div class="flex gap-2">
-
-<a
-href="index.html"
-class="bg-white/10 text-white px-3 py-2 rounded-xl text-xs font-bold">
-
-Home
-
-</a>
-
-<a
-href="browse.html"
-class="bg-green-500 text-white px-3 py-2 rounded-xl text-xs font-bold">
-
-Browse
-
-</a>
 
 </div>
 
 </div>
 
 <!-- MESSAGES -->
+
+<div id="messages"></div>
+
+<!-- TAG USERS -->
+
 <div
-id="messages"
-class="flex-1 overflow-y-auto px-3 py-4 space-y-4">
+id="tagBox"
+class="tag-box glass rounded-3xl">
 
-<div class="glass rounded-3xl p-5 max-w-[700px]">
-
-<h2 class="text-white text-2xl font-black mb-3">
-
-Welcome 👋
-
-</h2>
-
-<p class="text-gray-300 leading-relaxed text-sm">
-
-Mention
-<span class="mention">@ai</span>
-for AI help or
-<span class="mention">@admin</span>
-for admin assistance.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- REPLY PREVIEW -->
 <div
-id="replyPreview"
-class="hidden mobile-input mb-[70px] mx-3 glass rounded-2xl p-3">
+class="tag-item text-white font-bold"
+onclick="tagUser('ai')">
+
+🤖 AI Assistant
+
+</div>
+
+<div
+class="tag-item text-white font-bold"
+onclick="tagUser('admin')">
+
+🛡 Admin
+
+</div>
+
+</div>
+
+<!-- CHAT INPUT -->
+
+<form
+id="chatForm">
+
+<div class="max-w-5xl mx-auto">
+
+<!-- REPLY BOX -->
+
+<div
+id="replyBox"
+class="reply-box">
 
 <div class="flex items-center justify-between">
 
 <div>
 
-<p
-id="replyUser"
-class="text-green-400 text-xs font-black">
+<p class="reply-line">
+
+Replying to
 
 </p>
 
 <p
 id="replyText"
-class="text-white text-xs truncate max-w-[220px]">
-
-</p>
+class="text-white text-sm"></p>
 
 </div>
 
 <button
+type="button"
 onclick="cancelReply()"
-class="text-red-400 text-sm font-black">
+class="text-red-400 font-bold">
 
 ✕
 
@@ -324,27 +361,34 @@ class="text-red-400 text-sm font-black">
 
 </div>
 
-<!-- INPUT -->
-<div class="mobile-input glass border-t border-white/10 p-3">
+<div class="glass rounded-[30px] p-3 flex items-center gap-3">
 
-<!-- MENTIONS -->
-<div
-id="mentionBox"
-class="hidden absolute bottom-20 left-3 right-3 glass rounded-2xl overflow-hidden z-50 max-h-60 overflow-y-auto">
+<button
+type="button"
+class="text-2xl text-gray-400">
 
-</div>
+😊
 
-<div class="flex items-center gap-2">
+</button>
 
 <input
 type="text"
 id="messageInput"
 placeholder="Type message..."
-class="flex-1 h-11 bg-black/40 border border-white/10 rounded-2xl px-4 text-white placeholder:text-gray-500 outline-none text-sm focus:border-green-500">
+autocomplete="off"
+class="flex-1 bg-transparent outline-none text-white placeholder:text-gray-500 px-2">
 
 <button
-onclick="sendMessage()"
-class="bg-green-500 hover:bg-green-600 text-white px-4 h-11 rounded-2xl text-sm font-bold shrink-0">
+type="button"
+class="text-2xl text-gray-400">
+
+📎
+
+</button>
+
+<button
+type="submit"
+class="bg-green-500 hover:bg-green-600 text-white px-6 h-[55px] rounded-2xl font-black text-lg shrink-0">
 
 Send
 
@@ -354,410 +398,306 @@ Send
 
 </div>
 
+</form>
+
 <script>
 
-let users = [];
-
-let replyingTo = null;
-
-/* USER ONLINE */
-
-socket.emit(
-"user_online",
-currentUser.id
+const messages =
+document.getElementById(
+"messages"
 );
 
-/* LOAD USERS */
-
-async function loadUsers(){
-
-try{
-
-const res =
-await fetch(`${API}/users`);
-
-users =
-await res.json();
-
-}catch(err){
-
-console.log(err);
-
-}
-
-}
-
-loadUsers();
-
-/* INPUT */
-
-const input =
+const messageInput =
 document.getElementById(
 "messageInput"
 );
 
-/* MENTIONS */
+const tagBox =
+document.getElementById(
+"tagBox"
+);
 
-input.addEventListener(
+let replyTo = null;
+
+/* LOAD SAVED CHATS */
+
+const savedMessages =
+JSON.parse(
+localStorage.getItem(
+"swaply_messages"
+) || "[]"
+);
+
+savedMessages.forEach(msg => {
+
+appendMessage(msg);
+
+});
+
+/* SAVE */
+
+function saveMessage(msg){
+
+savedMessages.push(msg);
+
+localStorage.setItem(
+"swaply_messages",
+JSON.stringify(savedMessages)
+);
+
+}
+
+/* TAGGING */
+
+messageInput.addEventListener(
 "input",
-function(){
+() => {
 
 const value =
-input.value;
+messageInput.value;
 
-const words =
-value.split(" ");
+if(value.includes("@")){
 
-const lastWord =
-words[words.length - 1];
-
-if(lastWord.startsWith("@")){
-
-showMentions(lastWord);
+tagBox.style.display =
+"block";
 
 }else{
 
-hideMentions();
+tagBox.style.display =
+"none";
 
 }
 
 }
 );
 
-function showMentions(search = ""){
+function tagUser(name){
 
-const box =
-document.getElementById(
-"mentionBox"
+messageInput.value =
+messageInput.value.replace(
+/@\w*$/,
+`@${name} `
 );
 
-box.innerHTML = "";
+tagBox.style.display =
+"none";
 
-const special = [
-
-{
-username:"@ai",
-name:"🤖 AI Assistant"
-},
-
-{
-username:"@admin",
-name:"👑 Admin"
-}
-
-];
-
-special.forEach(user => {
-
-if(
-user.username
-.toLowerCase()
-.includes(search.toLowerCase())
-){
-
-box.innerHTML += `
-
-<div
-onclick="selectMention('${user.username}')"
-class="p-3 hover:bg-white/10 cursor-pointer text-white font-bold text-sm">
-
-${user.name}
-
-</div>
-
-`;
-
-}
-
-});
-
-users.forEach(user => {
-
-const username =
-"@" + user.username;
-
-if(
-username
-.toLowerCase()
-.includes(search.toLowerCase())
-){
-
-box.innerHTML += `
-
-<div
-onclick="selectMention('${username}')"
-class="p-3 hover:bg-white/10 cursor-pointer text-white text-sm">
-
-🟢 ${user.username}
-
-</div>
-
-`;
-
-}
-
-});
-
-if(box.innerHTML.trim() === ""){
-
-hideMentions();
-
-return;
-
-}
-
-box.classList.remove("hidden");
-
-}
-
-function selectMention(username){
-
-const words =
-input.value.split(" ");
-
-words.pop();
-
-words.push(username);
-
-input.value =
-words.join(" ") + " ";
-
-input.focus();
-
-hideMentions();
-
-}
-
-function hideMentions(){
-
-document
-.getElementById(
-"mentionBox"
-)
-.classList.add("hidden");
-
-}
-
-/* ENTER SEND */
-
-input.addEventListener(
-"keypress",
-function(e){
-
-if(e.key === "Enter"){
-
-sendMessage();
-
-}
-
-}
-);
-
-/* REPLY */
-
-function replyMessage(message){
-
-replyingTo = message;
-
-document
-.getElementById(
-"replyPreview"
-)
-.classList.remove("hidden");
-
-document
-.getElementById(
-"replyUser"
-)
-.innerText =
-`Replying to ${message.senderName}`;
-
-document
-.getElementById(
-"replyText"
-)
-.innerText =
-message.text;
-
-}
-
-function cancelReply(){
-
-replyingTo = null;
-
-document
-.getElementById(
-"replyPreview"
-)
-.classList.add("hidden");
+messageInput.focus();
 
 }
 
 /* SEND */
 
-function sendMessage(){
+document
+.getElementById(
+"chatForm"
+)
+.addEventListener(
+"submit",
+e => {
+
+e.preventDefault();
 
 const text =
-input.value.trim();
+messageInput.value.trim();
 
 if(!text) return;
 
-socket.emit(
-"send_message",
-{
+const msg = {
 
-senderId:
-currentUser.id,
-
-senderName:
+username:
 currentUser.username,
 
-receiverId:"GLOBAL",
+message:text,
 
-text,
+replyTo,
 
-replyTo:
-replyingTo ?
-replyingTo.senderName :
-"",
+admin:isAdmin,
 
-replyText:
-replyingTo ?
-replyingTo.text :
-""
+time:new Date()
+.toLocaleTimeString([],{
+hour:'2-digit',
+minute:'2-digit'
+})
+
+};
+
+socket.emit(
+"sendMessage",
+msg
+);
+
+appendMessage(msg);
+
+saveMessage(msg);
+
+messageInput.value = "";
+
+replyTo = null;
+
+document
+.getElementById(
+"replyBox"
+)
+.style.display = "none";
+
+/* AI */
+
+if(
+text.toLowerCase().includes("@ai")
+){
+
+setTimeout(() => {
+
+const aiMsg = {
+
+username:"AI",
+
+message:
+getAIResponse(text),
+
+ai:true,
+
+time:new Date()
+.toLocaleTimeString([],{
+hour:'2-digit',
+minute:'2-digit'
+})
+
+};
+
+appendMessage(aiMsg);
+
+saveMessage(aiMsg);
+
+},1000);
+
+}
+
+/* ADMIN AUTO */
+
+if(
+text.toLowerCase().includes("@admin")
+&&
+!isAdmin
+){
+
+setTimeout(() => {
+
+const adminMsg = {
+
+username:"ADMIN",
+
+message:
+"🛡 Admin has received your message and will respond shortly.",
+
+admin:true,
+
+time:new Date()
+.toLocaleTimeString([],{
+hour:'2-digit',
+minute:'2-digit'
+})
+
+};
+
+appendMessage(adminMsg);
+
+saveMessage(adminMsg);
+
+},1200);
+
+}
 
 }
 );
-
-input.value = "";
-
-hideMentions();
-
-cancelReply();
-
-}
 
 /* RECEIVE */
 
 socket.on(
-"receive_message",
-message => {
+"receiveMessage",
+msg => {
 
-renderMessage(message);
+appendMessage(msg);
 
 }
 );
 
-/* RENDER */
+/* APPEND */
 
-function renderMessage(message){
+function appendMessage(data){
 
-const messages =
-document.getElementById(
-"messages"
+const div =
+document.createElement(
+"div"
 );
 
-let badge = "";
+let type = "other";
 
-if(
-message.senderId === "AI" ||
-message.senderName === "AI Assistant"
-){
+if(data.username === currentUser.username){
 
-badge =
-`<span class="text-green-400 text-[10px] font-black">AI</span>`;
+type = "mine";
 
 }
 
-if(message.senderId === "ADMIN"){
+if(data.admin){
 
-badge =
-`<span class="text-yellow-400 text-[10px] font-black">ADMIN</span>`;
-
-}
-
-let replyHTML = "";
-
-if(message.replyText){
-
-replyHTML = `
-
-<div class="reply-box bg-black/30 rounded-xl p-3 mb-3">
-
-<p class="text-green-400 font-black text-[11px]">
-
-${message.replyTo}
-
-</p>
-
-<p class="text-gray-300 text-xs truncate">
-
-${message.replyText}
-
-</p>
-
-</div>
-
-`;
+type = "admin";
 
 }
 
-messages.innerHTML += `
+if(data.ai){
 
-<div class="message">
+type = "ai";
 
-<div class="glass rounded-3xl p-4 max-w-[95%] md:max-w-[700px]">
+}
 
-<div class="flex items-center justify-between mb-3">
+div.className =
+`message ${type}`;
 
-<div class="flex items-center gap-3">
+div.innerHTML = `
 
-<div class="w-9 h-9 rounded-xl bg-green-500 flex items-center justify-center text-white text-sm font-black shrink-0">
+<div
+class="bubble"
+onclick='replyMessage(${JSON.stringify(data.message)})'>
 
-${message.senderName
-.charAt(0)
-.toUpperCase()}
+<div class="username">
 
-</div>
-
-<div>
-
-<h3 class="text-white font-black text-sm">
-
-${message.senderName}
-
-${badge}
-
-</h3>
-
-<p class="text-gray-400 text-[10px]">
-
-${new Date(message.createdAt)
-.toLocaleTimeString()}
-
-</p>
+${
+data.admin
+?
+"🛡 ADMIN"
+:
+data.ai
+?
+"🤖 AI"
+:
+data.username
+}
 
 </div>
 
+${
+data.replyTo
+?
+`
+<div class="glass rounded-2xl p-2 mb-3 text-sm opacity-80">
+↩ ${data.replyTo}
+</div>
+`
+:
+""
+}
+
+<div class="text-[15px] leading-relaxed">
+
+${data.message}
+
 </div>
 
-<button
-onclick='replyMessage(${JSON.stringify(message)})'
-class="text-green-400 text-[11px] font-bold shrink-0">
+<div class="time">
 
-Reply
-
-</button>
-
-</div>
-
-${replyHTML}
-
-<p class="text-gray-200 text-sm leading-relaxed whitespace-pre-wrap break-words">
-
-${highlightMentions(message.text)}
-
-</p>
+${data.time}
 
 </div>
 
@@ -765,107 +705,95 @@ ${highlightMentions(message.text)}
 
 `;
 
-messages.scrollTop =
-messages.scrollHeight;
-
-}
-
-/* HIGHLIGHT */
-
-function highlightMentions(text){
-
-return text.replace(
-/@(\w+)/g,
-'<span class="mention">@$1</span>'
-);
-
-}
-
-/* LOAD OLD */
-
-async function loadMessages(){
-
-try{
-
-const res =
-await fetch(
-`${API}/messages`
-);
-
-const data =
-await res.json();
-
-data.forEach(message => {
-
-renderMessage(message);
-
-});
-
-}catch(err){
-
-console.log(err);
-
-}
-
-}
-
-loadMessages();
-
-/* LOGOUT */
-
-async function logout(){
-
-try{
-
-await fetch(
-`${API}/logout`,
-{
-
-method:"POST",
-
-headers:{
-Authorization:token
-}
-
-}
-);
-
-}catch(err){}
-
-socket.emit(
-"logout",
-currentUser.id
-);
-
-localStorage.removeItem(
-"token"
-);
-
-localStorage.removeItem(
-"user"
-);
-
-window.location.href =
-"login.html";
-
-}
-
-/* MOBILE KEYBOARD FIX */
-
-window.addEventListener(
-"resize",
-() => {
-
-const messages =
-document.getElementById(
-"messages"
-);
+messages.appendChild(div);
 
 messages.scrollTop =
 messages.scrollHeight;
 
 }
-);
+
+/* REPLY */
+
+function replyMessage(text){
+
+replyTo = text;
+
+document
+.getElementById(
+"replyBox"
+)
+.style.display = "block";
+
+document
+.getElementById(
+"replyText"
+)
+innerText = text;
+
+messageInput.focus();
+
+}
+
+function cancelReply(){
+
+replyTo = null;
+
+document
+.getElementById(
+"replyBox"
+)
+.style.display = "none";
+
+}
+
+/* AI */
+
+function getAIResponse(text){
+
+text = text.toLowerCase();
+
+if(text.includes("phone")){
+
+return "📱 You can browse phones in the marketplace section.";
+
+}
+
+if(text.includes("price")){
+
+return "💰 Compare multiple listings before buying.";
+
+}
+
+if(text.includes("laptop")){
+
+return "💻 Many laptops are available in browse section.";
+
+}
+
+if(text.includes("hello")){
+
+return "👋 Hello! How can I assist you today?";
+
+}
+
+if(text.includes("scam")){
+
+return "⚠ Never pay before meeting seller physically.";
+
+}
+
+return "🤖 AI Assistant is here to help you trade safely.";
+
+}
+
+/* MOBILE FIX */
+
+setTimeout(() => {
+
+messages.scrollTop =
+messages.scrollHeight;
+
+},500);
 
 </script>
 
