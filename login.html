@@ -2,185 +2,244 @@
 <html lang="en">
 <head>
 
-<meta charset="UTF-8"/>
+<meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0"/>
+content="width=device-width, initial-scale=1.0">
 
 <title>Swaply Login</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
 body{
-  font-family:'Inter',sans-serif;
+background:#050505;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+overflow:hidden;
+position:relative;
+}
+
+/* BACKGROUND */
+
+.bg{
+position:absolute;
+inset:0;
+overflow:hidden;
+z-index:0;
+}
+
+.circle{
+position:absolute;
+border-radius:50%;
+filter:blur(90px);
+opacity:.35;
+}
+
+.circle1{
+width:320px;
+height:320px;
+background:#22c55e;
+top:-100px;
+left:-100px;
+}
+
+.circle2{
+width:300px;
+height:300px;
+background:#7c3aed;
+bottom:-120px;
+right:-120px;
+}
+
+/* CARD */
+
+.card{
+position:relative;
+z-index:2;
+width:100%;
+max-width:420px;
+background:rgba(17,24,39,.92);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.08);
+border-radius:32px;
+padding:32px 24px;
+box-shadow:0 20px 50px rgba(0,0,0,.5);
+animation:fade .4s ease;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.logo{
+font-size:38px;
+font-weight:900;
+color:white;
+text-align:center;
+}
+
+.sub{
+text-align:center;
+color:#9ca3af;
+font-size:14px;
+margin-top:8px;
+margin-bottom:28px;
+}
+
+/* INPUTS */
+
+.input-group{
+margin-bottom:18px;
+}
+
+.label{
+display:block;
+color:white;
+font-size:13px;
+font-weight:700;
+margin-bottom:8px;
+}
+
+.input{
+width:100%;
+height:56px;
+background:#0f172a;
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+padding:0 16px;
+color:white;
+font-size:15px;
+outline:none;
+transition:.2s;
+}
+
+.input:focus{
+border-color:#22c55e;
+box-shadow:0 0 0 3px rgba(34,197,94,.15);
+}
+
+/* BUTTON */
+
+.btn{
+width:100%;
+height:58px;
+border:none;
+border-radius:18px;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+color:white;
+font-size:16px;
+font-weight:900;
+cursor:pointer;
+margin-top:10px;
+transition:.2s;
+}
+
+.btn:hover{
+transform:scale(1.02);
+}
+
+/* INFO */
+
+.info{
+margin-top:20px;
+padding:16px;
+background:#0f172a;
+border-radius:18px;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.info-title{
+color:#22c55e;
+font-size:13px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.info p{
+color:#d1d5db;
+font-size:13px;
+line-height:1.6;
+}
+
+/* LINKS */
+
+.links{
+margin-top:22px;
+text-align:center;
+}
+
+.links a{
+color:#22c55e;
+font-size:14px;
+font-weight:700;
+text-decoration:none;
+}
+
+/* ERROR */
+
+#error{
+margin-top:16px;
+text-align:center;
+color:#ef4444;
+font-size:14px;
+font-weight:700;
+display:none;
 }
 
 </style>
 
 </head>
 
-<body class="bg-gradient-to-br from-green-50 via-white to-gray-100 min-h-screen flex items-center justify-center p-6">
+<body>
 
-<div class="w-full max-w-6xl grid lg:grid-cols-2 bg-white rounded-[40px] overflow-hidden shadow-2xl border border-gray-100">
+<div class="bg">
 
-<!-- LEFT -->
-<div class="bg-gradient-to-br from-green-600 to-green-500 p-14 text-white relative overflow-hidden">
+<div class="circle circle1"></div>
 
-<div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-
-<div class="relative z-10">
-
-<div class="w-24 h-24 bg-white rounded-3xl flex items-center justify-center text-green-600 text-5xl font-black shadow-2xl mb-10">
-
-S
+<div class="circle circle2"></div>
 
 </div>
 
-<h1 class="text-6xl font-black leading-tight mb-8">
+<div class="card">
 
-Welcome To
+<h1 class="logo">
+
 Swaply
 
 </h1>
 
-<p class="text-green-100 text-xl leading-relaxed mb-10">
+<p class="sub">
 
-Buy, sell and trade items securely with real-time private chat.
-
-</p>
-
-<div class="space-y-5">
-
-<div class="flex items-center gap-4 bg-white/10 backdrop-blur-xl p-5 rounded-2xl">
-
-<div class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-green-600 text-2xl font-black">
-
-✓
-
-</div>
-
-<div>
-
-<h3 class="font-black text-xl">
-Secure Marketplace
-</h3>
-
-<p class="text-green-100">
-Protected user accounts
-</p>
-
-</div>
-
-</div>
-
-<div class="flex items-center gap-4 bg-white/10 backdrop-blur-xl p-5 rounded-2xl">
-
-<div class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-green-600 text-2xl font-black">
-
-💬
-
-</div>
-
-<div>
-
-<h3 class="font-black text-xl">
-Live Chat
-</h3>
-
-<p class="text-green-100">
-Real-time private messaging
-</p>
-
-</div>
-
-</div>
-
-<div class="flex items-center gap-4 bg-white/10 backdrop-blur-xl p-5 rounded-2xl">
-
-<div class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-green-600 text-2xl font-black">
-
-⚡
-
-</div>
-
-<div>
-
-<h3 class="font-black text-xl">
-Fast Trading
-</h3>
-
-<p class="text-green-100">
-Connect buyers and sellers instantly
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- RIGHT -->
-<div class="p-10 lg:p-16 flex items-center">
-
-<div class="w-full">
-
-<div class="mb-10">
-
-<h2 class="text-5xl font-black text-gray-900 mb-4">
-
-Login
-
-</h2>
-
-<p class="text-gray-500 text-lg">
-
-Access your Swaply account
+Buy • Sell • Trade Securely
 
 </p>
 
-</div>
+<form id="loginForm">
 
-<!-- TABS -->
-<div class="flex bg-gray-100 p-2 rounded-2xl mb-10">
+<div class="input-group">
 
-<button
-id="loginTab"
-onclick="showLogin()"
-class="flex-1 py-4 rounded-2xl font-black bg-green-600 text-white transition-all">
-
-Login
-
-</button>
-
-<button
-id="registerTab"
-onclick="showRegister()"
-class="flex-1 py-4 rounded-2xl font-black text-gray-700 transition-all">
-
-Register
-
-</button>
-
-</div>
-
-<!-- LOGIN FORM -->
-<div id="loginForm">
-
-<div class="space-y-6">
-
-<div>
-
-<label class="block font-bold mb-3 text-gray-700">
+<label class="label">
 
 Email
 
@@ -188,15 +247,16 @@ Email
 
 <input
 type="email"
-id="loginEmail"
-placeholder="Enter email"
-class="w-full border-2 border-gray-200 rounded-2xl px-6 py-5 text-lg outline-none focus:border-green-500 transition-all"/>
+id="email"
+class="input"
+placeholder="Enter your email"
+required>
 
 </div>
 
-<div>
+<div class="input-group">
 
-<label class="block font-bold mb-3 text-gray-700">
+<label class="label">
 
 Password
 
@@ -204,92 +264,54 @@ Password
 
 <input
 type="password"
-id="loginPassword"
-placeholder="Enter password"
-class="w-full border-2 border-gray-200 rounded-2xl px-6 py-5 text-lg outline-none focus:border-green-500 transition-all"/>
+id="password"
+class="input"
+placeholder="Enter your password"
+required>
 
 </div>
 
 <button
-onclick="login()"
-class="w-full bg-green-600 hover:bg-green-700 transition-all text-white py-5 rounded-2xl font-black text-xl shadow-2xl">
+type="submit"
+class="btn">
 
 Login
 
 </button>
 
-</div>
+<div id="error"></div>
+
+</form>
+
+<div class="info">
+
+<p class="info-title">
+
+🛡 Admin Login
+
+</p>
+
+<p>
+
+Email:
+<b>admin@swaply.com</b>
+
+<br><br>
+
+Password:
+<b>JULIAN254</b>
+
+</p>
 
 </div>
 
-<!-- REGISTER FORM -->
-<div
-id="registerForm"
-class="hidden">
+<div class="links">
 
-<div class="space-y-6">
-
-<div>
-
-<label class="block font-bold mb-3 text-gray-700">
-
-Username
-
-</label>
-
-<input
-type="text"
-id="registerUsername"
-placeholder="Choose username"
-class="w-full border-2 border-gray-200 rounded-2xl px-6 py-5 text-lg outline-none focus:border-green-500 transition-all"/>
-
-</div>
-
-<div>
-
-<label class="block font-bold mb-3 text-gray-700">
-
-Email
-
-</label>
-
-<input
-type="email"
-id="registerEmail"
-placeholder="Enter email"
-class="w-full border-2 border-gray-200 rounded-2xl px-6 py-5 text-lg outline-none focus:border-green-500 transition-all"/>
-
-</div>
-
-<div>
-
-<label class="block font-bold mb-3 text-gray-700">
-
-Password
-
-</label>
-
-<input
-type="password"
-id="registerPassword"
-placeholder="Create password"
-class="w-full border-2 border-gray-200 rounded-2xl px-6 py-5 text-lg outline-none focus:border-green-500 transition-all"/>
-
-</div>
-
-<button
-onclick="register()"
-class="w-full bg-black hover:bg-gray-900 transition-all text-white py-5 rounded-2xl font-black text-xl shadow-2xl">
+<a href="register.html">
 
 Create Account
 
-</button>
-
-</div>
-
-</div>
-
-</div>
+</a>
 
 </div>
 
@@ -300,176 +322,52 @@ Create Account
 const API =
 "https://traderbackend.onrender.com";
 
-
-// AUTO LOGIN
-const token =
-localStorage.getItem("token");
-
-if(token){
-
-window.location.href =
-"index.html";
-
-}
-
-
-// SHOW LOGIN
-function showLogin(){
-
 document
-.getElementById("loginForm")
-.classList.remove("hidden");
+.getElementById(
+"loginForm"
+)
+.addEventListener(
+"submit",
+async(e) => {
 
-document
-.getElementById("registerForm")
-.classList.add("hidden");
-
-document
-.getElementById("loginTab")
-.classList.add(
-"bg-green-600",
-"text-white"
-);
-
-document
-.getElementById("registerTab")
-.classList.remove(
-"bg-green-600",
-"text-white"
-);
-
-}
-
-
-// SHOW REGISTER
-function showRegister(){
-
-document
-.getElementById("registerForm")
-.classList.remove("hidden");
-
-document
-.getElementById("loginForm")
-.classList.add("hidden");
-
-document
-.getElementById("registerTab")
-.classList.add(
-"bg-green-600",
-"text-white"
-);
-
-document
-.getElementById("loginTab")
-.classList.remove(
-"bg-green-600",
-"text-white"
-);
-
-}
-
-
-// REGISTER
-async function register(){
-
-const username =
-document.getElementById("registerUsername").value;
+e.preventDefault();
 
 const email =
-document.getElementById("registerEmail").value;
+document
+.getElementById(
+"email"
+)
+.value;
 
 const password =
-document.getElementById("registerPassword").value;
+document
+.getElementById(
+"password"
+)
+.value;
 
-if(!username || !email || !password){
-
-alert("Please fill all fields");
-
-return;
-
-}
+const error =
+document
+.getElementById(
+"error"
+);
 
 try{
 
 const res =
-await fetch(`${API}/register`,{
-
+await fetch(
+`${API}/login`,
+{
 method:"POST",
-
 headers:{
 "Content-Type":"application/json"
 },
-
 body:JSON.stringify({
-
-username,
 email,
 password
-
 })
-
-});
-
-const data =
-await res.json();
-
-if(data.success){
-
-alert("Account created successfully");
-
-showLogin();
-
-}else{
-
-alert(data.message);
-
 }
-
-}catch(err){
-
-alert("Registration failed");
-
-}
-
-}
-
-
-// LOGIN
-async function login(){
-
-const email =
-document.getElementById("loginEmail").value;
-
-const password =
-document.getElementById("loginPassword").value;
-
-if(!email || !password){
-
-alert("Please fill all fields");
-
-return;
-
-}
-
-try{
-
-const res =
-await fetch(`${API}/login`,{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-email,
-password
-
-})
-
-});
+);
 
 const data =
 await res.json();
@@ -486,22 +384,46 @@ localStorage.setItem(
 JSON.stringify(data.user)
 );
 
+/* ADMIN */
+
+if(
+data.user.role === "admin"
+){
+
 window.location.href =
-"index.html";
+"admin/index.html";
 
 }else{
 
-alert(data.message);
+window.location.href =
+"index.html";
+
+}
+
+}else{
+
+error.style.display =
+"block";
+
+error.innerText =
+data.message || "Login failed";
 
 }
 
 }catch(err){
 
-alert("Login failed");
+console.log(err);
+
+error.style.display =
+"block";
+
+error.innerText =
+"Server error";
 
 }
 
 }
+);
 
 </script>
 
