@@ -7,7 +7,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0"/>
 
-<title>Swaply Global Chat</title>
+<title>Swaply Community Chat</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -20,38 +20,39 @@ content="width=device-width, initial-scale=1.0"/>
 <style>
 
 body{
-  font-family:'Inter',sans-serif;
-  overflow:hidden;
+font-family:'Inter',sans-serif;
+overflow:hidden;
+background:#050505;
 }
 
 ::-webkit-scrollbar{
-  width:6px;
+width:6px;
 }
 
 ::-webkit-scrollbar-thumb{
-  background:#16a34a;
-  border-radius:20px;
+background:#22c55e;
+border-radius:20px;
 }
 
 .glass{
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,.08);
 }
 
 .chat-bg{
-  background:
-  linear-gradient(
-  rgba(0,0,0,.84),
-  rgba(0,0,0,.88)),
-  url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop');
+background:
+linear-gradient(
+rgba(0,0,0,.84),
+rgba(0,0,0,.92)),
+url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop');
 
-  background-size:cover;
-  background-position:center;
+background-size:cover;
+background-position:center;
 }
 
 .message-enter{
-  animation:fade .35s ease;
+animation:fade .3s ease;
 }
 
 @keyframes fade{
@@ -66,6 +67,15 @@ opacity:1;
 transform:translateY(0);
 }
 
+}
+
+.mention{
+color:#22c55e;
+font-weight:800;
+}
+
+.reply-box{
+border-left:4px solid #22c55e;
 }
 
 </style>
@@ -99,7 +109,6 @@ window.location.href =
 
 </script>
 
-<!-- MAIN -->
 <div class="flex h-screen">
 
 <!-- SIDEBAR -->
@@ -109,7 +118,7 @@ window.location.href =
 
 <div class="flex items-center gap-5">
 
-<div class="w-16 h-16 rounded-3xl bg-green-500 flex items-center justify-center text-white text-3xl font-black shadow-2xl">
+<div class="w-16 h-16 rounded-3xl bg-green-500 flex items-center justify-center text-white text-3xl font-black">
 
 S
 
@@ -125,7 +134,7 @@ Swaply Chat
 
 <p class="text-green-400 font-bold">
 
-Global Marketplace Community
+Community + AI
 
 </p>
 
@@ -158,7 +167,7 @@ ${currentUser.username}
 
 <p class="text-green-400 font-bold">
 
-Online Now
+Online
 
 </p>
 
@@ -170,35 +179,25 @@ Online Now
 
 <div class="mt-8 glass rounded-[30px] p-6 text-white">
 
-<h3 class="text-2xl font-black mb-4">
+<h3 class="text-2xl font-black mb-5">
 
-🤖 AI Assistant
+🔥 Features
 
 </h3>
 
-<p class="text-gray-300 leading-relaxed">
+<div class="space-y-4 text-gray-300">
 
-Mention:
+<p>• Reply to messages</p>
 
-<span class="text-green-400 font-black">
+<p>• Mention users</p>
 
-@ai
+<p>• Mention AI</p>
 
-</span>
+<p>• Mention Admin</p>
 
-to get AI assistance.
+<p>• Real-time chat</p>
 
-</p>
-
-<div class="mt-5 space-y-3 text-gray-300">
-
-<p>• Product Help</p>
-
-<p>• Buying Advice</p>
-
-<p>• Marketplace Support</p>
-
-<p>• Price Negotiation</p>
+<p>• Community marketplace</p>
 
 </div>
 
@@ -206,7 +205,7 @@ to get AI assistance.
 
 <button
 onclick="logout()"
-class="mt-8 w-full bg-red-500 hover:bg-red-600 transition-all text-white py-5 rounded-3xl font-black text-xl shadow-2xl">
+class="mt-8 w-full bg-red-500 hover:bg-red-600 transition-all text-white py-5 rounded-3xl font-black text-xl">
 
 Logout
 
@@ -216,43 +215,33 @@ Logout
 
 </div>
 
-<!-- CHAT -->
+<!-- MAIN CHAT -->
 <div class="flex-1 flex flex-col">
 
 <!-- TOP -->
 <div class="glass border-b border-white/10 px-6 py-5 flex items-center justify-between">
 
-<div class="flex items-center gap-5">
-
-<div class="w-16 h-16 rounded-3xl bg-green-500 flex items-center justify-center text-white text-3xl shadow-2xl">
-
-💬
-
-</div>
-
 <div>
 
 <h2 class="text-3xl font-black text-white">
 
-Marketplace Chat
+Swaply Community
 
 </h2>
 
 <p class="text-green-400 font-bold">
 
-Chat with buyers, sellers & AI
+Chat with buyers, sellers, AI & admin
 
 </p>
 
 </div>
 
-</div>
-
-<div class="flex items-center gap-4">
+<div class="flex gap-4">
 
 <a
 href="index.html"
-class="bg-white/10 hover:bg-white/20 transition-all text-white px-6 py-4 rounded-2xl font-black">
+class="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-2xl font-black">
 
 Home
 
@@ -260,7 +249,7 @@ Home
 
 <a
 href="browse.html"
-class="bg-green-500 hover:bg-green-600 transition-all text-white px-6 py-4 rounded-2xl font-black">
+class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-2xl font-black">
 
 Browse
 
@@ -275,29 +264,21 @@ Browse
 id="messages"
 class="flex-1 overflow-y-auto p-6 pb-40 space-y-6">
 
-<!-- WELCOME -->
-<div class="message-enter">
-
-<div class="glass rounded-[35px] p-8 max-w-[850px]">
+<div class="glass rounded-[35px] p-8 max-w-[900px]">
 
 <h2 class="text-4xl font-black text-white mb-5">
 
-Welcome To Swaply Chat 👋
+Welcome 👋
 
 </h2>
 
 <p class="text-gray-300 text-xl leading-relaxed">
 
-Talk with buyers and sellers in real time.
-Need assistance? Mention
-
-<span class="text-green-400 font-black">
-
-@ai
-
-</span>
-
-and the AI assistant will help you instantly.
+Ask questions, negotiate deals, mention
+<span class="mention">@ai</span>
+for AI help or
+<span class="mention">@admin</span>
+for admin support.
 
 </p>
 
@@ -305,23 +286,63 @@ and the AI assistant will help you instantly.
 
 </div>
 
+<!-- REPLY BAR -->
+<div
+id="replyPreview"
+class="hidden px-6 py-4 bg-green-500/20 border-t border-green-500">
+
+<div class="flex items-center justify-between">
+
+<div>
+
+<p
+id="replyUser"
+class="text-green-400 font-black text-lg">
+
+</p>
+
+<p
+id="replyText"
+class="text-white">
+
+</p>
+
+</div>
+
+<button
+onclick="cancelReply()"
+class="text-red-400 font-black text-xl">
+
+✕
+
+</button>
+
+</div>
+
 </div>
 
 <!-- INPUT -->
-<div class="glass border-t border-white/10 p-5 sticky bottom-0">
+<div class="glass border-t border-white/10 p-5 relative">
+
+<!-- MENTION BOX -->
+<div
+id="mentionBox"
+class="hidden absolute bottom-24 left-6 w-80 glass rounded-3xl overflow-hidden shadow-2xl z-50">
+
+</div>
 
 <div class="flex items-center gap-4">
 
 <input
 type="text"
 id="messageInput"
-placeholder="Type your message..."
+placeholder="Type message..."
 class="flex-1 h-16 bg-white/10 border border-white/10 text-white placeholder:text-gray-400 rounded-3xl px-8 outline-none text-lg focus:border-green-500"
 autocomplete="off"/>
 
 <button
 onclick="sendMessage()"
-class="bg-green-500 hover:bg-green-600 transition-all text-white px-10 h-16 rounded-3xl font-black text-xl shadow-2xl hover:scale-105">
+class="bg-green-500 hover:bg-green-600 transition-all text-white px-10 h-16 rounded-3xl font-black text-xl">
 
 Send
 
@@ -337,6 +358,10 @@ Send
 
 <script>
 
+let users = [];
+
+let replyingTo = null;
+
 /* =========================================
    USER ONLINE
 ========================================= */
@@ -347,12 +372,182 @@ currentUser.id
 );
 
 /* =========================================
-   ENTER KEY SEND
+   LOAD USERS
 ========================================= */
 
+async function loadUsers(){
+
+try {
+
+const res =
+await fetch(`${API}/users`);
+
+users =
+await res.json();
+
+} catch(err){
+
+console.log(err);
+
+}
+
+}
+
+loadUsers();
+
+/* =========================================
+   MENTIONS
+========================================= */
+
+const input =
+document.getElementById(
+"messageInput"
+);
+
+input.addEventListener(
+"input",
+function(){
+
+const value =
+input.value;
+
+if(value.includes("@")){
+
+showMentions();
+
+}else{
+
 document
-.getElementById("messageInput")
-.addEventListener(
+.getElementById(
+"mentionBox"
+)
+.classList.add("hidden");
+
+}
+
+}
+);
+
+function showMentions(){
+
+const box =
+document.getElementById(
+"mentionBox"
+);
+
+box.innerHTML = "";
+
+const special = [
+
+{
+username:"ai",
+name:"🤖 AI Assistant"
+},
+
+{
+username:"admin",
+name:"👑 Admin"
+}
+
+];
+
+special.forEach(user => {
+
+box.innerHTML += `
+
+<div
+onclick="selectMention('${user.username}')"
+class="p-4 hover:bg-white/10 cursor-pointer text-white font-bold">
+
+${user.name}
+
+</div>
+
+`;
+
+});
+
+users.forEach(user => {
+
+box.innerHTML += `
+
+<div
+onclick="selectMention('${user.username}')"
+class="p-4 hover:bg-white/10 cursor-pointer text-white">
+
+🟢 ${user.username}
+
+</div>
+
+`;
+
+});
+
+box.classList.remove("hidden");
+
+}
+
+function selectMention(username){
+
+input.value += `${username} `;
+
+input.focus();
+
+document
+.getElementById(
+"mentionBox"
+)
+.classList.add("hidden");
+
+}
+
+/* =========================================
+   REPLY
+========================================= */
+
+function replyMessage(message){
+
+replyingTo = message;
+
+document
+.getElementById(
+"replyPreview"
+)
+.classList.remove("hidden");
+
+document
+.getElementById(
+"replyUser"
+)
+.innerText =
+`Replying to ${message.senderName}`;
+
+document
+.getElementById(
+"replyText"
+)
+.innerText =
+message.text;
+
+}
+
+function cancelReply(){
+
+replyingTo = null;
+
+document
+.getElementById(
+"replyPreview"
+)
+.classList.add("hidden");
+
+}
+
+/* =========================================
+   ENTER SEND
+========================================= */
+
+input.addEventListener(
 "keypress",
 function(e){
 
@@ -370,11 +565,6 @@ sendMessage();
 ========================================= */
 
 function sendMessage(){
-
-const input =
-document.getElementById(
-"messageInput"
-);
 
 const text =
 input.value.trim();
@@ -395,12 +585,22 @@ receiverId:"GLOBAL",
 
 text,
 
-isChatAI:true
+replyTo:
+replyingTo ?
+replyingTo.senderName :
+"",
+
+replyText:
+replyingTo ?
+replyingTo.text :
+""
 
 }
 );
 
 input.value = "";
+
+cancelReply();
 
 }
 
@@ -412,104 +612,61 @@ socket.on(
 "receive_message",
 message => {
 
+renderMessage(message);
+
+}
+);
+
+/* =========================================
+   RENDER MESSAGE
+========================================= */
+
+function renderMessage(message){
+
 const messages =
 document.getElementById(
 "messages"
 );
 
-/* USER MESSAGE */
+let badge = "";
 
 if(
-message.senderId === currentUser.id
-){
-
-messages.innerHTML += `
-
-<div class="flex justify-end message-enter">
-
-<div class="max-w-[750px]">
-
-<div class="bg-green-500 rounded-[30px] rounded-br-none px-8 py-6 shadow-2xl">
-
-<div class="flex items-center justify-between mb-3">
-
-<h3 class="text-2xl font-black text-white">
-
-You
-
-</h3>
-
-<p class="text-white/70 text-sm">
-
-${new Date(message.createdAt)
-.toLocaleTimeString()}
-
-</p>
-
-</div>
-
-<p class="text-white text-lg leading-relaxed whitespace-pre-wrap">
-
-${message.text}
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-}
-
-/* AI MESSAGE */
-
-else if(
 message.senderId === "AI"
 ){
 
-messages.innerHTML += `
+badge =
+`<span class="text-green-400 font-black">AI</span>`;
 
-<div class="flex items-start gap-4 message-enter">
+}
 
-<div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center text-2xl shadow-xl">
+if(
+message.senderId === "ADMIN"
+){
 
-🤖
+badge =
+`<span class="text-yellow-400 font-black">ADMIN</span>`;
 
-</div>
+}
 
-<div class="max-w-[750px]">
+let replyHTML = "";
 
-<div class="glass rounded-[30px] rounded-tl-none px-8 py-6 shadow-2xl">
+if(message.replyText){
 
-<div class="flex items-center justify-between mb-3">
+replyHTML = `
 
-<h3 class="text-2xl font-black text-white">
+<div class="reply-box bg-black/30 rounded-2xl p-4 mb-4">
 
-Swaply AI
+<p class="text-green-400 font-black">
 
-</h3>
-
-<p class="text-gray-400 text-sm">
-
-${new Date(message.createdAt)
-.toLocaleTimeString()}
-
-</p>
-
-</div>
-
-<p class="text-gray-200 text-lg leading-relaxed whitespace-pre-wrap">
-
-${message.text}
+${message.replyTo}
 
 </p>
 
-</div>
+<p class="text-gray-300 truncate">
 
-</div>
+${message.replyText}
+
+</p>
 
 </div>
 
@@ -517,15 +674,18 @@ ${message.text}
 
 }
 
-/* OTHER USERS */
-
-else{
-
 messages.innerHTML += `
 
-<div class="flex items-start gap-4 message-enter">
+<div
+class="message-enter">
 
-<div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-white text-xl shadow-xl font-black">
+<div class="glass rounded-[30px] p-6 max-w-[850px] shadow-2xl">
+
+<div class="flex items-center justify-between mb-4">
+
+<div class="flex items-center gap-3">
+
+<div class="w-12 h-12 rounded-2xl bg-green-500 flex items-center justify-center text-white font-black">
 
 ${message.senderName
 .charAt(0)
@@ -533,15 +693,13 @@ ${message.senderName
 
 </div>
 
-<div class="max-w-[750px]">
+<div>
 
-<div class="glass rounded-[30px] rounded-tl-none px-8 py-6 shadow-2xl">
-
-<div class="flex items-center justify-between mb-3">
-
-<h3 class="text-2xl font-black text-white">
+<h3 class="text-white font-black text-xl">
 
 ${message.senderName}
+
+${badge}
 
 </h3>
 
@@ -554,9 +712,23 @@ ${new Date(message.createdAt)
 
 </div>
 
+</div>
+
+<button
+onclick='replyMessage(${JSON.stringify(message)})'
+class="text-green-400 font-bold">
+
+Reply
+
+</button>
+
+</div>
+
+${replyHTML}
+
 <p class="text-gray-200 text-lg leading-relaxed whitespace-pre-wrap">
 
-${message.text}
+${highlightMentions(message.text)}
 
 </p>
 
@@ -564,17 +736,25 @@ ${message.text}
 
 </div>
 
-</div>
-
 `;
-
-}
 
 messages.scrollTop =
 messages.scrollHeight;
 
 }
+
+/* =========================================
+   HIGHLIGHT MENTIONS
+========================================= */
+
+function highlightMentions(text){
+
+return text.replace(
+/@(\w+)/g,
+'<span class="mention">@$1</span>'
 );
+
+}
 
 /* =========================================
    LOAD OLD MESSAGES
@@ -594,10 +774,7 @@ await res.json();
 
 data.forEach(message => {
 
-socket.emit(
-"receive_message",
-message
-);
+renderMessage(message);
 
 });
 
