@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 
-<meta charset="UTF-8"/>
+<meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0"/>
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Swaply Community Chat</title>
+<title>Swaply Chat</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -19,31 +19,24 @@ content="width=device-width, initial-scale=1.0"/>
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html,
 body{
-font-family:'Inter',sans-serif;
+height:100%;
 overflow:hidden;
+font-family:'Inter',sans-serif;
 background:#050505;
-}
-
-::-webkit-scrollbar{
-width:6px;
-}
-
-::-webkit-scrollbar-thumb{
-background:#22c55e;
-border-radius:20px;
-}
-
-.glass{
-background:rgba(255,255,255,.06);
-backdrop-filter:blur(25px);
-border:1px solid rgba(255,255,255,.08);
 }
 
 .chat-bg{
 background:
 linear-gradient(
-rgba(0,0,0,.84),
+rgba(0,0,0,.88),
 rgba(0,0,0,.92)),
 url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop');
 
@@ -51,15 +44,35 @@ background-size:cover;
 background-position:center;
 }
 
-.message-enter{
-animation:fade .3s ease;
+.glass{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.08);
+}
+
+::-webkit-scrollbar{
+width:4px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#22c55e;
+border-radius:20px;
+}
+
+.mention{
+color:#22c55e;
+font-weight:800;
+}
+
+.message{
+animation:fade .2s ease;
 }
 
 @keyframes fade{
 
 from{
 opacity:0;
-transform:translateY(20px);
+transform:translateY(10px);
 }
 
 to{
@@ -69,20 +82,28 @@ transform:translateY(0);
 
 }
 
-.mention{
-color:#22c55e;
-font-weight:800;
+.reply-box{
+border-left:3px solid #22c55e;
 }
 
-.reply-box{
-border-left:4px solid #22c55e;
+#messages{
+scroll-behavior:smooth;
+padding-bottom:120px;
+}
+
+.mobile-input{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+z-index:999;
 }
 
 </style>
 
 </head>
 
-<body class="chat-bg h-screen flex flex-col">
+<body class="chat-bg">
 
 <script>
 
@@ -109,63 +130,49 @@ window.location.href =
 
 </script>
 
-<div class="flex flex-1 overflow-hidden">
+<div class="flex h-screen overflow-hidden">
 
 <!-- SIDEBAR -->
-<div class="hidden lg:flex w-[350px] glass border-r border-white/10 flex-col">
+<div class="hidden lg:flex w-[260px] glass border-r border-white/10 flex-col">
 
-<div class="p-8 border-b border-white/10">
+<div class="p-5 border-b border-white/10">
 
-<div class="flex items-center gap-5">
+<h1 class="text-2xl font-black text-white">
 
-<div class="w-16 h-16 rounded-3xl bg-green-500 flex items-center justify-center text-white text-3xl font-black">
-
-S
-
-</div>
-
-<div>
-
-<h1 class="text-3xl font-black text-white">
-
-Swaply Chat
+Swaply
 
 </h1>
 
-<p class="text-green-400 font-bold">
+<p class="text-green-400 text-sm font-bold">
 
-Community + AI
+Community Chat
 
 </p>
 
 </div>
 
-</div>
+<div class="p-5">
 
-</div>
+<div class="glass rounded-3xl p-4">
 
-<div class="p-8 overflow-y-auto">
-
-<div class="glass rounded-[30px] p-6">
-
-<div class="flex items-center gap-5">
+<div class="flex items-center gap-3">
 
 <img
 src="${
 currentUser.avatar ||
 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
 }"
-class="w-20 h-20 rounded-full object-cover border-4 border-green-500"/>
+class="w-14 h-14 rounded-full object-cover border-2 border-green-500">
 
 <div>
 
-<h2 class="text-2xl font-black text-white">
+<h2 class="text-white font-black">
 
 ${currentUser.username}
 
 </h2>
 
-<p class="text-green-400 font-bold">
+<p class="text-green-400 text-sm">
 
 Online
 
@@ -177,35 +184,27 @@ Online
 
 </div>
 
-<div class="mt-8 glass rounded-[30px] p-6 text-white">
+<div class="mt-5 space-y-3">
 
-<h3 class="text-2xl font-black mb-5">
+<a
+href="index.html"
+class="block bg-white/5 hover:bg-white/10 text-white text-center py-3 rounded-2xl text-sm font-bold">
 
-🔥 Features
+Home
 
-</h3>
+</a>
 
-<div class="space-y-4 text-gray-300">
+<a
+href="browse.html"
+class="block bg-green-500 hover:bg-green-600 text-white text-center py-3 rounded-2xl text-sm font-bold">
 
-<p>• Reply to messages</p>
+Browse
 
-<p>• Mention users</p>
-
-<p>• Mention AI</p>
-
-<p>• Mention Admin</p>
-
-<p>• Real-time chat</p>
-
-<p>• Community marketplace</p>
-
-</div>
-
-</div>
+</a>
 
 <button
 onclick="logout()"
-class="mt-8 w-full bg-red-500 hover:bg-red-600 transition-all text-white py-5 rounded-3xl font-black text-xl">
+class="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-2xl text-sm font-bold">
 
 Logout
 
@@ -215,33 +214,35 @@ Logout
 
 </div>
 
-<!-- MAIN CHAT -->
-<div class="flex-1 flex flex-col overflow-hidden">
+</div>
+
+<!-- MAIN -->
+<div class="flex-1 flex flex-col h-screen">
 
 <!-- TOP -->
-<div class="glass border-b border-white/10 px-6 py-5 flex items-center justify-between">
+<div class="glass border-b border-white/10 px-4 py-4 flex items-center justify-between shrink-0">
 
 <div>
 
-<h2 class="text-3xl font-black text-white">
+<h2 class="text-lg md:text-2xl font-black text-white">
 
 Swaply Community
 
 </h2>
 
-<p class="text-green-400 font-bold">
+<p class="text-green-400 text-xs md:text-sm font-bold">
 
-Chat with buyers, sellers, AI & admin
+Buy • Sell • Negotiate • AI
 
 </p>
 
 </div>
 
-<div class="flex gap-4">
+<div class="flex gap-2">
 
 <a
 href="index.html"
-class="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-2xl font-black">
+class="bg-white/10 text-white px-3 py-2 rounded-xl text-xs font-bold">
 
 Home
 
@@ -249,7 +250,7 @@ Home
 
 <a
 href="browse.html"
-class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-2xl font-black">
+class="bg-green-500 text-white px-3 py-2 rounded-xl text-xs font-bold">
 
 Browse
 
@@ -262,23 +263,23 @@ Browse
 <!-- MESSAGES -->
 <div
 id="messages"
-class="flex-1 overflow-y-auto p-6 space-y-6">
+class="flex-1 overflow-y-auto px-3 py-4 space-y-4">
 
-<div class="glass rounded-[35px] p-8 max-w-[900px]">
+<div class="glass rounded-3xl p-5 max-w-[700px]">
 
-<h2 class="text-4xl font-black text-white mb-5">
+<h2 class="text-white text-2xl font-black mb-3">
 
 Welcome 👋
 
 </h2>
 
-<p class="text-gray-300 text-xl leading-relaxed">
+<p class="text-gray-300 leading-relaxed text-sm">
 
-Ask questions, negotiate deals, mention
+Mention
 <span class="mention">@ai</span>
 for AI help or
 <span class="mention">@admin</span>
-for admin support.
+for admin assistance.
 
 </p>
 
@@ -286,10 +287,12 @@ for admin support.
 
 </div>
 
-<!-- REPLY BAR -->
+</div>
+
+<!-- REPLY PREVIEW -->
 <div
 id="replyPreview"
-class="hidden px-6 py-4 bg-green-500/20 border-t border-green-500">
+class="hidden mobile-input mb-[70px] mx-3 glass rounded-2xl p-3">
 
 <div class="flex items-center justify-between">
 
@@ -297,13 +300,13 @@ class="hidden px-6 py-4 bg-green-500/20 border-t border-green-500">
 
 <p
 id="replyUser"
-class="text-green-400 font-black text-lg">
+class="text-green-400 text-xs font-black">
 
 </p>
 
 <p
 id="replyText"
-class="text-white">
+class="text-white text-xs truncate max-w-[220px]">
 
 </p>
 
@@ -311,7 +314,7 @@ class="text-white">
 
 <button
 onclick="cancelReply()"
-class="text-red-400 font-black text-xl">
+class="text-red-400 text-sm font-black">
 
 ✕
 
@@ -322,35 +325,30 @@ class="text-red-400 font-black text-xl">
 </div>
 
 <!-- INPUT -->
-<div class="glass border-t border-white/10 p-5 relative sticky bottom-0 z-50">
+<div class="mobile-input glass border-t border-white/10 p-3">
 
-<!-- MENTION BOX -->
+<!-- MENTIONS -->
 <div
 id="mentionBox"
-class="hidden absolute bottom-24 left-6 w-80 glass rounded-3xl overflow-hidden shadow-2xl z-50 max-h-80 overflow-y-auto">
+class="hidden absolute bottom-20 left-3 right-3 glass rounded-2xl overflow-hidden z-50 max-h-60 overflow-y-auto">
 
 </div>
 
-<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
 
 <input
 type="text"
 id="messageInput"
-placeholder="Type your message..."
-class="flex-1 h-16 bg-white/10 border border-white/10 text-white placeholder:text-gray-400 rounded-3xl px-8 outline-none text-lg focus:border-green-500"
-autocomplete="off"/>
+placeholder="Type message..."
+class="flex-1 h-11 bg-black/40 border border-white/10 rounded-2xl px-4 text-white placeholder:text-gray-500 outline-none text-sm focus:border-green-500">
 
 <button
 onclick="sendMessage()"
-class="bg-green-500 hover:bg-green-600 transition-all text-white px-10 h-16 rounded-3xl font-black text-xl">
+class="bg-green-500 hover:bg-green-600 text-white px-4 h-11 rounded-2xl text-sm font-bold shrink-0">
 
 Send
 
 </button>
-
-</div>
-
-</div>
 
 </div>
 
@@ -362,22 +360,18 @@ let users = [];
 
 let replyingTo = null;
 
-/* =========================================
-   USER ONLINE
-========================================= */
+/* USER ONLINE */
 
 socket.emit(
 "user_online",
 currentUser.id
 );
 
-/* =========================================
-   LOAD USERS
-========================================= */
+/* LOAD USERS */
 
 async function loadUsers(){
 
-try {
+try{
 
 const res =
 await fetch(`${API}/users`);
@@ -385,7 +379,7 @@ await fetch(`${API}/users`);
 users =
 await res.json();
 
-} catch(err){
+}catch(err){
 
 console.log(err);
 
@@ -395,14 +389,14 @@ console.log(err);
 
 loadUsers();
 
-/* =========================================
-   MENTIONS
-========================================= */
+/* INPUT */
 
 const input =
 document.getElementById(
 "messageInput"
 );
+
+/* MENTIONS */
 
 input.addEventListener(
 "input",
@@ -411,24 +405,26 @@ function(){
 const value =
 input.value;
 
-if(value.includes("@")){
+const words =
+value.split(" ");
 
-showMentions();
+const lastWord =
+words[words.length - 1];
+
+if(lastWord.startsWith("@")){
+
+showMentions(lastWord);
 
 }else{
 
-document
-.getElementById(
-"mentionBox"
-)
-.classList.add("hidden");
+hideMentions();
 
 }
 
 }
 );
 
-function showMentions(){
+function showMentions(search = ""){
 
 const box =
 document.getElementById(
@@ -453,11 +449,17 @@ name:"👑 Admin"
 
 special.forEach(user => {
 
+if(
+user.username
+.toLowerCase()
+.includes(search.toLowerCase())
+){
+
 box.innerHTML += `
 
 <div
 onclick="selectMention('${user.username}')"
-class="p-4 hover:bg-white/10 cursor-pointer text-white font-bold">
+class="p-3 hover:bg-white/10 cursor-pointer text-white font-bold text-sm">
 
 ${user.name}
 
@@ -465,15 +467,26 @@ ${user.name}
 
 `;
 
+}
+
 });
 
 users.forEach(user => {
 
+const username =
+"@" + user.username;
+
+if(
+username
+.toLowerCase()
+.includes(search.toLowerCase())
+){
+
 box.innerHTML += `
 
 <div
-onclick="selectMention('@${user.username}')"
-class="p-4 hover:bg-white/10 cursor-pointer text-white">
+onclick="selectMention('${username}')"
+class="p-3 hover:bg-white/10 cursor-pointer text-white text-sm">
 
 🟢 ${user.username}
 
@@ -481,7 +494,17 @@ class="p-4 hover:bg-white/10 cursor-pointer text-white">
 
 `;
 
+}
+
 });
+
+if(box.innerHTML.trim() === ""){
+
+hideMentions();
+
+return;
+
+}
 
 box.classList.remove("hidden");
 
@@ -489,9 +512,23 @@ box.classList.remove("hidden");
 
 function selectMention(username){
 
-input.value += `${username} `;
+const words =
+input.value.split(" ");
+
+words.pop();
+
+words.push(username);
+
+input.value =
+words.join(" ") + " ";
 
 input.focus();
+
+hideMentions();
+
+}
+
+function hideMentions(){
 
 document
 .getElementById(
@@ -501,9 +538,22 @@ document
 
 }
 
-/* =========================================
-   REPLY
-========================================= */
+/* ENTER SEND */
+
+input.addEventListener(
+"keypress",
+function(e){
+
+if(e.key === "Enter"){
+
+sendMessage();
+
+}
+
+}
+);
+
+/* REPLY */
 
 function replyMessage(message){
 
@@ -543,26 +593,7 @@ document
 
 }
 
-/* =========================================
-   ENTER SEND
-========================================= */
-
-input.addEventListener(
-"keypress",
-function(e){
-
-if(e.key === "Enter"){
-
-sendMessage();
-
-}
-
-}
-);
-
-/* =========================================
-   SEND MESSAGE
-========================================= */
+/* SEND */
 
 function sendMessage(){
 
@@ -600,13 +631,13 @@ replyingTo.text :
 
 input.value = "";
 
+hideMentions();
+
 cancelReply();
 
 }
 
-/* =========================================
-   RECEIVE MESSAGE
-========================================= */
+/* RECEIVE */
 
 socket.on(
 "receive_message",
@@ -617,9 +648,7 @@ renderMessage(message);
 }
 );
 
-/* =========================================
-   RENDER MESSAGE
-========================================= */
+/* RENDER */
 
 function renderMessage(message){
 
@@ -631,20 +660,19 @@ document.getElementById(
 let badge = "";
 
 if(
-message.senderId === "AI"
+message.senderId === "AI" ||
+message.senderName === "AI Assistant"
 ){
 
 badge =
-`<span class="text-green-400 font-black">AI</span>`;
+`<span class="text-green-400 text-[10px] font-black">AI</span>`;
 
 }
 
-if(
-message.senderId === "ADMIN"
-){
+if(message.senderId === "ADMIN"){
 
 badge =
-`<span class="text-yellow-400 font-black">ADMIN</span>`;
+`<span class="text-yellow-400 text-[10px] font-black">ADMIN</span>`;
 
 }
 
@@ -654,15 +682,15 @@ if(message.replyText){
 
 replyHTML = `
 
-<div class="reply-box bg-black/30 rounded-2xl p-4 mb-4">
+<div class="reply-box bg-black/30 rounded-xl p-3 mb-3">
 
-<p class="text-green-400 font-black">
+<p class="text-green-400 font-black text-[11px]">
 
 ${message.replyTo}
 
 </p>
 
-<p class="text-gray-300 truncate">
+<p class="text-gray-300 text-xs truncate">
 
 ${message.replyText}
 
@@ -676,15 +704,15 @@ ${message.replyText}
 
 messages.innerHTML += `
 
-<div class="message-enter">
+<div class="message">
 
-<div class="glass rounded-[30px] p-6 max-w-[850px] shadow-2xl">
+<div class="glass rounded-3xl p-4 max-w-[95%] md:max-w-[700px]">
 
-<div class="flex items-center justify-between mb-4">
+<div class="flex items-center justify-between mb-3">
 
 <div class="flex items-center gap-3">
 
-<div class="w-12 h-12 rounded-2xl bg-green-500 flex items-center justify-center text-white font-black">
+<div class="w-9 h-9 rounded-xl bg-green-500 flex items-center justify-center text-white text-sm font-black shrink-0">
 
 ${message.senderName
 .charAt(0)
@@ -694,7 +722,7 @@ ${message.senderName
 
 <div>
 
-<h3 class="text-white font-black text-xl">
+<h3 class="text-white font-black text-sm">
 
 ${message.senderName}
 
@@ -702,7 +730,7 @@ ${badge}
 
 </h3>
 
-<p class="text-gray-400 text-sm">
+<p class="text-gray-400 text-[10px]">
 
 ${new Date(message.createdAt)
 .toLocaleTimeString()}
@@ -715,7 +743,7 @@ ${new Date(message.createdAt)
 
 <button
 onclick='replyMessage(${JSON.stringify(message)})'
-class="text-green-400 font-bold">
+class="text-green-400 text-[11px] font-bold shrink-0">
 
 Reply
 
@@ -725,7 +753,7 @@ Reply
 
 ${replyHTML}
 
-<p class="text-gray-200 text-lg leading-relaxed whitespace-pre-wrap">
+<p class="text-gray-200 text-sm leading-relaxed whitespace-pre-wrap break-words">
 
 ${highlightMentions(message.text)}
 
@@ -742,9 +770,7 @@ messages.scrollHeight;
 
 }
 
-/* =========================================
-   HIGHLIGHT MENTIONS
-========================================= */
+/* HIGHLIGHT */
 
 function highlightMentions(text){
 
@@ -755,13 +781,11 @@ return text.replace(
 
 }
 
-/* =========================================
-   LOAD OLD MESSAGES
-========================================= */
+/* LOAD OLD */
 
 async function loadMessages(){
 
-try {
+try{
 
 const res =
 await fetch(
@@ -777,7 +801,7 @@ renderMessage(message);
 
 });
 
-} catch(err){
+}catch(err){
 
 console.log(err);
 
@@ -787,9 +811,7 @@ console.log(err);
 
 loadMessages();
 
-/* =========================================
-   LOGOUT
-========================================= */
+/* LOGOUT */
 
 async function logout(){
 
@@ -827,6 +849,23 @@ window.location.href =
 "login.html";
 
 }
+
+/* MOBILE KEYBOARD FIX */
+
+window.addEventListener(
+"resize",
+() => {
+
+const messages =
+document.getElementById(
+"messages"
+);
+
+messages.scrollTop =
+messages.scrollHeight;
+
+}
+);
 
 </script>
 
