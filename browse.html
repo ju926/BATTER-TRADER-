@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 
-<meta charset="UTF-8"/>
+<meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0"/>
+content="width=device-width, initial-scale=1.0">
 
 <title>Browse Marketplace - Swaply</title>
 
@@ -17,24 +17,50 @@ content="width=device-width, initial-scale=1.0"/>
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-  font-family:'Inter',sans-serif;
+font-family:'Inter',sans-serif;
+background:#050505;
+overflow-x:hidden;
+}
+
+.glass{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.07);
+}
+
+.card-hover{
+transition:.3s;
+}
+
+.card-hover:hover{
+transform:translateY(-6px);
 }
 
 ::-webkit-scrollbar{
-  width:6px;
+width:5px;
 }
 
 ::-webkit-scrollbar-thumb{
-  background:#16a34a;
-  border-radius:20px;
+background:#22c55e;
+border-radius:20px;
+}
+
+.bottom-nav{
+box-shadow:0 -5px 30px rgba(0,0,0,.5);
 }
 
 </style>
 
 </head>
 
-<body class="bg-gradient-to-br from-gray-100 via-white to-green-50 min-h-screen">
+<body class="text-white">
 
 <script>
 
@@ -45,33 +71,27 @@ const token =
 localStorage.getItem("token");
 
 const currentUser =
-JSON.parse(localStorage.getItem("user"));
+JSON.parse(
+localStorage.getItem("user")
+);
 
 </script>
 
 <!-- NAVBAR -->
-<header class="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-200">
 
-<div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+<nav class="sticky top-0 z-50 glass border-b border-white/10">
 
-<!-- LOGO -->
-<div class="flex items-center gap-4">
-
-<div class="w-14 h-14 rounded-3xl bg-green-600 flex items-center justify-center text-white text-3xl font-black shadow-xl">
-
-S
-
-</div>
+<div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
 
 <div>
 
-<h1 class="text-3xl font-black text-gray-900">
+<h1 class="text-2xl md:text-3xl font-black">
 
 Swaply
 
 </h1>
 
-<p class="text-gray-500">
+<p class="text-green-400 text-xs font-bold">
 
 Marketplace
 
@@ -79,202 +99,274 @@ Marketplace
 
 </div>
 
+<!-- SEARCH -->
+
+<div class="hidden md:flex flex-1 max-w-2xl">
+
+<div class="glass rounded-2xl flex items-center px-4 py-3 w-full">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search phones, laptops, cars..."
+class="bg-transparent outline-none w-full text-white placeholder:text-gray-500">
+
 </div>
 
-<!-- NAV -->
-<div class="hidden md:flex items-center gap-8">
+</div>
 
-<a href="index.html"
-class="font-bold text-gray-700 hover:text-green-600 transition-all">
+<div id="authButtons"
+class="flex items-center gap-3">
 
-Home
+<a
+href="login.html"
+class="bg-green-500 hover:bg-green-600 px-5 py-2 rounded-2xl font-bold">
+
+Login
 
 </a>
 
-<a href="browse.html"
-class="font-bold text-green-600">
-
-Browse
-
-</a>
+</div>
 
 </div>
 
-<!-- AUTH -->
-<div id="authArea"></div>
+</nav>
+
+<!-- MOBILE SEARCH -->
+
+<div class="md:hidden p-5">
+
+<div class="glass rounded-2xl flex items-center px-4 py-3">
+
+<input
+type="text"
+id="mobileSearch"
+placeholder="Search marketplace..."
+class="bg-transparent outline-none w-full text-white placeholder:text-gray-500">
 
 </div>
 
-</header>
-
-<!-- HERO -->
-<section class="max-w-7xl mx-auto px-6 pt-12 pb-8">
-
-<div class="bg-gradient-to-r from-green-600 to-green-500 rounded-[40px] p-10 lg:p-14 text-white shadow-2xl relative overflow-hidden">
-
-<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-3xl"></div>
-
-<div class="relative z-10">
-
-<div class="inline-flex items-center gap-3 bg-white/20 backdrop-blur-xl px-5 py-3 rounded-full font-bold mb-8">
-
-<div class="w-3 h-3 bg-green-300 rounded-full animate-pulse"></div>
-
-Live Marketplace
-
 </div>
 
-<h1 class="text-5xl lg:text-7xl font-black leading-tight mb-8">
+<!-- FILTERS -->
 
-Explore
-Amazing
-Products
+<section class="max-w-7xl mx-auto px-5 py-6">
 
-</h1>
+<div class="flex flex-wrap gap-3">
 
-<p class="text-2xl text-green-100 leading-relaxed max-w-3xl">
+<button
+onclick="filterCategory('all')"
+class="category-btn bg-green-500 px-5 py-2 rounded-2xl font-bold">
 
-Browse premium marketplace listings and connect instantly with sellers through secure live chat.
+All
 
-</p>
+</button>
 
-</div>
+<button
+onclick="filterCategory('Phones')"
+class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+
+Phones
+
+</button>
+
+<button
+onclick="filterCategory('Laptops')"
+class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+
+Laptops
+
+</button>
+
+<button
+onclick="filterCategory('Cars')"
+class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+
+Cars
+
+</button>
+
+<button
+onclick="filterCategory('Fashion')"
+class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+
+Fashion
+
+</button>
+
+<button
+onclick="filterCategory('Gaming')"
+class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+
+Gaming
+
+</button>
+
+<button
+onclick="filterCategory('Furniture')"
+class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+
+Furniture
+
+</button>
 
 </div>
 
 </section>
 
-<!-- SEARCH -->
-<section class="max-w-7xl mx-auto px-6 pb-10">
+<!-- PAGE TITLE -->
 
-<div class="bg-white rounded-[35px] shadow-xl border border-gray-100 p-6">
+<section class="max-w-7xl mx-auto px-5 pt-6 pb-10">
 
-<div class="flex flex-col md:flex-row gap-5">
+<div class="flex items-center justify-between flex-wrap gap-5">
 
-<input
-type="text"
-id="searchInput"
-placeholder="Search products..."
-class="flex-1 border-2 border-gray-200 rounded-2xl px-6 py-5 text-lg outline-none focus:border-green-500 transition-all"/>
+<div>
 
-<select
-id="categoryFilter"
-class="border-2 border-gray-200 rounded-2xl px-6 py-5 text-lg outline-none focus:border-green-500 transition-all">
+<p class="text-green-400 font-black tracking-widest mb-3">
 
-<option value="">All Categories</option>
+LIVE MARKETPLACE
 
-<option>Phones</option>
+</p>
 
-<option>Laptops</option>
+<h1 class="text-4xl md:text-6xl font-black">
 
-<option>Fashion</option>
+Browse Products
 
-<option>Gaming</option>
-
-<option>Cars</option>
-
-<option>Furniture</option>
-
-<option>Electronics</option>
-
-</select>
-
-<button
-onclick="loadItems()"
-class="bg-green-600 hover:bg-green-700 transition-all text-white px-10 py-5 rounded-2xl font-black shadow-xl">
-
-Search
-
-</button>
+</h1>
 
 </div>
+
+<select
+id="sortSelect"
+class="glass px-5 py-3 rounded-2xl outline-none">
+
+<option value="newest">
+
+Newest
+
+</option>
+
+<option value="oldest">
+
+Oldest
+
+</option>
+
+<option value="low">
+
+Lowest Price
+
+</option>
+
+<option value="high">
+
+Highest Price
+
+</option>
+
+</select>
 
 </div>
 
 </section>
 
 <!-- PRODUCTS -->
-<section class="max-w-7xl mx-auto px-6 pb-20">
+
+<section class="max-w-7xl mx-auto px-5 pb-32">
 
 <div
-id="itemsContainer"
-class="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
-
-<!-- ITEMS -->
+id="productsContainer"
+class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
 </div>
 
 </section>
 
-<!-- FOOTER -->
-<footer class="bg-black text-white py-10">
+<!-- FLOATING SELL BUTTON -->
 
-<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+<a
+href="upload.html"
+class="fixed bottom-24 md:bottom-10 right-5 z-50 bg-green-500 hover:bg-green-600 w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl font-light">
 
-<div>
++
 
-<h2 class="text-3xl font-black">
+</a>
 
-Swaply
+<!-- MOBILE NAV -->
 
-</h2>
+<div class="md:hidden fixed bottom-0 left-0 right-0 glass border-t border-white/10 bottom-nav z-50">
 
-<p class="text-gray-400 mt-2">
+<div class="grid grid-cols-4">
 
-Modern marketplace experience
+<a
+href="index.html"
+class="flex flex-col items-center py-3 text-white">
 
-</p>
+<span class="text-xl">🏠</span>
+<span class="text-[11px] font-bold">Home</span>
+
+</a>
+
+<a
+href="browse.html"
+class="flex flex-col items-center py-3 text-green-400">
+
+<span class="text-xl">🛒</span>
+<span class="text-[11px] font-bold">Browse</span>
+
+</a>
+
+<a
+href="chat.html"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-xl">💬</span>
+<span class="text-[11px] font-bold">Chat</span>
+
+</a>
+
+<a
+href="#"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-xl">👤</span>
+<span class="text-[11px] font-bold">Profile</span>
+
+</a>
 
 </div>
 
-<div class="text-gray-400">
-
-© 2026 Swaply Marketplace
-
 </div>
-
-</div>
-
-</footer>
 
 <script>
 
-const authArea =
-document.getElementById("authArea");
+let allItems = [];
 
-if(token && currentUser){
+let currentCategory = "all";
 
-authArea.innerHTML = `
+/* LOGIN UI */
 
-<div class="flex items-center gap-4">
+const authButtons =
+document.getElementById(
+"authButtons"
+);
 
-<div class="hidden md:flex items-center gap-3 bg-white px-5 py-3 rounded-2xl shadow-lg border">
+if(currentUser){
+
+authButtons.innerHTML = `
+
+<div class="flex items-center gap-3">
 
 <img
-src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-class="w-10 h-10 rounded-full"/>
-
-<div>
-
-<h3 class="font-black text-gray-900">
-
-${currentUser.username}
-
-</h3>
-
-<p class="text-gray-500 text-sm">
-
-Logged In
-
-</p>
-
-</div>
-
-</div>
+src="${
+currentUser.avatar ||
+'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+}"
+class="w-11 h-11 rounded-full border-2 border-green-500 object-cover">
 
 <button
 onclick="logout()"
-class="bg-red-500 hover:bg-red-600 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
+class="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-2xl font-bold">
 
 Logout
 
@@ -284,134 +376,88 @@ Logout
 
 `;
 
-}else{
-
-authArea.innerHTML = `
-
-<div class="flex items-center gap-4">
-
-<a href="login.html">
-
-<button
-class="bg-green-600 hover:bg-green-700 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
-
-Login
-
-</button>
-
-</a>
-
-<a href="register.html">
-
-<button
-class="bg-black hover:bg-gray-900 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
-
-Register
-
-</button>
-
-</a>
-
-</div>
-
-`;
-
 }
 
-
-// LOGOUT
 function logout(){
 
 localStorage.removeItem("token");
 
 localStorage.removeItem("user");
 
-window.location.href =
-"login.html";
+window.location.reload();
 
 }
 
+/* LOAD PRODUCTS */
 
-// LOAD ITEMS
-async function loadItems(){
-
-const container =
-document.getElementById("itemsContainer");
-
-container.innerHTML = `
-
-<div class="col-span-full text-center py-20">
-
-<div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-green-600 mb-6"></div>
-
-<p class="text-2xl font-black text-gray-700">
-
-Loading marketplace...
-
-</p>
-
-</div>
-
-`;
+async function loadProducts(){
 
 try{
 
 const res =
-await fetch(`${API}/items`);
+await fetch(
+`${API}/items`
+);
 
 const items =
 await res.json();
 
-const search =
-document.getElementById("searchInput")
-.value
-.toLowerCase();
+allItems = items;
 
-const category =
-document.getElementById("categoryFilter")
-.value
-.toLowerCase();
+displayProducts(items);
 
-const filtered =
-items.filter(item => {
+}catch(err){
 
-const matchSearch =
-item.name.toLowerCase().includes(search) ||
-item.description.toLowerCase().includes(search);
+console.log(err);
 
-const matchCategory =
-!category ||
-item.category.toLowerCase() === category;
+}
 
-return matchSearch && matchCategory;
+}
 
-});
+/* DISPLAY */
 
-if(filtered.length === 0){
+function displayProducts(items){
+
+const container =
+document.getElementById(
+"productsContainer"
+);
+
+container.innerHTML = "";
+
+if(items.length === 0){
 
 container.innerHTML = `
 
 <div class="col-span-full">
 
-<div class="bg-white rounded-[35px] shadow-xl p-20 text-center">
+<div class="glass rounded-3xl p-14 text-center">
 
-<div class="text-7xl mb-8">
+<h2 class="text-6xl mb-5">
 
 📦
 
-</div>
+</h2>
 
-<h2 class="text-4xl font-black text-gray-900 mb-5">
+<h2 class="text-3xl font-black mb-4">
 
-No Items Found
+No Products Found
 
 </h2>
 
-<p class="text-gray-500 text-xl">
+<p class="text-gray-400 mb-8">
 
-Try another search or category
+Be the first to upload products.
 
 </p>
+
+<a
+href="upload.html"
+class="bg-green-500 hover:bg-green-600 px-8 py-4 rounded-2xl font-black">
+
+Upload Item
+
+</a>
 
 </div>
 
@@ -423,39 +469,48 @@ return;
 
 }
 
-container.innerHTML = "";
-
-filtered.forEach(item => {
+items.forEach(item => {
 
 container.innerHTML += `
 
-<div class="bg-white rounded-[35px] overflow-hidden shadow-xl border border-gray-100 hover:-translate-y-3 hover:shadow-2xl transition-all duration-300">
+<div class="glass rounded-3xl overflow-hidden card-hover">
 
 <div class="relative">
 
 <img
 src="${item.image}"
-class="w-full h-80 object-cover"/>
+class="w-full h-72 object-cover">
 
-<div class="absolute top-5 left-5 bg-green-600 text-white px-5 py-2 rounded-full font-black shadow-xl">
+<div class="absolute top-4 left-4">
 
-${item.category}
+<div class="bg-black/70 backdrop-blur-lg px-3 py-1 rounded-full text-sm font-bold text-green-400">
+
+${item.category || "Marketplace"}
 
 </div>
 
 </div>
 
-<div class="p-8">
+<button
+class="absolute top-4 right-4 glass w-11 h-11 rounded-full text-xl">
 
-<div class="flex items-center justify-between mb-5">
+❤️
 
-<h2 class="text-3xl font-black text-gray-900">
+</button>
+
+</div>
+
+<div class="p-6">
+
+<div class="flex items-start justify-between gap-3">
+
+<h2 class="text-2xl font-black line-clamp-1">
 
 ${item.name}
 
 </h2>
 
-<div class="text-3xl font-black text-green-600">
+<div class="text-green-400 font-black text-xl whitespace-nowrap">
 
 KSh ${item.price}
 
@@ -463,63 +518,52 @@ KSh ${item.price}
 
 </div>
 
-<p class="text-gray-600 text-lg leading-relaxed mb-8 line-clamp-3">
+<p class="text-gray-400 text-sm mt-4 line-clamp-3">
 
 ${item.description}
 
 </p>
 
-<div class="flex items-center justify-between mb-8">
+<div class="flex items-center justify-between mt-5">
 
 <div>
 
-<p class="text-gray-500 text-sm">
+<p class="text-xs text-gray-500">
 
 Seller
 
 </p>
 
-<h3 class="font-black text-xl">
+<p class="font-bold">
 
-${item.sellerName || "Swaply Seller"}
-
-</h3>
-
-</div>
-
-<div class="bg-gray-100 px-5 py-3 rounded-2xl">
-
-<p class="font-bold text-gray-700">
-
-Wanted:
-${item.wanted || "Offers"}
+${item.sellerName || "Anonymous"}
 
 </p>
 
 </div>
 
+<div class="text-green-400 text-sm font-bold">
+
+✔ Verified
+
 </div>
 
-<div class="flex gap-4">
+</div>
+
+<div class="grid grid-cols-2 gap-3 mt-6">
 
 <a
-href="chat.html?id=${item._id}"
-class="flex-1">
+href="chat.html"
+class="bg-green-500 hover:bg-green-600 py-3 rounded-2xl text-center font-black">
 
-<button
-class="w-full bg-green-600 hover:bg-green-700 transition-all text-white py-5 rounded-2xl font-black text-lg shadow-xl">
-
-Chat Seller
-
-</button>
+💬 Chat
 
 </a>
 
 <button
-onclick="shareItem('${item.name}')"
-class="bg-black hover:bg-gray-900 transition-all text-white px-6 rounded-2xl font-black shadow-xl">
+class="glass py-3 rounded-2xl font-black">
 
-Share
+View
 
 </button>
 
@@ -533,68 +577,141 @@ Share
 
 });
 
-}catch(err){
-
-container.innerHTML = `
-
-<div class="col-span-full">
-
-<div class="bg-white rounded-[35px] shadow-xl p-20 text-center">
-
-<div class="text-7xl mb-8">
-
-⚠️
-
-</div>
-
-<h2 class="text-4xl font-black text-gray-900 mb-5">
-
-Failed To Load Items
-
-</h2>
-
-<p class="text-gray-500 text-xl">
-
-Please try again later
-
-</p>
-
-</div>
-
-</div>
-
-`;
-
 }
 
-}
+/* FILTER */
 
+function filterCategory(category){
 
-// SHARE
-function shareItem(name){
+currentCategory = category;
 
-if(navigator.share){
+document.querySelectorAll(".category-btn")
+.forEach(btn => {
 
-navigator.share({
+btn.classList.remove(
+"bg-green-500"
+);
 
-title:name,
-text:`Check this item on Swaply: ${name}`
+btn.classList.add(
+"glass"
+);
 
 });
 
-}else{
+event.target.classList.remove(
+"glass"
+);
 
-alert("Sharing not supported");
+event.target.classList.add(
+"bg-green-500"
+);
+
+if(category === "all"){
+
+displayProducts(allItems);
+
+return;
 
 }
 
+const filtered =
+allItems.filter(item =>
+(item.category || "")
+.toLowerCase()
+.includes(
+category.toLowerCase()
+)
+);
+
+displayProducts(filtered);
+
 }
 
+/* SEARCH */
 
-// INITIAL LOAD
-loadItems();
+document
+.getElementById("searchInput")
+.addEventListener("input", searchProducts);
+
+document
+.getElementById("mobileSearch")
+.addEventListener("input", searchProducts);
+
+function searchProducts(e){
+
+const query =
+e.target.value.toLowerCase();
+
+const filtered =
+allItems.filter(item =>
+
+(item.name || "")
+.toLowerCase()
+.includes(query)
+
+||
+
+(item.description || "")
+.toLowerCase()
+.includes(query)
+
+||
+
+(item.category || "")
+.toLowerCase()
+.includes(query)
+
+);
+
+displayProducts(filtered);
+
+}
+
+/* SORT */
+
+document
+.getElementById("sortSelect")
+.addEventListener("change", e => {
+
+let sorted = [...allItems];
+
+if(e.target.value === "newest"){
+
+sorted.reverse();
+
+}
+
+if(e.target.value === "oldest"){
+
+sorted = allItems;
+
+}
+
+if(e.target.value === "low"){
+
+sorted.sort(
+(a,b)=>
+Number(a.price)-Number(b.price)
+);
+
+}
+
+if(e.target.value === "high"){
+
+sorted.sort(
+(a,b)=>
+Number(b.price)-Number(a.price)
+);
+
+}
+
+displayProducts(sorted);
+
+});
+
+loadProducts();
 
 </script>
 
 </body>
-  </html>
+</html>
