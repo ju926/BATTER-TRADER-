@@ -7,7 +7,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0"/>
 
-<title>Swaply AI Chat</title>
+<title>Swaply Global Chat</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -42,15 +42,16 @@ body{
 .chat-bg{
   background:
   linear-gradient(
-  rgba(0,0,0,.82),
-  rgba(0,0,0,.85)),
-  url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop');
+  rgba(0,0,0,.84),
+  rgba(0,0,0,.88)),
+  url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop');
+
   background-size:cover;
   background-position:center;
 }
 
 .message-enter{
-  animation:fade .3s ease;
+  animation:fade .35s ease;
 }
 
 @keyframes fade{
@@ -89,10 +90,6 @@ JSON.parse(
 localStorage.getItem("user")
 );
 
-/* =========================
-   AUTH CHECK
-========================= */
-
 if(!token || !currentUser){
 
 window.location.href =
@@ -106,11 +103,11 @@ window.location.href =
 <div class="flex h-screen">
 
 <!-- SIDEBAR -->
-<div class="hidden lg:flex w-[340px] glass flex-col border-r border-white/10">
+<div class="hidden lg:flex w-[350px] glass border-r border-white/10 flex-col">
 
 <div class="p-8 border-b border-white/10">
 
-<div class="flex items-center gap-4">
+<div class="flex items-center gap-5">
 
 <div class="w-16 h-16 rounded-3xl bg-green-500 flex items-center justify-center text-white text-3xl font-black shadow-2xl">
 
@@ -122,13 +119,13 @@ S
 
 <h1 class="text-3xl font-black text-white">
 
-Swaply AI
+Swaply Chat
 
 </h1>
 
 <p class="text-green-400 font-bold">
 
-Marketplace Assistant
+Global Marketplace Community
 
 </p>
 
@@ -149,7 +146,7 @@ src="${
 currentUser.avatar ||
 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
 }"
-class="w-20 h-20 rounded-full border-4 border-green-500 object-cover"/>
+class="w-20 h-20 rounded-full object-cover border-4 border-green-500"/>
 
 <div>
 
@@ -161,7 +158,7 @@ ${currentUser.username}
 
 <p class="text-green-400 font-bold">
 
-Online
+Online Now
 
 </p>
 
@@ -171,35 +168,45 @@ Online
 
 </div>
 
-<div class="mt-8 space-y-4">
+<div class="mt-8 glass rounded-[30px] p-6 text-white">
 
-<div class="glass rounded-3xl p-5 text-white">
+<h3 class="text-2xl font-black mb-4">
 
-<h3 class="font-black text-xl mb-3">
-
-🤖 AI Features
+🤖 AI Assistant
 
 </h3>
 
-<ul class="space-y-2 text-gray-300">
+<p class="text-gray-300 leading-relaxed">
 
-<li>• Smart Replies</li>
+Mention:
 
-<li>• Product Help</li>
+<span class="text-green-400 font-black">
 
-<li>• Marketplace Support</li>
+@ai
 
-<li>• Real GPT AI</li>
+</span>
 
-<li>• 24/7 Assistance</li>
+to get AI assistance.
 
-</ul>
+</p>
+
+<div class="mt-5 space-y-3 text-gray-300">
+
+<p>• Product Help</p>
+
+<p>• Buying Advice</p>
+
+<p>• Marketplace Support</p>
+
+<p>• Price Negotiation</p>
+
+</div>
 
 </div>
 
 <button
 onclick="logout()"
-class="w-full bg-red-500 hover:bg-red-600 transition-all text-white py-5 rounded-3xl font-black text-xl shadow-2xl">
+class="mt-8 w-full bg-red-500 hover:bg-red-600 transition-all text-white py-5 rounded-3xl font-black text-xl shadow-2xl">
 
 Logout
 
@@ -209,19 +216,17 @@ Logout
 
 </div>
 
-</div>
-
-<!-- CHAT AREA -->
+<!-- CHAT -->
 <div class="flex-1 flex flex-col">
 
-<!-- TOPBAR -->
+<!-- TOP -->
 <div class="glass border-b border-white/10 px-6 py-5 flex items-center justify-between">
 
 <div class="flex items-center gap-5">
 
 <div class="w-16 h-16 rounded-3xl bg-green-500 flex items-center justify-center text-white text-3xl shadow-2xl">
 
-🤖
+💬
 
 </div>
 
@@ -229,19 +234,21 @@ Logout
 
 <h2 class="text-3xl font-black text-white">
 
-Swaply AI Chat
+Marketplace Chat
 
 </h2>
 
 <p class="text-green-400 font-bold">
 
-GPT Marketplace Assistant Online
+Chat with buyers, sellers & AI
 
 </p>
 
 </div>
 
 </div>
+
+<div class="flex items-center gap-4">
 
 <a
 href="index.html"
@@ -251,37 +258,46 @@ Home
 
 </a>
 
+<a
+href="browse.html"
+class="bg-green-500 hover:bg-green-600 transition-all text-white px-6 py-4 rounded-2xl font-black">
+
+Browse
+
+</a>
+
+</div>
+
 </div>
 
 <!-- MESSAGES -->
 <div
 id="messages"
-class="flex-1 overflow-y-auto p-6 space-y-6">
+class="flex-1 overflow-y-auto p-6 pb-40 space-y-6">
 
 <!-- WELCOME -->
+<div class="message-enter">
 
-<div class="flex items-start gap-4 message-enter">
+<div class="glass rounded-[35px] p-8 max-w-[850px]">
 
-<div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center text-2xl shadow-xl">
+<h2 class="text-4xl font-black text-white mb-5">
 
-🤖
+Welcome To Swaply Chat 👋
 
-</div>
+</h2>
 
-<div class="max-w-[700px]">
+<p class="text-gray-300 text-xl leading-relaxed">
 
-<div class="glass rounded-[30px] rounded-tl-none px-8 py-6 shadow-2xl">
+Talk with buyers and sellers in real time.
+Need assistance? Mention
 
-<h3 class="text-2xl font-black text-white mb-3">
+<span class="text-green-400 font-black">
 
-Swaply AI
+@ai
 
-</h3>
+</span>
 
-<p class="text-gray-200 text-lg leading-relaxed">
-
-Hello 👋 I'm your AI marketplace assistant.
-Ask me anything about buying, selling, prices, products or Swaply features.
+and the AI assistant will help you instantly.
 
 </p>
 
@@ -291,22 +307,21 @@ Ask me anything about buying, selling, prices, products or Swaply features.
 
 </div>
 
-</div>
-
 <!-- INPUT -->
-<div class="glass border-t border-white/10 p-5">
+<div class="glass border-t border-white/10 p-5 sticky bottom-0">
 
 <div class="flex items-center gap-4">
 
 <input
 type="text"
 id="messageInput"
-placeholder="Ask Swaply AI anything..."
-class="flex-1 bg-white/10 border border-white/10 text-white placeholder:text-gray-400 rounded-3xl px-8 py-6 outline-none text-lg focus:border-green-500"/>
+placeholder="Type your message..."
+class="flex-1 h-16 bg-white/10 border border-white/10 text-white placeholder:text-gray-400 rounded-3xl px-8 outline-none text-lg focus:border-green-500"
+autocomplete="off"/>
 
 <button
 onclick="sendMessage()"
-class="bg-green-500 hover:bg-green-600 transition-all text-white px-10 py-6 rounded-3xl font-black text-xl shadow-2xl hover:scale-105">
+class="bg-green-500 hover:bg-green-600 transition-all text-white px-10 h-16 rounded-3xl font-black text-xl shadow-2xl hover:scale-105">
 
 Send
 
@@ -322,18 +337,18 @@ Send
 
 <script>
 
-/* =========================
+/* =========================================
    USER ONLINE
-========================= */
+========================================= */
 
 socket.emit(
 "user_online",
 currentUser.id
 );
 
-/* =========================
-   ENTER SEND
-========================= */
+/* =========================================
+   ENTER KEY SEND
+========================================= */
 
 document
 .getElementById("messageInput")
@@ -350,9 +365,9 @@ sendMessage();
 }
 );
 
-/* =========================
+/* =========================================
    SEND MESSAGE
-========================= */
+========================================= */
 
 function sendMessage(){
 
@@ -366,8 +381,6 @@ input.value.trim();
 
 if(!text) return;
 
-/* USER MESSAGE */
-
 socket.emit(
 "send_message",
 {
@@ -378,7 +391,7 @@ currentUser.id,
 senderName:
 currentUser.username,
 
-receiverId:"AI",
+receiverId:"GLOBAL",
 
 text,
 
@@ -391,9 +404,9 @@ input.value = "";
 
 }
 
-/* =========================
+/* =========================================
    RECEIVE MESSAGE
-========================= */
+========================================= */
 
 socket.on(
 "receive_message",
@@ -414,17 +427,28 @@ messages.innerHTML += `
 
 <div class="flex justify-end message-enter">
 
-<div class="max-w-[700px]">
+<div class="max-w-[750px]">
 
 <div class="bg-green-500 rounded-[30px] rounded-br-none px-8 py-6 shadow-2xl">
 
-<h3 class="text-2xl font-black text-white mb-3">
+<div class="flex items-center justify-between mb-3">
+
+<h3 class="text-2xl font-black text-white">
 
 You
 
 </h3>
 
-<p class="text-white text-lg leading-relaxed">
+<p class="text-white/70 text-sm">
+
+${new Date(message.createdAt)
+.toLocaleTimeString()}
+
+</p>
+
+</div>
+
+<p class="text-white text-lg leading-relaxed whitespace-pre-wrap">
 
 ${message.text}
 
@@ -456,15 +480,79 @@ messages.innerHTML += `
 
 </div>
 
-<div class="max-w-[700px]">
+<div class="max-w-[750px]">
 
 <div class="glass rounded-[30px] rounded-tl-none px-8 py-6 shadow-2xl">
 
-<h3 class="text-2xl font-black text-white mb-3">
+<div class="flex items-center justify-between mb-3">
+
+<h3 class="text-2xl font-black text-white">
 
 Swaply AI
 
 </h3>
+
+<p class="text-gray-400 text-sm">
+
+${new Date(message.createdAt)
+.toLocaleTimeString()}
+
+</p>
+
+</div>
+
+<p class="text-gray-200 text-lg leading-relaxed whitespace-pre-wrap">
+
+${message.text}
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+/* OTHER USERS */
+
+else{
+
+messages.innerHTML += `
+
+<div class="flex items-start gap-4 message-enter">
+
+<div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-white text-xl shadow-xl font-black">
+
+${message.senderName
+.charAt(0)
+.toUpperCase()}
+
+</div>
+
+<div class="max-w-[750px]">
+
+<div class="glass rounded-[30px] rounded-tl-none px-8 py-6 shadow-2xl">
+
+<div class="flex items-center justify-between mb-3">
+
+<h3 class="text-2xl font-black text-white">
+
+${message.senderName}
+
+</h3>
+
+<p class="text-gray-400 text-sm">
+
+${new Date(message.createdAt)
+.toLocaleTimeString()}
+
+</p>
+
+</div>
 
 <p class="text-gray-200 text-lg leading-relaxed whitespace-pre-wrap">
 
@@ -488,9 +576,44 @@ messages.scrollHeight;
 }
 );
 
-/* =========================
+/* =========================================
+   LOAD OLD MESSAGES
+========================================= */
+
+async function loadMessages(){
+
+try {
+
+const res =
+await fetch(
+`${API}/messages`
+);
+
+const data =
+await res.json();
+
+data.forEach(message => {
+
+socket.emit(
+"receive_message",
+message
+);
+
+});
+
+} catch(err){
+
+console.log(err);
+
+}
+
+}
+
+loadMessages();
+
+/* =========================================
    LOGOUT
-========================= */
+========================================= */
 
 async function logout(){
 
@@ -532,4 +655,4 @@ window.location.href =
 </script>
 
 </body>
-</html>
+  </html>
