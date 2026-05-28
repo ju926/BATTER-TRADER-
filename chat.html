@@ -7,7 +7,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0"/>
 
-<title>Swaply Premium Chat</title>
+<title>Swaply Private Chat</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -23,8 +23,13 @@ body{
   font-family:'Inter',sans-serif;
 }
 
-.scrollbar-hide::-webkit-scrollbar{
-  display:none;
+::-webkit-scrollbar{
+  width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#16a34a;
+  border-radius:20px;
 }
 
 </style>
@@ -33,14 +38,31 @@ body{
 
 <body class="bg-gradient-to-br from-gray-100 via-white to-green-50 min-h-screen">
 
-<!-- TOP BAR -->
-<header class="backdrop-blur-xl bg-white/70 border-b sticky top-0 z-50">
+<script>
+
+const token =
+localStorage.getItem("token");
+
+if(!token){
+
+window.location.href =
+"login.html";
+
+}
+
+const currentUser =
+JSON.parse(localStorage.getItem("user"));
+
+</script>
+
+<!-- NAVBAR -->
+<header class="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-200">
 
 <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
 
 <div class="flex items-center gap-4">
 
-<div class="w-14 h-14 rounded-2xl bg-green-600 flex items-center justify-center text-white text-2xl font-black shadow-xl">
+<div class="w-14 h-14 rounded-3xl bg-green-600 flex items-center justify-center text-white text-3xl font-black shadow-xl">
 
 S
 
@@ -49,24 +71,65 @@ S
 <div>
 
 <h1 class="text-3xl font-black text-gray-900">
+
 Swaply Chat
+
 </h1>
 
-<p class="text-gray-500 text-sm">
-Private marketplace conversation
+<p class="text-gray-500">
+
+Secure marketplace conversation
+
 </p>
 
 </div>
 
 </div>
 
-<div class="flex items-center gap-3">
+<div class="flex items-center gap-5">
+
+<div class="hidden md:flex items-center gap-3 bg-green-100 px-5 py-3 rounded-2xl">
 
 <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
 
-<p class="font-semibold text-green-700">
+<p class="font-bold text-green-700">
+
 Live
+
 </p>
+
+</div>
+
+<div class="flex items-center gap-4 bg-white shadow-lg px-5 py-3 rounded-2xl border">
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+class="w-12 h-12 rounded-full"/>
+
+<div>
+
+<h3 id="topUsername"
+class="font-black text-lg text-gray-900">
+
+</h3>
+
+<p class="text-gray-500 text-sm">
+
+Logged In
+
+</p>
+
+</div>
+
+</div>
+
+<button
+onclick="logout()"
+class="bg-red-500 hover:bg-red-600 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
+
+Logout
+
+</button>
 
 </div>
 
@@ -79,21 +142,20 @@ Live
 
 <div class="grid lg:grid-cols-3 gap-10">
 
-<!-- LEFT -->
+<!-- ITEM -->
 <div class="lg:col-span-1">
 
-<div class="bg-white rounded-[35px] shadow-2xl overflow-hidden border border-gray-100 sticky top-28">
+<div class="bg-white rounded-[35px] shadow-2xl overflow-hidden sticky top-28 border border-gray-100">
 
-<!-- ITEM -->
 <div id="itemHeader">
 
 <div class="animate-pulse p-8">
 
 <div class="h-80 bg-gray-200 rounded-3xl mb-6"></div>
 
-<div class="h-10 bg-gray-200 rounded w-2/3 mb-4"></div>
+<div class="h-10 bg-gray-200 rounded w-2/3 mb-5"></div>
 
-<div class="h-5 bg-gray-200 rounded w-full mb-2"></div>
+<div class="h-5 bg-gray-200 rounded mb-3"></div>
 
 <div class="h-5 bg-gray-200 rounded w-5/6"></div>
 
@@ -105,34 +167,40 @@ Live
 
 </div>
 
-<!-- RIGHT -->
+<!-- CHAT -->
 <div class="lg:col-span-2">
 
 <div class="bg-white rounded-[35px] shadow-2xl overflow-hidden border border-gray-100">
 
 <!-- CHAT HEADER -->
-<div class="px-8 py-6 border-b bg-gradient-to-r from-green-600 to-green-500 text-white">
+<div class="bg-gradient-to-r from-green-600 to-green-500 p-8 text-white">
 
 <div class="flex items-center justify-between">
 
 <div>
 
-<h2 class="text-3xl font-black">
-Live Conversation
+<h2 class="text-4xl font-black">
+
+Private Chat
+
 </h2>
 
-<p class="text-green-100">
-Chat securely with seller
+<p class="text-green-100 mt-2">
+
+Chat securely with seller in real-time
+
 </p>
 
 </div>
 
-<div class="flex items-center gap-3 bg-white/20 px-5 py-3 rounded-2xl backdrop-blur-xl">
+<div class="bg-white/20 backdrop-blur-xl px-5 py-3 rounded-2xl flex items-center gap-3">
 
 <div class="w-3 h-3 bg-green-300 rounded-full animate-pulse"></div>
 
 <p class="font-bold">
+
 Encrypted
+
 </p>
 
 </div>
@@ -144,14 +212,13 @@ Encrypted
 <!-- MESSAGES -->
 <div
 id="messages"
-class="h-[600px] overflow-y-auto p-8 bg-gradient-to-b from-gray-50 to-white space-y-6 scrollbar-hide">
+class="h-[650px] overflow-y-auto p-8 bg-gradient-to-b from-gray-50 to-white space-y-6">
 
-<!-- Welcome -->
 <div class="text-center">
 
 <div class="inline-block bg-green-100 text-green-700 px-6 py-3 rounded-full font-bold">
 
-Welcome to Swaply private chat
+Welcome to Swaply secure chat
 
 </div>
 
@@ -162,25 +229,17 @@ Welcome to Swaply private chat
 <!-- INPUT -->
 <div class="border-t bg-white p-6">
 
-<div class="flex flex-col md:flex-row gap-4">
-
-<input
-type="text"
-id="username"
-placeholder="Your Name"
-class="md:w-52 border-2 border-gray-200 rounded-2xl px-5 py-4 outline-none focus:border-green-500 transition-all"/>
-
-<div class="flex-1 flex gap-4">
+<div class="flex gap-4">
 
 <input
 type="text"
 id="messageInput"
 placeholder="Type your message..."
-class="flex-1 border-2 border-gray-200 rounded-2xl px-6 py-4 outline-none focus:border-green-500 transition-all"/>
+class="flex-1 border-2 border-gray-200 rounded-2xl px-6 py-5 text-lg outline-none focus:border-green-500 transition-all"/>
 
 <button
 onclick="sendMessage()"
-class="bg-green-600 hover:bg-green-700 active:scale-95 transition-all text-white px-10 rounded-2xl font-black shadow-xl">
+class="bg-green-600 hover:bg-green-700 active:scale-95 transition-all text-white px-10 rounded-2xl font-black shadow-2xl text-lg">
 
 Send
 
@@ -198,27 +257,52 @@ Send
 
 </div>
 
-</div>
-
 <script>
 
+document.getElementById("topUsername")
+.innerText =
+currentUser.username;
+
+
+// LOGOUT
+function logout(){
+
+localStorage.removeItem("token");
+
+localStorage.removeItem("user");
+
+window.location.href =
+"login.html";
+
+}
+
+
+// API
 const API =
 "https://traderbackend.onrender.com";
 
+
+// SOCKET
 const socket =
 io(API);
 
+
+// URL PARAMS
 const params =
 new URLSearchParams(window.location.search);
 
 const itemId =
 params.get("id");
 
+
+// ROOM
 const room =
 `item-${itemId}`;
 
 socket.emit("joinRoom", room);
 
+
+// ELEMENTS
 const messages =
 document.getElementById("messages");
 
@@ -242,7 +326,7 @@ class="w-full h-96 object-cover"/>
 
 <div class="p-8">
 
-<div class="flex items-center justify-between mb-5">
+<div class="flex items-center justify-between mb-6">
 
 <div class="bg-green-100 text-green-700 px-5 py-3 rounded-full font-black">
 
@@ -264,37 +348,25 @@ ${item.name}
 
 </h1>
 
-<p class="text-gray-600 leading-relaxed text-lg mb-8">
+<p class="text-gray-600 text-lg leading-relaxed mb-8">
 
 ${item.description}
 
 </p>
 
-<div class="grid grid-cols-2 gap-4">
-
-<div class="bg-gray-100 rounded-2xl p-5">
+<div class="bg-gray-100 rounded-3xl p-6">
 
 <p class="text-gray-500 text-sm mb-2">
+
 Seller
+
 </p>
 
-<h3 class="font-black text-xl">
+<h3 class="text-2xl font-black">
+
 ${item.sellerName || "Swaply Seller"}
+
 </h3>
-
-</div>
-
-<div class="bg-gray-100 rounded-2xl p-5">
-
-<p class="text-gray-500 text-sm mb-2">
-Marketplace
-</p>
-
-<h3 class="font-black text-xl">
-Swaply
-</h3>
-
-</div>
 
 </div>
 
@@ -313,17 +385,64 @@ console.log(err);
 loadItem();
 
 
-// PREVIOUS MESSAGES
+// APPEND MESSAGE
+function appendMessage(data){
+
+const isMine =
+data.sender === currentUser.username;
+
+messages.innerHTML += `
+
+<div class="flex ${isMine ? 'justify-end' : 'justify-start'}">
+
+<div class="max-w-xl">
+
+<div class="text-sm text-gray-500 mb-2 font-bold ${isMine ? 'text-right' : ''}">
+
+${data.sender}
+
+</div>
+
+<div class="${isMine
+? 'bg-green-600 text-white rounded-br-md'
+: 'bg-white border rounded-bl-md text-gray-800 shadow-lg'}
+px-6 py-5 rounded-[28px] text-lg leading-relaxed">
+
+${data.text}
+
+</div>
+
+<div class="text-xs text-gray-400 mt-2 ${isMine ? 'text-right' : ''}">
+
+${new Date(data.createdAt).toLocaleTimeString([],{
+hour:'2-digit',
+minute:'2-digit'
+})}
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+messages.scrollTop =
+messages.scrollHeight;
+
+}
+
+
+// LOAD OLD MESSAGES
 socket.on("previousMessages", (msgs)=>{
+
+messages.innerHTML = "";
 
 msgs.forEach(data=>{
 
 appendMessage(data);
 
 });
-
-messages.scrollTop =
-messages.scrollHeight;
 
 });
 
@@ -333,55 +452,14 @@ socket.on("receiveMessage", (data)=>{
 
 appendMessage(data);
 
-messages.scrollTop =
-messages.scrollHeight;
-
 });
 
 
-// APPEND MESSAGE
-function appendMessage(data){
-
-messages.innerHTML += `
-
-<div class="flex flex-col items-end">
-
-<div class="text-sm text-gray-500 mb-2 font-semibold">
-
-${data.sender}
-
-</div>
-
-<div class="bg-green-600 text-white px-6 py-5 rounded-[28px] rounded-br-md max-w-xl shadow-xl text-lg leading-relaxed">
-
-${data.text}
-
-</div>
-
-<div class="text-xs text-gray-400 mt-2">
-
-${new Date(data.createdAt).toLocaleTimeString([], {
-hour:'2-digit',
-minute:'2-digit'
-})}
-
-</div>
-
-</div>
-
-`;
-
-}
-
-
-// SEND MESSAGE
+// SEND
 function sendMessage(){
 
 const input =
 document.getElementById("messageInput");
-
-const username =
-document.getElementById("username");
 
 if(!input.value.trim()) return;
 
@@ -390,7 +468,10 @@ socket.emit("sendMessage", {
 room,
 
 sender:
-username.value || "Anonymous",
+currentUser.username,
+
+senderId:
+currentUser.id,
 
 message:
 input.value
