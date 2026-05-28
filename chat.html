@@ -7,7 +7,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0"/>
 
-<title>Swaply Live Chat</title>
+<title>Swaply AI Chat</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -21,6 +21,7 @@ content="width=device-width, initial-scale=1.0"/>
 
 body{
   font-family:'Inter',sans-serif;
+  overflow:hidden;
 }
 
 ::-webkit-scrollbar{
@@ -32,11 +33,45 @@ body{
   border-radius:20px;
 }
 
+.glass{
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.chat-bg{
+  background:
+  linear-gradient(
+  rgba(0,0,0,.82),
+  rgba(0,0,0,.85)),
+  url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop');
+  background-size:cover;
+  background-position:center;
+}
+
+.message-enter{
+  animation:fade .3s ease;
+}
+
+@keyframes fade{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
 </style>
 
 </head>
 
-<body class="bg-gradient-to-br from-gray-100 via-white to-green-50 min-h-screen flex flex-col">
+<body class="chat-bg h-screen">
 
 <script>
 
@@ -50,10 +85,14 @@ const token =
 localStorage.getItem("token");
 
 const currentUser =
-JSON.parse(localStorage.getItem("user"));
+JSON.parse(
+localStorage.getItem("user")
+);
 
+/* =========================
+   AUTH CHECK
+========================= */
 
-// LOGIN REQUIRED
 if(!token || !currentUser){
 
 window.location.href =
@@ -63,14 +102,17 @@ window.location.href =
 
 </script>
 
-<!-- NAVBAR -->
-<header class="bg-white border-b border-gray-200 shadow-sm">
+<!-- MAIN -->
+<div class="flex h-screen">
 
-<div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+<!-- SIDEBAR -->
+<div class="hidden lg:flex w-[340px] glass flex-col border-r border-white/10">
+
+<div class="p-8 border-b border-white/10">
 
 <div class="flex items-center gap-4">
 
-<div class="w-14 h-14 rounded-3xl bg-green-600 flex items-center justify-center text-white text-3xl font-black shadow-xl">
+<div class="w-16 h-16 rounded-3xl bg-green-500 flex items-center justify-center text-white text-3xl font-black shadow-2xl">
 
 S
 
@@ -78,15 +120,15 @@ S
 
 <div>
 
-<h1 class="text-3xl font-black text-gray-900">
+<h1 class="text-3xl font-black text-white">
 
-Swaply Chat
+Swaply AI
 
 </h1>
 
-<p class="text-gray-500">
+<p class="text-green-400 font-bold">
 
-Secure Marketplace Messaging
+Marketplace Assistant
 
 </p>
 
@@ -94,25 +136,30 @@ Secure Marketplace Messaging
 
 </div>
 
-<div class="flex items-center gap-4">
+</div>
 
-<div class="hidden md:flex items-center gap-3 bg-gray-100 px-5 py-3 rounded-2xl">
+<div class="p-8">
+
+<div class="glass rounded-[30px] p-6">
+
+<div class="flex items-center gap-5">
 
 <img
-src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-class="w-10 h-10 rounded-full"/>
+src="${
+currentUser.avatar ||
+'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+}"
+class="w-20 h-20 rounded-full border-4 border-green-500 object-cover"/>
 
 <div>
 
-<h3 class="font-black text-gray-900">
+<h2 class="text-2xl font-black text-white">
 
-<span id="username">
+${currentUser.username}
 
-</span>
+</h2>
 
-</h3>
-
-<p class="text-green-600 text-sm font-bold">
+<p class="text-green-400 font-bold">
 
 Online
 
@@ -122,9 +169,37 @@ Online
 
 </div>
 
+</div>
+
+<div class="mt-8 space-y-4">
+
+<div class="glass rounded-3xl p-5 text-white">
+
+<h3 class="font-black text-xl mb-3">
+
+🤖 AI Features
+
+</h3>
+
+<ul class="space-y-2 text-gray-300">
+
+<li>• Smart Replies</li>
+
+<li>• Product Help</li>
+
+<li>• Marketplace Support</li>
+
+<li>• Real GPT AI</li>
+
+<li>• 24/7 Assistance</li>
+
+</ul>
+
+</div>
+
 <button
 onclick="logout()"
-class="bg-red-500 hover:bg-red-600 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
+class="w-full bg-red-500 hover:bg-red-600 transition-all text-white py-5 rounded-3xl font-black text-xl shadow-2xl">
 
 Logout
 
@@ -134,91 +209,104 @@ Logout
 
 </div>
 
-</header>
-
-<!-- MAIN -->
-<div class="flex-1 max-w-7xl mx-auto w-full px-6 py-8">
-
-<div class="grid lg:grid-cols-4 gap-8 h-[80vh]">
-
-<!-- SIDEBAR -->
-<div class="bg-white rounded-[35px] shadow-xl border border-gray-100 p-6 overflow-y-auto">
-
-<div class="flex items-center justify-between mb-8">
-
-<h2 class="text-2xl font-black text-gray-900">
-
-Online Users
-
-</h2>
-
-<div class="bg-green-100 text-green-700 px-4 py-2 rounded-full font-black">
-
-LIVE
-
-</div>
-
-</div>
-
-<div
-id="usersContainer"
-class="space-y-4">
-
-</div>
-
 </div>
 
 <!-- CHAT AREA -->
-<div class="lg:col-span-3 bg-white rounded-[35px] shadow-xl border border-gray-100 flex flex-col overflow-hidden">
+<div class="flex-1 flex flex-col">
 
-<!-- TOP -->
-<div class="border-b border-gray-100 px-8 py-6 flex items-center justify-between">
+<!-- TOPBAR -->
+<div class="glass border-b border-white/10 px-6 py-5 flex items-center justify-between">
+
+<div class="flex items-center gap-5">
+
+<div class="w-16 h-16 rounded-3xl bg-green-500 flex items-center justify-center text-white text-3xl shadow-2xl">
+
+🤖
+
+</div>
 
 <div>
 
-<h2 class="text-3xl font-black text-gray-900">
+<h2 class="text-3xl font-black text-white">
 
-Marketplace Chat
+Swaply AI Chat
 
 </h2>
 
-<p class="text-gray-500 mt-1">
+<p class="text-green-400 font-bold">
 
-Private live messaging system
+GPT Marketplace Assistant Online
 
 </p>
 
 </div>
 
-<div class="bg-green-100 text-green-700 px-5 py-3 rounded-2xl font-black">
-
-Encrypted
-
 </div>
+
+<a
+href="index.html"
+class="bg-white/10 hover:bg-white/20 transition-all text-white px-6 py-4 rounded-2xl font-black">
+
+Home
+
+</a>
 
 </div>
 
 <!-- MESSAGES -->
 <div
 id="messages"
-class="flex-1 overflow-y-auto p-8 space-y-6 bg-gradient-to-b from-white to-gray-50">
+class="flex-1 overflow-y-auto p-6 space-y-6">
+
+<!-- WELCOME -->
+
+<div class="flex items-start gap-4 message-enter">
+
+<div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center text-2xl shadow-xl">
+
+🤖
+
+</div>
+
+<div class="max-w-[700px]">
+
+<div class="glass rounded-[30px] rounded-tl-none px-8 py-6 shadow-2xl">
+
+<h3 class="text-2xl font-black text-white mb-3">
+
+Swaply AI
+
+</h3>
+
+<p class="text-gray-200 text-lg leading-relaxed">
+
+Hello 👋 I'm your AI marketplace assistant.
+Ask me anything about buying, selling, prices, products or Swaply features.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 <!-- INPUT -->
-<div class="border-t border-gray-100 p-6">
+<div class="glass border-t border-white/10 p-5">
 
-<div class="flex gap-4">
+<div class="flex items-center gap-4">
 
 <input
 type="text"
 id="messageInput"
-placeholder="Type your message..."
-class="flex-1 border-2 border-gray-200 rounded-2xl px-6 py-5 text-lg outline-none focus:border-green-500 transition-all"/>
+placeholder="Ask Swaply AI anything..."
+class="flex-1 bg-white/10 border border-white/10 text-white placeholder:text-gray-400 rounded-3xl px-8 py-6 outline-none text-lg focus:border-green-500"/>
 
 <button
 onclick="sendMessage()"
-class="bg-green-600 hover:bg-green-700 transition-all text-white px-10 rounded-2xl font-black text-lg shadow-xl">
+class="bg-green-500 hover:bg-green-600 transition-all text-white px-10 py-6 rounded-3xl font-black text-xl shadow-2xl hover:scale-105">
 
 Send
 
@@ -232,71 +320,113 @@ Send
 
 </div>
 
-</div>
-
 <script>
 
-document.getElementById("username")
-.innerText =
-currentUser.username;
+/* =========================
+   USER ONLINE
+========================= */
 
-
-// USER ONLINE
 socket.emit(
 "user_online",
 currentUser.id
 );
 
+/* =========================
+   ENTER SEND
+========================= */
 
-// LOAD USERS
-async function loadUsers(){
+document
+.getElementById("messageInput")
+.addEventListener(
+"keypress",
+function(e){
 
-try{
+if(e.key === "Enter"){
 
-const res =
-await fetch(`${API}/users`);
+sendMessage();
 
-const users =
-await res.json();
+}
 
-const container =
-document.getElementById("usersContainer");
+}
+);
 
-container.innerHTML = "";
+/* =========================
+   SEND MESSAGE
+========================= */
 
-users.forEach(user => {
+function sendMessage(){
 
-container.innerHTML += `
+const input =
+document.getElementById(
+"messageInput"
+);
 
-<div class="flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition-all p-4 rounded-2xl">
+const text =
+input.value.trim();
 
-<div class="flex items-center gap-4">
+if(!text) return;
 
-<div class="relative">
+/* USER MESSAGE */
 
-<img
-src="${user.avatar}"
-class="w-14 h-14 rounded-full object-cover"/>
+socket.emit(
+"send_message",
+{
 
-<div class="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-white
-${user.online ? 'bg-green-500' : 'bg-gray-400'}">
+senderId:
+currentUser.id,
 
-</div>
+senderName:
+currentUser.username,
 
-</div>
+receiverId:"AI",
 
-<div>
+text,
 
-<h3 class="font-black text-gray-900">
+isChatAI:true
 
-${user.username}
+}
+);
+
+input.value = "";
+
+}
+
+/* =========================
+   RECEIVE MESSAGE
+========================= */
+
+socket.on(
+"receive_message",
+message => {
+
+const messages =
+document.getElementById(
+"messages"
+);
+
+/* USER MESSAGE */
+
+if(
+message.senderId === currentUser.id
+){
+
+messages.innerHTML += `
+
+<div class="flex justify-end message-enter">
+
+<div class="max-w-[700px]">
+
+<div class="bg-green-500 rounded-[30px] rounded-br-none px-8 py-6 shadow-2xl">
+
+<h3 class="text-2xl font-black text-white mb-3">
+
+You
 
 </h3>
 
-<p class="text-sm
-${user.online ? 'text-green-600' : 'text-gray-500'} font-bold">
+<p class="text-white text-lg leading-relaxed">
 
-${user.online ? 'Online' : 'Offline'}
+${message.text}
 
 </p>
 
@@ -308,69 +438,39 @@ ${user.online ? 'Online' : 'Offline'}
 
 `;
 
-});
-
-}catch(err){
-
-console.log(err);
-
 }
 
-}
+/* AI MESSAGE */
 
+else if(
+message.senderId === "AI"
+){
 
-// LOAD MESSAGES
-async function loadMessages(){
+messages.innerHTML += `
 
-try{
+<div class="flex items-start gap-4 message-enter">
 
-const res =
-await fetch(`${API}/messages`);
+<div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center text-2xl shadow-xl">
 
-const messages =
-await res.json();
-
-const container =
-document.getElementById("messages");
-
-container.innerHTML = "";
-
-messages.forEach(message => {
-
-const mine =
-message.senderId === currentUser.id;
-
-container.innerHTML += `
-
-<div class="flex
-${mine ? 'justify-end' : 'justify-start'}">
-
-<div class="
-${mine
-? 'bg-green-600 text-white'
-: 'bg-gray-200 text-gray-900'}
-max-w-[75%]
-rounded-[30px]
-px-6
-py-5
-shadow-lg">
-
-<div class="font-black mb-2">
-
-${message.senderName || "User"}
+🤖
 
 </div>
 
-<div class="text-lg leading-relaxed">
+<div class="max-w-[700px]">
+
+<div class="glass rounded-[30px] rounded-tl-none px-8 py-6 shadow-2xl">
+
+<h3 class="text-2xl font-black text-white mb-3">
+
+Swaply AI
+
+</h3>
+
+<p class="text-gray-200 text-lg leading-relaxed whitespace-pre-wrap">
 
 ${message.text}
 
-</div>
-
-<div class="text-xs opacity-70 mt-3">
-
-${new Date(message.createdAt)
-.toLocaleTimeString()}
+</p>
 
 </div>
 
@@ -380,143 +480,25 @@ ${new Date(message.createdAt)
 
 `;
 
-});
-
-container.scrollTop =
-container.scrollHeight;
-
-}catch(err){
-
-console.log(err);
-
 }
 
-}
-
-
-// SEND MESSAGE
-function sendMessage(){
-
-const input =
-document.getElementById("messageInput");
-
-const text =
-input.value.trim();
-
-if(!text) return;
-
-socket.emit("send_message", {
-
-senderId:
-currentUser.id,
-
-senderName:
-currentUser.username,
-
-receiverId:
-"global",
-
-text
-
-});
-
-input.value = "";
-
-}
-
-
-// RECEIVE MESSAGE
-socket.on(
-"receive_message",
-message => {
-
-const container =
-document.getElementById("messages");
-
-const mine =
-message.senderId === currentUser.id;
-
-container.innerHTML += `
-
-<div class="flex
-${mine ? 'justify-end' : 'justify-start'}">
-
-<div class="
-${mine
-? 'bg-green-600 text-white'
-: 'bg-gray-200 text-gray-900'}
-max-w-[75%]
-rounded-[30px]
-px-6
-py-5
-shadow-lg">
-
-<div class="font-black mb-2">
-
-${message.senderName || "User"}
-
-</div>
-
-<div class="text-lg leading-relaxed">
-
-${message.text}
-
-</div>
-
-<div class="text-xs opacity-70 mt-3">
-
-${new Date(message.createdAt)
-.toLocaleTimeString()}
-
-</div>
-
-</div>
-
-</div>
-
-`;
-
-container.scrollTop =
-container.scrollHeight;
+messages.scrollTop =
+messages.scrollHeight;
 
 }
 );
 
+/* =========================
+   LOGOUT
+========================= */
 
-// REFRESH USERS
-socket.on(
-"refresh_users",
-() => {
-
-loadUsers();
-
-}
-);
-
-
-// ENTER SEND
-document
-.getElementById("messageInput")
-.addEventListener(
-"keypress",
-e => {
-
-if(e.key === "Enter"){
-
-sendMessage();
-
-}
-
-}
-);
-
-
-// LOGOUT
 async function logout(){
 
 try{
 
-await fetch(`${API}/logout`,{
+await fetch(
+`${API}/logout`,
+{
 
 method:"POST",
 
@@ -524,7 +506,8 @@ headers:{
 Authorization:token
 }
 
-});
+}
+);
 
 }catch(err){}
 
@@ -533,20 +516,18 @@ socket.emit(
 currentUser.id
 );
 
-localStorage.removeItem("token");
+localStorage.removeItem(
+"token"
+);
 
-localStorage.removeItem("user");
+localStorage.removeItem(
+"user"
+);
 
 window.location.href =
 "login.html";
 
 }
-
-
-// INITIAL LOAD
-loadUsers();
-
-loadMessages();
 
 </script>
 
