@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Upload Product - Swaply</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#050505;
+overflow-x:hidden;
+}
+
+.glass{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.07);
+}
+
+input,
+textarea,
+select{
+outline:none;
+}
+
+::-webkit-scrollbar{
+width:5px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#22c55e;
+border-radius:20px;
+}
+
+</style>
+
+</head>
+
+<body class="text-white">
+
+<script>
+
+const API =
+"https://traderbackend.onrender.com";
+
+const token =
+localStorage.getItem("token");
+
+const currentUser =
+JSON.parse(
+localStorage.getItem("user")
+);
+
+if(!token){
+
+window.location.href =
+"login.html";
+
+}
+
+</script>
+
+<!-- NAVBAR -->
+
+<nav class="sticky top-0 z-50 glass border-b border-white/10">
+
+<div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+
+<div>
+
+<h1 class="text-2xl md:text-3xl font-black">
+
+Swaply
+
+</h1>
+
+<p class="text-green-400 text-xs font-bold">
+
+Upload Product
+
+</p>
+
+</div>
+
+<div class="flex items-center gap-3">
+
+<img
+src="${
+currentUser?.avatar ||
+'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+}"
+class="w-11 h-11 rounded-full border-2 border-green-500 object-cover">
+
+<button
+onclick="logout()"
+class="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-2xl font-bold">
+
+Logout
+
+</button>
+
+</div>
+
+</div>
+
+</nav>
+
+<!-- PAGE -->
+
+<section class="max-w-6xl mx-auto px-5 py-10 pb-32">
+
+<div class="grid lg:grid-cols-2 gap-10">
+
+<!-- LEFT -->
+
+<div>
+
+<p class="text-green-400 font-black tracking-widest mb-4">
+
+SELL ON SWAPLY
+
+</p>
+
+<h1 class="text-5xl md:text-6xl font-black leading-tight">
+
+Upload
+Your Product
+
+</h1>
+
+<p class="text-gray-400 text-lg mt-6 leading-relaxed">
+
+Post your products and connect instantly with buyers through real-time marketplace chat.
+
+</p>
+
+<div class="grid grid-cols-2 gap-5 mt-10">
+
+<div class="glass rounded-3xl p-6">
+
+<h2 class="text-4xl mb-4">
+
+⚡
+
+</h2>
+
+<h2 class="font-black text-xl">
+
+Fast Uploads
+
+</h2>
+
+</div>
+
+<div class="glass rounded-3xl p-6">
+
+<h2 class="text-4xl mb-4">
+
+🤖
+
+</h2>
+
+<h2 class="font-black text-xl">
+
+AI Marketplace
+
+</h2>
+
+</div>
+
+<div class="glass rounded-3xl p-6">
+
+<h2 class="text-4xl mb-4">
+
+💬
+
+</h2>
+
+<h2 class="font-black text-xl">
+
+Instant Chat
+
+</h2>
+
+</div>
+
+<div class="glass rounded-3xl p-6">
+
+<h2 class="text-4xl mb-4">
+
+🚀
+
+</h2>
+
+<h2 class="font-black text-xl">
+
+Live Listings
+
+</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FORM -->
+
+<div class="glass rounded-[35px] p-8 md:p-10">
+
+<form id="uploadForm"
+class="space-y-6">
+
+<!-- IMAGE -->
+
+<div>
+
+<label class="font-bold text-lg">
+
+Product Image
+
+</label>
+
+<div class="mt-4">
+
+<label
+for="imageInput"
+class="glass border-2 border-dashed border-white/10 rounded-3xl h-64 flex flex-col items-center justify-center cursor-pointer hover:border-green-500 transition-all">
+
+<div id="previewContainer"
+class="w-full h-full hidden">
+
+<img
+id="previewImage"
+class="w-full h-full object-cover rounded-3xl">
+
+</div>
+
+<div id="uploadText"
+class="text-center">
+
+<h2 class="text-6xl mb-4">
+
+📷
+
+</h2>
+
+<p class="text-gray-400">
+
+Tap to upload image
+
+</p>
+
+</div>
+
+</label>
+
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+class="hidden">
+
+</div>
+
+</div>
+
+<!-- PRODUCT NAME -->
+
+<div>
+
+<label class="font-bold text-lg">
+
+Product Name
+
+</label>
+
+<input
+type="text"
+id="name"
+required
+placeholder="iPhone 14 Pro Max"
+class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+
+</div>
+
+<!-- DESCRIPTION -->
+
+<div>
+
+<label class="font-bold text-lg">
+
+Description
+
+</label>
+
+<textarea
+id="description"
+required
+rows="5"
+placeholder="Describe your product..."
+class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent resize-none"></textarea>
+
+</div>
+
+<!-- CATEGORY -->
+
+<div>
+
+<label class="font-bold text-lg">
+
+Category
+
+</label>
+
+<select
+id="category"
+required
+class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+
+<option value="">
+
+Select Category
+
+</option>
+
+<option>
+
+Phones
+
+</option>
+
+<option>
+
+Laptops
+
+</option>
+
+<option>
+
+Cars
+
+</option>
+
+<option>
+
+Fashion
+
+</option>
+
+<option>
+
+Gaming
+
+</option>
+
+<option>
+
+Furniture
+
+</option>
+
+<option>
+
+Electronics
+
+</option>
+
+</select>
+
+</div>
+
+<!-- PRICE -->
+
+<div>
+
+<label class="font-bold text-lg">
+
+Price (KSh)
+
+</label>
+
+<input
+type="number"
+id="price"
+required
+placeholder="50000"
+class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+
+</div>
+
+<!-- WANTED -->
+
+<div>
+
+<label class="font-bold text-lg">
+
+Wanted Exchange (Optional)
+
+</label>
+
+<input
+type="text"
+id="wanted"
+placeholder="Looking for MacBook or cash"
+class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+
+</div>
+
+<!-- LOCATION -->
+
+<div>
+
+<label class="font-bold text-lg">
+
+Location
+
+</label>
+
+<input
+type="text"
+id="location"
+placeholder="Nairobi"
+class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+
+</div>
+
+<!-- PHONE -->
+
+<div>
+
+<label class="font-bold text-lg">
+
+Phone Number
+
+</label>
+
+<input
+type="text"
+id="phone"
+placeholder="+254..."
+class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+
+</div>
+
+<!-- BUTTON -->
+
+<button
+type="submit"
+id="uploadBtn"
+class="w-full bg-green-500 hover:bg-green-600 py-5 rounded-2xl text-xl font-black transition-all">
+
+Upload Product
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+/* LOGOUT */
+
+function logout(){
+
+localStorage.removeItem("token");
+
+localStorage.removeItem("user");
+
+window.location.href =
+"index.html";
+
+}
+
+/* IMAGE PREVIEW */
+
+const imageInput =
+document.getElementById(
+"imageInput"
+);
+
+imageInput.addEventListener(
+"change",
+e => {
+
+const file =
+e.target.files[0];
+
+if(!file) return;
+
+const reader =
+new FileReader();
+
+reader.onload = function(){
+
+document
+.getElementById(
+"previewContainer"
+)
+.classList.remove(
+"hidden"
+);
+
+document
+.getElementById(
+"uploadText"
+)
+.style.display = "none";
+
+document
+.getElementById(
+"previewImage"
+)
+.src = reader.result;
+
+};
+
+reader.readAsDataURL(file);
+
+}
+);
+
+/* UPLOAD */
+
+document
+.getElementById(
+"uploadForm"
+)
+.addEventListener(
+"submit",
+async e => {
+
+e.preventDefault();
+
+const btn =
+document.getElementById(
+"uploadBtn"
+);
+
+btn.innerHTML =
+"Uploading...";
+
+btn.disabled = true;
+
+try{
+
+const formData =
+new FormData();
+
+formData.append(
+"name",
+document.getElementById(
+"name"
+).value
+);
+
+formData.append(
+"description",
+document.getElementById(
+"description"
+).value
+);
+
+formData.append(
+"category",
+document.getElementById(
+"category"
+).value
+);
+
+formData.append(
+"price",
+document.getElementById(
+"price"
+).value
+);
+
+formData.append(
+"wanted",
+document.getElementById(
+"wanted"
+).value
+);
+
+formData.append(
+"sellerName",
+currentUser.username
+);
+
+formData.append(
+"sellerPhone",
+document.getElementById(
+"phone"
+).value
+);
+
+formData.append(
+"location",
+document.getElementById(
+"location"
+).value
+);
+
+if(imageInput.files[0]){
+
+formData.append(
+"image",
+imageInput.files[0]
+);
+
+}
+
+const res =
+await fetch(
+`${API}/upload`,
+{
+method:"POST",
+body:formData
+}
+);
+
+const data =
+await res.json();
+
+btn.innerHTML =
+"Uploaded Successfully ✅";
+
+setTimeout(() => {
+
+window.location.href =
+"browse.html";
+
+},1500);
+
+}catch(err){
+
+console.log(err);
+
+btn.innerHTML =
+"Upload Failed";
+
+btn.disabled = false;
+
+}
+
+}
+);
+
+</script>
+
+</body>
+  </html>
