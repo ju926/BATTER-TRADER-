@@ -384,21 +384,10 @@ localStorage.setItem(
 JSON.stringify(data.user)
 );
 
-/* ADMIN */
-
-if(
-data.user.role === "admin"
-){
-
-window.location.href =
-"admin/index.html";
-
-}else{
+/* LAND EVERYONE TO INDEX */
 
 window.location.href =
 "index.html";
-
-}
 
 }else{
 
