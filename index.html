@@ -113,39 +113,51 @@ Buy • Sell • Trade
 <div class="hidden md:flex items-center gap-4">
 
 <a href="browse.html"
-class="text-white hover:text-green-400 font-semibold">
+class="text-white hover:text-green-400 font-semibold transition-all">
 
 Browse
 
 </a>
 
 <a href="chat.html"
-class="text-white hover:text-green-400 font-semibold">
+class="text-white hover:text-green-400 font-semibold transition-all">
 
 Chat
 
 </a>
 
 <a href="blog.html"
-class="text-white hover:text-green-400 font-semibold">
+class="text-white hover:text-green-400 font-semibold transition-all">
 
 Blog
 
 </a>
 
 <a href="support.html"
-class="text-white hover:text-green-400 font-semibold">
+class="text-white hover:text-green-400 font-semibold transition-all">
 
 Support
 
 </a>
 
-<div id="authButtons">
+<div id="authButtons"
+class="flex items-center gap-3">
 
-<a href="login.html"
-class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-2xl font-bold">
+<a
+href="login.html"
+id="loginBtn"
+class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-2xl font-bold transition-all">
 
 Login
+
+</a>
+
+<a
+href="register.html"
+id="registerBtn"
+class="glass text-white px-5 py-2 rounded-2xl font-bold transition-all hover:bg-white/10">
+
+Sign Up
 
 </a>
 
@@ -430,11 +442,7 @@ Safe Marketplace
 
 <div class="glass rounded-3xl p-8 text-center card-hover">
 
-<h2 class="text-5xl mb-5">
-
-✅
-
-</h2>
+<h2 class="text-5xl mb-5">✅</h2>
 
 <p class="text-white font-black">
 
@@ -446,11 +454,7 @@ Verified Users
 
 <div class="glass rounded-3xl p-8 text-center card-hover">
 
-<h2 class="text-5xl mb-5">
-
-🔒
-
-</h2>
+<h2 class="text-5xl mb-5">🔒</h2>
 
 <p class="text-white font-black">
 
@@ -462,11 +466,7 @@ Secure Platform
 
 <div class="glass rounded-3xl p-8 text-center card-hover">
 
-<h2 class="text-5xl mb-5">
-
-🤖
-
-</h2>
+<h2 class="text-5xl mb-5">🤖</h2>
 
 <p class="text-white font-black">
 
@@ -478,11 +478,7 @@ AI Moderation
 
 <div class="glass rounded-3xl p-8 text-center card-hover">
 
-<h2 class="text-5xl mb-5">
-
-⚡
-
-</h2>
+<h2 class="text-5xl mb-5">⚡</h2>
 
 <p class="text-white font-black">
 
@@ -659,7 +655,7 @@ class="flex flex-col items-center py-3 text-white">
 </a>
 
 <a
-href="login.html"
+href="#"
 class="flex flex-col items-center py-3 text-white">
 
 <span class="text-xl">👤</span>
@@ -686,7 +682,7 @@ authButtons.innerHTML = `
 
 <div class="flex items-center gap-3">
 
-<div class="text-right">
+<div class="hidden md:block text-right">
 
 <p class="text-white font-black text-sm">
 
@@ -702,9 +698,16 @@ Online
 
 </div>
 
+<img
+src="${
+currentUser.avatar ||
+'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+}"
+class="w-11 h-11 rounded-full border-2 border-green-500 object-cover">
+
 <button
 onclick="logout()"
-class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-2xl font-bold">
+class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-2xl font-bold transition-all">
 
 Logout
 
