@@ -1,164 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<meta charset="UTF-8"/>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0"/>
+
 <title>Swaply Marketplace</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  font-family:'Inter',sans-serif;
+}
+
+::-webkit-scrollbar{
+  width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#16a34a;
+  border-radius:20px;
+}
+
+</style>
+
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gradient-to-br from-gray-100 via-white to-green-50 min-h-screen">
+
+<script>
+
+const token =
+localStorage.getItem("token");
+
+const currentUser =
+JSON.parse(localStorage.getItem("user"));
+
+</script>
 
 <!-- NAVBAR -->
-<header class="bg-white shadow-md sticky top-0 z-50">
+<header class="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-200">
 
-<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
 
-<h1 class="text-3xl font-black text-green-600">
+<!-- LOGO -->
+<div class="flex items-center gap-4">
+
+<div class="w-14 h-14 rounded-3xl bg-green-600 flex items-center justify-center text-white text-3xl font-black shadow-xl">
+
+S
+
+</div>
+
+<div>
+
+<h1 class="text-3xl font-black text-gray-900">
+
 Swaply
+
 </h1>
 
-<nav class="hidden md:flex gap-8 font-semibold">
+<p class="text-gray-500">
 
-<a href="index.html" class="hover:text-green-600">Home</a>
-<a href="browse.html" class="hover:text-green-600">Browse</a>
-<a href="chat.html" class="hover:text-green-600">Chat</a>
-<a href="about.html" class="hover:text-green-600">About</a>
-<a href="help.html" class="hover:text-green-600">Help</a>
-<a href="terms.html" class="hover:text-green-600">Terms</a>
+Modern Marketplace
 
-</nav>
+</p>
 
-<div class="flex gap-3">
+</div>
 
-<a href="login.html"
-class="px-5 py-2 rounded-xl border border-green-600 text-green-600">
+</div>
 
-Login
+<!-- NAV -->
+<div class="hidden md:flex items-center gap-8">
+
+<a href="index.html"
+class="font-bold text-green-600">
+
+Home
 
 </a>
 
-<a href="register.html"
-class="px-5 py-2 rounded-xl bg-green-600 text-white">
+<a href="browse.html"
+class="font-bold text-gray-700 hover:text-green-600 transition-all">
 
-Sign Up
+Browse
 
 </a>
 
 </div>
+
+<!-- AUTH -->
+<div id="authArea"></div>
 
 </div>
 
 </header>
 
 <!-- HERO -->
-<section class="bg-green-600 text-white py-24">
+<section class="max-w-7xl mx-auto px-6 py-16">
 
-<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+<div class="grid lg:grid-cols-2 gap-14 items-center">
+
+<!-- LEFT -->
+<div>
+
+<div class="inline-flex items-center gap-3 bg-green-100 text-green-700 px-5 py-3 rounded-full font-bold mb-8">
+
+<div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+
+Live Marketplace
+
+</div>
+
+<h1 class="text-6xl lg:text-7xl font-black leading-tight text-gray-900 mb-8">
+
+Buy,
+Sell &
+Trade
+Smarter
+
+</h1>
+
+<p class="text-2xl text-gray-600 leading-relaxed mb-10">
+
+Discover amazing products, connect instantly with sellers and enjoy secure real-time marketplace conversations.
+
+</p>
+
+<div class="flex flex-wrap gap-5">
+
+<a href="browse.html">
+
+<button class="bg-green-600 hover:bg-green-700 transition-all text-white px-10 py-5 rounded-2xl font-black text-xl shadow-2xl">
+
+Browse Marketplace
+
+</button>
+
+</a>
+
+<a href="chat.html?id=demo">
+
+<button class="bg-black hover:bg-gray-900 transition-all text-white px-10 py-5 rounded-2xl font-black text-xl shadow-2xl">
+
+Open Chat
+
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+<div class="relative">
+
+<div class="absolute inset-0 bg-green-500/20 blur-3xl rounded-full"></div>
+
+<div class="relative bg-white rounded-[40px] shadow-2xl overflow-hidden border border-gray-100">
+
+<img
+src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop"
+class="w-full h-[500px] object-cover"/>
+
+<div class="p-8">
+
+<div class="flex items-center justify-between mb-6">
 
 <div>
 
-<h2 class="text-6xl font-black leading-tight mb-6">
-Buy, Sell & Swap Items Easily
+<h2 class="text-3xl font-black text-gray-900">
+
+Swaply Community
+
 </h2>
 
-<p class="text-xl text-green-100 mb-8">
-Kenya's modern marketplace platform with real-time chat and live listings.
+<p class="text-gray-500 mt-2">
+
+Thousands of active traders
+
 </p>
 
-<div class="flex gap-4 flex-wrap">
+</div>
 
-<a href="browse.html"
-class="bg-white text-green-600 px-8 py-4 rounded-2xl font-black">
+<div class="bg-green-100 text-green-700 px-5 py-3 rounded-2xl font-black">
 
-Browse Items
-
-</a>
-
-<a href="chat.html"
-class="bg-black text-white px-8 py-4 rounded-2xl font-black">
-
-Marketplace Chat
-
-</a>
-
-<a href="https://wa.me/254780204730"
-class="bg-yellow-400 text-black px-8 py-4 rounded-2xl font-black">
-
-Sell On Swaply
-
-</a>
+LIVE
 
 </div>
 
 </div>
 
-<!-- RIGHT CARD -->
-<div class="bg-white text-gray-800 rounded-3xl p-10 shadow-2xl">
+<div class="grid grid-cols-3 gap-5">
 
-<h3 class="text-4xl font-black mb-6">
-Why Swaply?
+<div class="bg-gray-100 rounded-3xl p-5 text-center">
+
+<h3 class="text-4xl font-black text-green-600">
+
+24/7
+
 </h3>
 
-<div class="space-y-6">
+<p class="text-gray-500 mt-2">
 
-<div class="flex gap-4">
+Trading
 
-<div class="text-4xl">
-🛒
-</div>
-
-<div>
-
-<h4 class="font-black text-xl">
-Marketplace
-</h4>
-
-<p class="text-gray-600">
-Buy and sell products instantly.
 </p>
 
 </div>
 
-</div>
+<div class="bg-gray-100 rounded-3xl p-5 text-center">
 
-<div class="flex gap-4">
+<h3 class="text-4xl font-black text-green-600">
 
-<div class="text-4xl">
-💬
-</div>
+Live
 
-<div>
+</h3>
 
-<h4 class="font-black text-xl">
-Live Chat
-</h4>
+<p class="text-gray-500 mt-2">
 
-<p class="text-gray-600">
-Chat with buyers and sellers directly.
+Chat
+
 </p>
 
 </div>
 
-</div>
+<div class="bg-gray-100 rounded-3xl p-5 text-center">
 
-<div class="flex gap-4">
+<h3 class="text-4xl font-black text-green-600">
 
-<div class="text-4xl">
-🔒
-</div>
+Safe
 
-<div>
+</h3>
 
-<h4 class="font-black text-xl">
-Safe Trading
-</h4>
+<p class="text-gray-500 mt-2">
 
-<p class="text-gray-600">
-Trusted marketplace with real listings.
+Accounts
+
 </p>
+
+</div>
 
 </div>
 
@@ -172,36 +262,74 @@ Trusted marketplace with real listings.
 
 </section>
 
-<!-- ITEMS -->
-<section class="py-20 bg-white">
+<!-- FEATURES -->
+<section class="max-w-7xl mx-auto px-6 pb-20">
 
-<div class="max-w-7xl mx-auto px-6">
+<div class="grid md:grid-cols-3 gap-8">
 
-<div class="flex items-center justify-between mb-12">
+<div class="bg-white rounded-[35px] shadow-xl p-10 border border-gray-100">
 
-<div>
+<div class="w-20 h-20 rounded-3xl bg-green-100 flex items-center justify-center text-4xl mb-8">
 
-<h2 class="text-5xl font-black">
-Latest Items
+💬
+
+</div>
+
+<h2 class="text-3xl font-black text-gray-900 mb-5">
+
+Live Chat
+
 </h2>
 
-<p class="text-gray-600 mt-2">
-Recently uploaded marketplace products
+<p class="text-gray-600 text-lg leading-relaxed">
+
+Real-time messaging between buyers and sellers with secure authentication.
+
 </p>
 
 </div>
 
-<a href="browse.html"
-class="bg-green-600 text-white px-6 py-3 rounded-xl font-bold">
+<div class="bg-white rounded-[35px] shadow-xl p-10 border border-gray-100">
 
-View All
+<div class="w-20 h-20 rounded-3xl bg-green-100 flex items-center justify-center text-4xl mb-8">
 
-</a>
+🔒
 
 </div>
 
-<div id="itemsContainer"
-class="grid md:grid-cols-3 gap-8">
+<h2 class="text-3xl font-black text-gray-900 mb-5">
+
+Secure Login
+
+</h2>
+
+<p class="text-gray-600 text-lg leading-relaxed">
+
+Protected marketplace accounts with automatic login persistence.
+
+</p>
+
+</div>
+
+<div class="bg-white rounded-[35px] shadow-xl p-10 border border-gray-100">
+
+<div class="w-20 h-20 rounded-3xl bg-green-100 flex items-center justify-center text-4xl mb-8">
+
+⚡
+
+</div>
+
+<h2 class="text-3xl font-black text-gray-900 mb-5">
+
+Fast Trading
+
+</h2>
+
+<p class="text-gray-600 text-lg leading-relaxed">
+
+Modern marketplace experience optimized for mobile and desktop.
+
+</p>
 
 </div>
 
@@ -210,62 +338,29 @@ class="grid md:grid-cols-3 gap-8">
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-gray-900 text-gray-300 py-16">
+<footer class="bg-black text-white py-10">
 
-<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
 
 <div>
 
-<h2 class="text-3xl font-black text-white mb-4">
+<h2 class="text-3xl font-black">
+
 Swaply
+
 </h2>
 
-<p class="text-gray-400">
-Modern marketplace platform.
+<p class="text-gray-400 mt-2">
+
+Next generation marketplace
+
 </p>
 
 </div>
 
-<div>
+<div class="text-gray-400">
 
-<h3 class="text-white font-bold mb-4">
-Company
-</h3>
-
-<ul class="space-y-2">
-
-<li><a href="about.html">About</a></li>
-<li><a href="blog.html">Blog</a></li>
-<li><a href="careers.html">Careers</a></li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h3 class="text-white font-bold mb-4">
-Support
-</h3>
-
-<ul class="space-y-2">
-
-<li><a href="help.html">Help</a></li>
-<li><a href="terms.html">Terms</a></li>
-<li><a href="safety.html">Safety</a></li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h3 class="text-white font-bold mb-4">
-Contact
-</h3>
-
-<p>Email: mikemizan254@gmail.com</p>
-<p>WhatsApp: +254780204730</p>
+© 2026 Swaply. All rights reserved.
 
 </div>
 
@@ -275,71 +370,99 @@ Contact
 
 <script>
 
-const API = "https://traderbackend.onrender.com";
+const authArea =
+document.getElementById("authArea");
 
-async function loadItems(){
+if(token && currentUser){
 
-const res = await fetch(`${API}/items`);
+authArea.innerHTML = `
 
-const items = await res.json();
+<div class="flex items-center gap-4">
 
-const container =
-document.getElementById("itemsContainer");
-
-container.innerHTML = "";
-
-items.forEach(item => {
-
-container.innerHTML += `
-
-<div class="bg-gray-50 rounded-3xl overflow-hidden shadow-xl">
+<div class="hidden md:flex items-center gap-3 bg-white px-5 py-3 rounded-2xl shadow-lg border">
 
 <img
-src="${item.image}"
-class="w-full h-64 object-cover"/>
+src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+class="w-10 h-10 rounded-full"/>
 
-<div class="p-6">
+<div>
 
-<h2 class="text-2xl font-black mb-2">
-${item.name}
-</h2>
+<h3 class="font-black text-gray-900">
 
-<p class="text-gray-600 mb-4">
-${item.description}
+${currentUser.username}
+
+</h3>
+
+<p class="text-gray-500 text-sm">
+
+Logged In
+
 </p>
 
-<div class="flex justify-between items-center mb-4">
-
-<span class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold">
-${item.category}
-</span>
-
-<span class="text-xl font-black text-green-600">
-KSh ${item.price || 0}
-</span>
+</div>
 
 </div>
 
-<a href="chat.html"
-class="block bg-green-600 text-white py-3 rounded-2xl text-center font-black">
+<button
+onclick="logout()"
+class="bg-red-500 hover:bg-red-600 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
 
-Chat Seller
+Logout
 
-</a>
-
-</div>
+</button>
 
 </div>
 
 `;
 
-});
+}else{
+
+authArea.innerHTML = `
+
+<div class="flex items-center gap-4">
+
+<a href="login.html">
+
+<button
+class="bg-green-600 hover:bg-green-700 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
+
+Login
+
+</button>
+
+</a>
+
+<a href="register.html">
+
+<button
+class="bg-black hover:bg-gray-900 transition-all text-white px-6 py-3 rounded-2xl font-black shadow-xl">
+
+Register
+
+</button>
+
+</a>
+
+</div>
+
+`;
 
 }
 
-loadItems();
+
+// LOGOUT
+function logout(){
+
+localStorage.removeItem("token");
+
+localStorage.removeItem("user");
+
+window.location.href =
+"login.html";
+
+}
 
 </script>
 
 </body>
-</html>
+  </html>
