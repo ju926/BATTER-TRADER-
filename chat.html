@@ -36,33 +36,72 @@ display:flex;
 flex-direction:column;
 }
 
+/* TOPBAR */
+
 .topbar{
 position:fixed;
 top:0;
 left:0;
 right:0;
-height:75px;
+height:72px;
 background:rgba(10,10,10,.95);
-backdrop-filter:blur(15px);
-border-bottom:1px solid rgba(255,255,255,.08);
+backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(255,255,255,.06);
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:0 16px;
+padding:0 14px;
 z-index:999;
 }
+
+.logo{
+font-size:22px;
+font-weight:900;
+color:white;
+}
+
+.nav{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.nav a{
+text-decoration:none;
+color:white;
+font-size:13px;
+font-weight:800;
+padding:10px 14px;
+border-radius:14px;
+background:#111827;
+}
+
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:15px;
+font-weight:900;
+color:white;
+}
+
+/* MESSAGES */
 
 .messages{
 flex:1;
 overflow-y:auto;
-padding:90px 12px 120px;
+padding:90px 12px 130px;
 }
 
 .message{
 margin-bottom:18px;
 display:flex;
 flex-direction:column;
-max-width:85%;
+max-width:86%;
 animation:fade .2s ease;
 }
 
@@ -83,9 +122,9 @@ margin-left:auto;
 
 .bubble{
 padding:14px;
-border-radius:22px;
-word-wrap:break-word;
+border-radius:24px;
 position:relative;
+word-wrap:break-word;
 }
 
 .mine .bubble{
@@ -112,19 +151,13 @@ color:white;
 
 .username{
 font-size:12px;
-font-weight:800;
-margin-bottom:6px;
-opacity:.9;
-}
-
-.time{
-font-size:10px;
-margin-top:7px;
-opacity:.7;
+font-weight:900;
+margin-bottom:8px;
+opacity:.95;
 }
 
 .reply-preview{
-background:rgba(255,255,255,.08);
+background:rgba(255,255,255,.09);
 padding:8px;
 border-radius:12px;
 margin-bottom:10px;
@@ -132,12 +165,20 @@ font-size:12px;
 }
 
 .reply-btn{
-font-size:12px;
-color:#4ade80;
-font-weight:700;
 margin-top:10px;
+font-size:12px;
+font-weight:800;
+color:#86efac;
 cursor:pointer;
 }
+
+.time{
+font-size:10px;
+margin-top:8px;
+opacity:.7;
+}
+
+/* INPUT */
 
 .input-area{
 position:fixed;
@@ -150,18 +191,26 @@ border-top:1px solid rgba(255,255,255,.06);
 z-index:999;
 }
 
+.replying-box{
+display:none;
+background:#111827;
+padding:10px;
+border-radius:16px;
+margin-bottom:10px;
+}
+
 .input-wrap{
 background:#111827;
 border-radius:30px;
 display:flex;
 align-items:center;
 padding:8px;
-gap:10px;
+gap:8px;
 }
 
 #messageInput{
 flex:1;
-height:48px;
+height:50px;
 background:transparent;
 border:none;
 outline:none;
@@ -171,28 +220,22 @@ padding:0 10px;
 }
 
 .send-btn{
-background:#22c55e;
-color:white;
-border:none;
 width:52px;
 height:52px;
 border-radius:50%;
+border:none;
+background:#22c55e;
+color:white;
 font-size:20px;
 font-weight:900;
 cursor:pointer;
 }
 
-.replying-box{
-display:none;
-background:#111827;
-padding:10px;
-border-radius:18px;
-margin-bottom:10px;
-}
+/* TAG USERS */
 
 .tag-users{
 position:fixed;
-bottom:90px;
+bottom:95px;
 left:10px;
 right:10px;
 background:#111827;
@@ -206,7 +249,7 @@ border:1px solid rgba(255,255,255,.06);
 .tag-user{
 padding:14px;
 color:white;
-font-weight:700;
+font-weight:800;
 cursor:pointer;
 border-bottom:1px solid rgba(255,255,255,.05);
 }
@@ -215,12 +258,21 @@ border-bottom:1px solid rgba(255,255,255,.05);
 background:#1f2937;
 }
 
-.online-dot{
+.online{
+display:flex;
+align-items:center;
+gap:6px;
+margin-top:3px;
+}
+
+.dot{
 width:8px;
 height:8px;
 background:#22c55e;
 border-radius:50%;
 }
+
+/* SCROLLBAR */
 
 ::-webkit-scrollbar{
 width:4px;
@@ -263,39 +315,25 @@ currentUser?.role === "admin"
 
 ||
 
-currentUser?.email === "admin@swaply.com"
-
-||
-
-currentUser?.username === "swaplyadmin";
+currentUser?.email === "admin@swaply.com";
 
 </script>
 
-<!-- TOP -->
+<!-- TOPBAR -->
 
 <div class="topbar">
 
-<div class="flex items-center gap-3">
-
-<a
-href="index.html"
-class="text-white text-2xl">
-
-←
-
-</a>
-
 <div>
 
-<h1 class="text-white text-lg font-black">
+<h1 class="logo">
 
-Swaply Chat
+Swaply
 
 </h1>
 
-<div class="flex items-center gap-2 mt-1">
+<div class="online">
 
-<div class="online-dot"></div>
+<div class="dot"></div>
 
 <p class="text-green-400 text-xs font-bold">
 
@@ -307,27 +345,43 @@ Community Online
 
 </div>
 
+<div class="nav">
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<a href="browse.html">
+
+Browse
+
+</a>
+
+<a
+href="#"
+onclick="logout()">
+
+Logout
+
+</a>
+
+<div class="avatar">
+
+<script>
+
+document.write(
+
+(currentUser?.username || "U")
+.charAt(0)
+.toUpperCase()
+
+);
+
+</script>
+
 </div>
-
-<div class="text-right">
-
-<p class="text-white text-sm font-black">
-
-${currentUser?.username || "User"}
-
-</p>
-
-<p class="${
-isAdmin
-?
-'text-orange-400'
-:
-'text-green-400'
-} text-xs font-bold">
-
-${isAdmin ? "🛡 ADMIN" : "● Online"}
-
-</p>
 
 </div>
 
@@ -383,7 +437,7 @@ Replying to
 
 <p
 id="replyText"
-class="text-white text-sm"></p>
+class="text-white text-sm mt-1"></p>
 
 </div>
 
@@ -399,14 +453,13 @@ class="text-red-400 text-lg">
 
 </div>
 
-<form
-id="chatForm">
+<form id="chatForm">
 
 <div class="input-wrap">
 
 <button
 type="button"
-class="text-xl text-gray-400">
+class="text-gray-400 text-xl">
 
 😊
 
@@ -420,7 +473,7 @@ autocomplete="off">
 
 <button
 type="button"
-class="text-xl text-gray-400">
+class="text-gray-400 text-xl">
 
 📎
 
@@ -466,7 +519,7 @@ socket.emit(
 currentUser.username
 );
 
-/* LOAD MESSAGES */
+/* LOAD */
 
 async function loadMessages(){
 
@@ -498,7 +551,7 @@ console.log(err);
 
 loadMessages();
 
-/* TAGS */
+/* TAG USERS */
 
 messageInput.addEventListener(
 "input",
@@ -518,8 +571,6 @@ tagUsers.style.display =
 "none";
 
 }
-
-/* TYPING */
 
 socket.emit(
 "typing",
@@ -541,7 +592,7 @@ messageInput.focus();
 
 }
 
-/* SEND */
+/* SEND MESSAGE */
 
 document
 .getElementById(
@@ -562,9 +613,6 @@ const msg = {
 
 username:
 currentUser.username,
-
-senderId:
-currentUser.id,
 
 message:text,
 
@@ -589,7 +637,7 @@ messageInput.value = "";
 
 cancelReply();
 
-/* AI RESPONSE */
+/* AI */
 
 if(
 text.toLowerCase().includes("ai")
@@ -597,7 +645,7 @@ text.toLowerCase().includes("ai")
 
 setTimeout(() => {
 
-const aiMsg = {
+appendMessage({
 
 username:"AI",
 
@@ -612,15 +660,13 @@ hour:"2-digit",
 minute:"2-digit"
 })
 
-};
-
-appendMessage(aiMsg);
+});
 
 },1000);
 
 }
 
-/* ADMIN AUTO */
+/* ADMIN */
 
 if(
 text.toLowerCase().includes("@admin")
@@ -635,7 +681,7 @@ appendMessage({
 username:"ADMIN",
 
 message:
-"🛡 Admin has received your message.",
+"🛡 Admin received your message.",
 
 admin:true,
 
@@ -661,25 +707,6 @@ socket.on(
 msg => {
 
 appendMessage(msg);
-
-}
-);
-
-/* TYPING */
-
-socket.on(
-"userTyping",
-username => {
-
-if(
-username !== currentUser.username
-){
-
-console.log(
-`${username} typing...`
-);
-
-}
 
 }
 );
@@ -744,13 +771,11 @@ data.replyTo
 `
 <div class="reply-preview">
 
-↩ ${
-data.replyTo.username || ""
-}
+↩ ${data.replyTo.username}
 
 <br>
 
-${data.replyTo.message || ""}
+${data.replyTo.message}
 
 </div>
 `
@@ -764,7 +789,8 @@ ${data.message}
 
 </div>
 
-<div class="reply-btn"
+<div
+class="reply-btn"
 onclick='replyMessage(${JSON.stringify(data).replace(/'/g,"&apos;")})'>
 
 ↩ Reply
@@ -810,7 +836,8 @@ document
 .getElementById(
 "replyText"
 )
-innerText =
+.innerText =
+
 `${data.username}: ${data.message}`;
 
 messageInput.focus();
@@ -829,7 +856,7 @@ document
 
 }
 
-/* AI */
+/* AI REPLIES */
 
 function generateAIReply(text){
 
@@ -840,7 +867,7 @@ if(
 text.includes("phone")
 ){
 
-return "📱 You can browse phones in the marketplace.";
+return "📱 Browse phones in marketplace.";
 
 }
 
@@ -848,7 +875,7 @@ if(
 text.includes("laptop")
 ){
 
-return "💻 Check the browse page for available laptops.";
+return "💻 Check Browse for laptops.";
 
 }
 
@@ -856,15 +883,7 @@ if(
 text.includes("price")
 ){
 
-return "💰 Compare multiple listings before buying.";
-
-}
-
-if(
-text.includes("scam")
-){
-
-return "⚠ Never pay before meeting seller physically.";
+return "💰 Compare prices before trading.";
 
 }
 
@@ -872,11 +891,32 @@ if(
 text.includes("hello")
 ){
 
-return "👋 Hello! How can I help you today?";
+return "👋 Hello! Welcome to Swaply.";
+
+}
+
+if(
+text.includes("scam")
+){
+
+return "⚠ Never send money before meeting seller.";
 
 }
 
 return "🤖 AI Assistant is here to help.";
+
+}
+
+/* LOGOUT */
+
+function logout(){
+
+localStorage.removeItem("user");
+
+localStorage.removeItem("token");
+
+window.location.href =
+"login.html";
 
 }
 
