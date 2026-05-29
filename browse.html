@@ -7,7 +7,7 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Swaply Browse</title>
+<title>Swaply Marketplace</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -29,7 +29,9 @@ min-height:100vh;
 padding-bottom:120px;
 }
 
-.topbar{
+/* HEADER */
+
+.header{
 position:sticky;
 top:0;
 z-index:100;
@@ -43,12 +45,13 @@ border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .logo{
-font-size:26px;
+font-size:28px;
 font-weight:900;
 }
 
 .nav{
 display:flex;
+align-items:center;
 gap:10px;
 }
 
@@ -62,8 +65,22 @@ font-size:13px;
 font-weight:800;
 }
 
+.avatar{
+width:42px;
+height:42px;
+border-radius:50%;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:16px;
+font-weight:900;
+}
+
+/* SEARCH */
+
 .search-box{
-padding:16px;
+padding:18px;
 }
 
 .search{
@@ -72,17 +89,19 @@ height:58px;
 background:#111827;
 border:none;
 outline:none;
-border-radius:20px;
+border-radius:18px;
 padding:0 18px;
-color:white;
 font-size:15px;
+color:white;
 }
+
+/* PRODUCTS */
 
 .products{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 gap:16px;
-padding:0 16px;
+padding:0 18px;
 }
 
 .card{
@@ -95,7 +114,7 @@ border:1px solid rgba(255,255,255,.05);
 }
 
 .card:hover{
-transform:translateY(-5px);
+transform:translateY(-4px);
 }
 
 .image{
@@ -129,8 +148,8 @@ padding:16px;
 .title{
 font-size:16px;
 font-weight:800;
-margin-bottom:10px;
 line-height:1.5;
+margin-bottom:10px;
 }
 
 .price{
@@ -154,7 +173,7 @@ align-items:center;
 gap:10px;
 }
 
-.avatar{
+.seller-avatar{
 width:38px;
 height:38px;
 border-radius:50%;
@@ -164,6 +183,8 @@ align-items:center;
 justify-content:center;
 font-weight:900;
 }
+
+/* FLOAT BUTTON */
 
 .upload-btn{
 position:fixed;
@@ -184,21 +205,18 @@ box-shadow:0 10px 30px rgba(34,197,94,.4);
 z-index:999;
 }
 
-.loading{
-padding:40px;
+/* STATES */
+
+.loading,
+.empty{
+padding:60px;
 text-align:center;
 font-size:18px;
 font-weight:700;
 color:#9ca3af;
 }
 
-.empty{
-padding:40px;
-text-align:center;
-font-size:18px;
-font-weight:700;
-color:#9ca3af;
-}
+/* MOBILE */
 
 @media(max-width:768px){
 
@@ -232,7 +250,9 @@ font-size:12px;
 
 <body>
 
-<div class="topbar">
+<!-- HEADER -->
+
+<div class="header">
 
 <h1 class="logo">
 
@@ -260,19 +280,38 @@ Profile
 
 </a>
 
+<a href="#"
+onclick="logout()">
+
+Logout
+
+</a>
+
+<div
+class="avatar"
+id="userAvatar">
+
+U
+
 </div>
 
 </div>
+
+</div>
+
+<!-- SEARCH -->
 
 <div class="search-box">
 
 <input
 type="text"
-class="search"
 id="searchInput"
+class="search"
 placeholder="Search products...">
 
 </div>
+
+<!-- PRODUCTS -->
 
 <div
 class="products"
@@ -286,6 +325,8 @@ Loading products...
 
 </div>
 
+<!-- UPLOAD BUTTON -->
+
 <a
 href="upload.html"
 class="upload-btn">
@@ -296,10 +337,34 @@ class="upload-btn">
 
 <script>
 
+/* BACKEND */
+
 const BACKEND_URL =
-"https://YOUR_BACKEND_URL.onrender.com";
+"https://traderbackend.onrender.com";
+
+/* USER */
+
+const currentUser =
+JSON.parse(
+localStorage.getItem("swaplyUser")
+);
+
+if(currentUser){
+
+document.getElementById(
+"userAvatar"
+).innerText =
+currentUser.username
+.charAt(0)
+.toUpperCase();
+
+}
+
+/* PRODUCTS */
 
 let allProducts = [];
+
+/* LOAD PRODUCTS */
 
 async function loadProducts(){
 
@@ -335,6 +400,8 @@ Failed to load products
 
 }
 
+/* RENDER PRODUCTS */
+
 function renderProducts(products){
 
 const container =
@@ -348,7 +415,7 @@ container.innerHTML = `
 
 <div class="empty">
 
-No products found
+No products available
 
 </div>
 
@@ -360,7 +427,7 @@ return;
 
 container.innerHTML = "";
 
-products.forEach(product => {
+products.reverse().forEach(product => {
 
 container.innerHTML += `
 
@@ -418,7 +485,7 @@ KSh ${product.price}
 
 <div class="seller">
 
-<div class="avatar">
+<div class="seller-avatar">
 
 ${product.sellerName?.charAt(0) || "U"}
 
@@ -452,12 +519,16 @@ Seller
 
 }
 
+/* OPEN PRODUCT */
+
 function openProduct(id){
 
 window.location.href =
 `product.html?id=${id}`;
 
 }
+
+/* SEARCH */
 
 document
 .getElementById("searchInput")
@@ -472,9 +543,17 @@ const filtered =
 allProducts.filter(product => {
 
 return (
+
 product.title
 .toLowerCase()
 .includes(value)
+
+||
+
+product.category
+?.toLowerCase()
+.includes(value)
+
 );
 
 });
@@ -483,6 +562,21 @@ renderProducts(filtered);
 
 }
 );
+
+/* LOGOUT */
+
+function logout(){
+
+localStorage.removeItem(
+"swaplyUser"
+);
+
+window.location.href =
+"login.html";
+
+}
+
+/* START */
 
 loadProducts();
 
