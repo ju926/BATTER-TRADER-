@@ -29,8 +29,6 @@ min-height:100vh;
 padding-bottom:120px;
 }
 
-/* TOPBAR */
-
 .topbar{
 position:sticky;
 top:0;
@@ -45,13 +43,12 @@ border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .logo{
-font-size:24px;
+font-size:26px;
 font-weight:900;
 }
 
 .nav{
 display:flex;
-align-items:center;
 gap:10px;
 }
 
@@ -64,8 +61,6 @@ border-radius:14px;
 font-size:13px;
 font-weight:800;
 }
-
-/* SEARCH */
 
 .search-box{
 padding:16px;
@@ -83,40 +78,9 @@ color:white;
 font-size:15px;
 }
 
-/* CATEGORIES */
-
-.categories{
-display:flex;
-gap:10px;
-overflow-x:auto;
-padding:0 16px 18px;
-}
-
-.categories::-webkit-scrollbar{
-display:none;
-}
-
-.category{
-background:#111827;
-padding:12px 18px;
-border-radius:18px;
-font-size:13px;
-font-weight:800;
-white-space:nowrap;
-cursor:pointer;
-transition:.2s;
-}
-
-.category.active{
-background:#22c55e;
-color:white;
-}
-
-/* PRODUCTS */
-
 .products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 gap:16px;
 padding:0 16px;
 }
@@ -125,13 +89,13 @@ padding:0 16px;
 background:#111827;
 border-radius:28px;
 overflow:hidden;
-transition:.2s;
 cursor:pointer;
-border:1px solid rgba(255,255,255,.04);
+transition:.2s;
+border:1px solid rgba(255,255,255,.05);
 }
 
 .card:hover{
-transform:translateY(-4px);
+transform:translateY(-5px);
 }
 
 .image{
@@ -179,7 +143,6 @@ margin-bottom:12px;
 .meta{
 display:flex;
 justify-content:space-between;
-align-items:center;
 font-size:12px;
 color:#9ca3af;
 margin-bottom:12px;
@@ -189,7 +152,6 @@ margin-bottom:12px;
 display:flex;
 align-items:center;
 gap:10px;
-margin-top:10px;
 }
 
 .avatar{
@@ -202,8 +164,6 @@ align-items:center;
 justify-content:center;
 font-weight:900;
 }
-
-/* FLOATING BUTTON */
 
 .upload-btn{
 position:fixed;
@@ -224,7 +184,21 @@ box-shadow:0 10px 30px rgba(34,197,94,.4);
 z-index:999;
 }
 
-/* MOBILE */
+.loading{
+padding:40px;
+text-align:center;
+font-size:18px;
+font-weight:700;
+color:#9ca3af;
+}
+
+.empty{
+padding:40px;
+text-align:center;
+font-size:18px;
+font-weight:700;
+color:#9ca3af;
+}
 
 @media(max-width:768px){
 
@@ -234,7 +208,7 @@ gap:12px;
 }
 
 .image{
-height:180px;
+height:170px;
 }
 
 .title{
@@ -242,7 +216,7 @@ font-size:14px;
 }
 
 .price{
-font-size:20px;
+font-size:18px;
 }
 
 .nav a{
@@ -257,8 +231,6 @@ font-size:12px;
 </head>
 
 <body>
-
-<!-- TOPBAR -->
 
 <div class="topbar">
 
@@ -292,366 +264,27 @@ Profile
 
 </div>
 
-<!-- SEARCH -->
-
 <div class="search-box">
 
 <input
 type="text"
 class="search"
-placeholder="Search phones, laptops, cars...">
+id="searchInput"
+placeholder="Search products...">
 
 </div>
-
-<!-- CATEGORIES -->
-
-<div class="categories">
-
-<div class="category active">
-
-All
-
-</div>
-
-<div class="category">
-
-Phones
-
-</div>
-
-<div class="category">
-
-Laptops
-
-</div>
-
-<div class="category">
-
-Gaming
-
-</div>
-
-<div class="category">
-
-Fashion
-
-</div>
-
-<div class="category">
-
-Cars
-
-</div>
-
-<div class="category">
-
-Electronics
-
-</div>
-
-</div>
-
-<!-- PRODUCTS -->
-
-<div class="products">
-
-<!-- CARD -->
 
 <div
-class="card"
-onclick="openProduct(1)">
+class="products"
+id="products">
 
-<div class="image">
+<div class="loading">
 
-<img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop">
-
-<div class="badge">
-
-Featured
+Loading products...
 
 </div>
 
 </div>
-
-<div class="content">
-
-<h2 class="title">
-
-iPhone 13 Pro Max 256GB
-
-</h2>
-
-<div class="price">
-
-KSh 85,000
-
-</div>
-
-<div class="meta">
-
-<span>
-
-📍 Nairobi
-
-</span>
-
-<span>
-
-👀 1.2k
-
-</span>
-
-</div>
-
-<div class="seller">
-
-<div class="avatar">
-
-S
-
-</div>
-
-<div>
-
-<p class="font-bold text-sm">
-
-Stephani
-
-</p>
-
-<p class="text-xs text-gray-400">
-
-Verified Seller
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- CARD -->
-
-<div
-class="card"
-onclick="openProduct(2)">
-
-<div class="image">
-
-<img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<div class="content">
-
-<h2 class="title">
-
-MacBook Pro M2
-
-</h2>
-
-<div class="price">
-
-KSh 145,000
-
-</div>
-
-<div class="meta">
-
-<span>
-
-📍 Mombasa
-
-</span>
-
-<span>
-
-👀 892
-
-</span>
-
-</div>
-
-<div class="seller">
-
-<div class="avatar">
-
-J
-
-</div>
-
-<div>
-
-<p class="font-bold text-sm">
-
-Julian
-
-</p>
-
-<p class="text-xs text-gray-400">
-
-Top Seller
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- CARD -->
-
-<div
-class="card"
-onclick="openProduct(3)">
-
-<div class="image">
-
-<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<div class="content">
-
-<h2 class="title">
-
-Mercedes Benz C200
-
-</h2>
-
-<div class="price">
-
-KSh 2.4M
-
-</div>
-
-<div class="meta">
-
-<span>
-
-📍 Kisumu
-
-</span>
-
-<span>
-
-👀 3.4k
-
-</span>
-
-</div>
-
-<div class="seller">
-
-<div class="avatar">
-
-M
-
-</div>
-
-<div>
-
-<p class="font-bold text-sm">
-
-Mark
-
-</p>
-
-<p class="text-xs text-gray-400">
-
-Verified Seller
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- CARD -->
-
-<div
-class="card"
-onclick="openProduct(4)">
-
-<div class="image">
-
-<img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=1200&auto=format&fit=crop">
-
-</div>
-
-<div class="content">
-
-<h2 class="title">
-
-Google Pixel 8 Pro
-
-</h2>
-
-<div class="price">
-
-KSh 76,000
-
-</div>
-
-<div class="meta">
-
-<span>
-
-📍 Nakuru
-
-</span>
-
-<span>
-
-👀 642
-
-</span>
-
-</div>
-
-<div class="seller">
-
-<div class="avatar">
-
-A
-
-</div>
-
-<div>
-
-<p class="font-bold text-sm">
-
-Alex
-
-</p>
-
-<p class="text-xs text-gray-400">
-
-Trusted Seller
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- FLOATING UPLOAD BUTTON -->
 
 <a
 href="upload.html"
@@ -663,6 +296,162 @@ class="upload-btn">
 
 <script>
 
+const BACKEND_URL =
+"https://YOUR_BACKEND_URL.onrender.com";
+
+let allProducts = [];
+
+async function loadProducts(){
+
+try{
+
+const res =
+await fetch(
+`${BACKEND_URL}/products`
+);
+
+const products =
+await res.json();
+
+allProducts = products;
+
+renderProducts(products);
+
+}catch(err){
+
+document.getElementById(
+"products"
+).innerHTML = `
+
+<div class="empty">
+
+Failed to load products
+
+</div>
+
+`;
+
+}
+
+}
+
+function renderProducts(products){
+
+const container =
+document.getElementById(
+"products"
+);
+
+if(products.length === 0){
+
+container.innerHTML = `
+
+<div class="empty">
+
+No products found
+
+</div>
+
+`;
+
+return;
+
+}
+
+container.innerHTML = "";
+
+products.forEach(product => {
+
+container.innerHTML += `
+
+<div
+class="card"
+onclick="openProduct('${product._id}')">
+
+<div class="image">
+
+<img src="${
+product.images?.[0]
+||
+'https://via.placeholder.com/500'
+}">
+
+${
+product.featured
+?
+'<div class="badge">Featured</div>'
+:
+''
+}
+
+</div>
+
+<div class="content">
+
+<h2 class="title">
+
+${product.title}
+
+</h2>
+
+<div class="price">
+
+KSh ${product.price}
+
+</div>
+
+<div class="meta">
+
+<span>
+
+📍 ${product.location || 'Kenya'}
+
+</span>
+
+<span>
+
+👀 ${product.views || 0}
+
+</span>
+
+</div>
+
+<div class="seller">
+
+<div class="avatar">
+
+${product.sellerName?.charAt(0) || "U"}
+
+</div>
+
+<div>
+
+<p class="font-bold text-sm">
+
+${product.sellerName || "User"}
+
+</p>
+
+<p class="text-xs text-gray-400">
+
+Seller
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
 function openProduct(id){
 
 window.location.href =
@@ -670,32 +459,34 @@ window.location.href =
 
 }
 
-/* CATEGORY ACTIVE */
-
 document
-.querySelectorAll(".category")
-.forEach(cat => {
+.getElementById("searchInput")
+.addEventListener(
+"input",
+e => {
 
-cat.addEventListener(
-"click",
-() => {
+const value =
+e.target.value.toLowerCase();
 
-document
-.querySelectorAll(".category")
-.forEach(c => {
+const filtered =
+allProducts.filter(product => {
 
-c.classList.remove("active");
-
-});
-
-cat.classList.add("active");
-
-}
+return (
+product.title
+.toLowerCase()
+.includes(value)
 );
 
 });
 
+renderProducts(filtered);
+
+}
+);
+
+loadProducts();
+
 </script>
 
 </body>
-  </html>
+</html>
