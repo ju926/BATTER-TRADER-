@@ -7,11 +7,9 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Browse Marketplace - Swaply</title>
+<title>Swaply Browse</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -21,697 +19,683 @@ content="width=device-width, initial-scale=1.0">
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:'Inter',sans-serif;
 }
 
 body{
-font-family:'Inter',sans-serif;
 background:#050505;
-overflow-x:hidden;
+color:white;
+min-height:100vh;
+padding-bottom:120px;
 }
 
-.glass{
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.07);
+/* TOPBAR */
+
+.topbar{
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(5,5,5,.95);
+backdrop-filter:blur(18px);
+padding:16px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
-.card-hover{
-transition:.3s;
+.logo{
+font-size:24px;
+font-weight:900;
 }
 
-.card-hover:hover{
-transform:translateY(-6px);
+.nav{
+display:flex;
+align-items:center;
+gap:10px;
 }
 
-::-webkit-scrollbar{
-width:5px;
+.nav a{
+text-decoration:none;
+color:white;
+background:#111827;
+padding:10px 14px;
+border-radius:14px;
+font-size:13px;
+font-weight:800;
 }
 
-::-webkit-scrollbar-thumb{
-background:#22c55e;
+/* SEARCH */
+
+.search-box{
+padding:16px;
+}
+
+.search{
+width:100%;
+height:58px;
+background:#111827;
+border:none;
+outline:none;
 border-radius:20px;
+padding:0 18px;
+color:white;
+font-size:15px;
 }
 
-.bottom-nav{
-box-shadow:0 -5px 30px rgba(0,0,0,.5);
+/* CATEGORIES */
+
+.categories{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:0 16px 18px;
+}
+
+.categories::-webkit-scrollbar{
+display:none;
+}
+
+.category{
+background:#111827;
+padding:12px 18px;
+border-radius:18px;
+font-size:13px;
+font-weight:800;
+white-space:nowrap;
+cursor:pointer;
+transition:.2s;
+}
+
+.category.active{
+background:#22c55e;
+color:white;
+}
+
+/* PRODUCTS */
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:16px;
+padding:0 16px;
+}
+
+.card{
+background:#111827;
+border-radius:28px;
+overflow:hidden;
+transition:.2s;
+cursor:pointer;
+border:1px solid rgba(255,255,255,.04);
+}
+
+.card:hover{
+transform:translateY(-4px);
+}
+
+.image{
+width:100%;
+height:220px;
+overflow:hidden;
+position:relative;
+}
+
+.image img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.badge{
+position:absolute;
+top:12px;
+left:12px;
+background:#22c55e;
+padding:8px 12px;
+border-radius:14px;
+font-size:11px;
+font-weight:900;
+}
+
+.content{
+padding:16px;
+}
+
+.title{
+font-size:16px;
+font-weight:800;
+margin-bottom:10px;
+line-height:1.5;
+}
+
+.price{
+font-size:24px;
+font-weight:900;
+color:#22c55e;
+margin-bottom:12px;
+}
+
+.meta{
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-size:12px;
+color:#9ca3af;
+margin-bottom:12px;
+}
+
+.seller{
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:10px;
+}
+
+.avatar{
+width:38px;
+height:38px;
+border-radius:50%;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+}
+
+/* FLOATING BUTTON */
+
+.upload-btn{
+position:fixed;
+bottom:24px;
+right:24px;
+width:68px;
+height:68px;
+border-radius:50%;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+font-weight:900;
+color:white;
+text-decoration:none;
+box-shadow:0 10px 30px rgba(34,197,94,.4);
+z-index:999;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.products{
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.image{
+height:180px;
+}
+
+.title{
+font-size:14px;
+}
+
+.price{
+font-size:20px;
+}
+
+.nav a{
+padding:8px 12px;
+font-size:12px;
+}
+
 }
 
 </style>
 
 </head>
 
-<body class="text-white">
+<body>
 
-<script>
+<!-- TOPBAR -->
 
-const API =
-"https://traderbackend.onrender.com";
+<div class="topbar">
 
-const token =
-localStorage.getItem("token");
-
-const currentUser =
-JSON.parse(
-localStorage.getItem("user")
-);
-
-</script>
-
-<!-- NAVBAR -->
-
-<nav class="sticky top-0 z-50 glass border-b border-white/10">
-
-<div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
-
-<div>
-
-<h1 class="text-2xl md:text-3xl font-black">
+<h1 class="logo">
 
 Swaply
 
 </h1>
 
-<p class="text-green-400 text-xs font-bold">
+<div class="nav">
 
-Marketplace
+<a href="index.html">
 
-</p>
+Home
+
+</a>
+
+<a href="chat.html">
+
+Chat
+
+</a>
+
+<a href="profile.html">
+
+Profile
+
+</a>
+
+</div>
 
 </div>
 
 <!-- SEARCH -->
 
-<div class="hidden md:flex flex-1 max-w-2xl">
-
-<div class="glass rounded-2xl flex items-center px-4 py-3 w-full">
+<div class="search-box">
 
 <input
 type="text"
-id="searchInput"
-placeholder="Search phones, laptops, cars..."
-class="bg-transparent outline-none w-full text-white placeholder:text-gray-500">
+class="search"
+placeholder="Search phones, laptops, cars...">
 
 </div>
 
-</div>
+<!-- CATEGORIES -->
 
-<div id="authButtons"
-class="flex items-center gap-3">
+<div class="categories">
 
-<a
-href="login.html"
-class="bg-green-500 hover:bg-green-600 px-5 py-2 rounded-2xl font-bold">
-
-Login
-
-</a>
-
-</div>
-
-</div>
-
-</nav>
-
-<!-- MOBILE SEARCH -->
-
-<div class="md:hidden p-5">
-
-<div class="glass rounded-2xl flex items-center px-4 py-3">
-
-<input
-type="text"
-id="mobileSearch"
-placeholder="Search marketplace..."
-class="bg-transparent outline-none w-full text-white placeholder:text-gray-500">
-
-</div>
-
-</div>
-
-<!-- FILTERS -->
-
-<section class="max-w-7xl mx-auto px-5 py-6">
-
-<div class="flex flex-wrap gap-3">
-
-<button
-onclick="filterCategory('all')"
-class="category-btn bg-green-500 px-5 py-2 rounded-2xl font-bold">
+<div class="category active">
 
 All
 
-</button>
+</div>
 
-<button
-onclick="filterCategory('Phones')"
-class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+<div class="category">
 
 Phones
 
-</button>
+</div>
 
-<button
-onclick="filterCategory('Laptops')"
-class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+<div class="category">
 
 Laptops
 
-</button>
+</div>
 
-<button
-onclick="filterCategory('Cars')"
-class="category-btn glass px-5 py-2 rounded-2xl font-bold">
-
-Cars
-
-</button>
-
-<button
-onclick="filterCategory('Fashion')"
-class="category-btn glass px-5 py-2 rounded-2xl font-bold">
-
-Fashion
-
-</button>
-
-<button
-onclick="filterCategory('Gaming')"
-class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+<div class="category">
 
 Gaming
 
-</button>
+</div>
 
-<button
-onclick="filterCategory('Furniture')"
-class="category-btn glass px-5 py-2 rounded-2xl font-bold">
+<div class="category">
 
-Furniture
-
-</button>
+Fashion
 
 </div>
 
-</section>
+<div class="category">
 
-<!-- PAGE TITLE -->
-
-<section class="max-w-7xl mx-auto px-5 pt-6 pb-10">
-
-<div class="flex items-center justify-between flex-wrap gap-5">
-
-<div>
-
-<p class="text-green-400 font-black tracking-widest mb-3">
-
-LIVE MARKETPLACE
-
-</p>
-
-<h1 class="text-4xl md:text-6xl font-black">
-
-Browse Products
-
-</h1>
+Cars
 
 </div>
 
-<select
-id="sortSelect"
-class="glass px-5 py-3 rounded-2xl outline-none">
+<div class="category">
 
-<option value="newest">
-
-Newest
-
-</option>
-
-<option value="oldest">
-
-Oldest
-
-</option>
-
-<option value="low">
-
-Lowest Price
-
-</option>
-
-<option value="high">
-
-Highest Price
-
-</option>
-
-</select>
+Electronics
 
 </div>
 
-</section>
+</div>
 
 <!-- PRODUCTS -->
 
-<section class="max-w-7xl mx-auto px-5 pb-32">
+<div class="products">
+
+<!-- CARD -->
 
 <div
-id="productsContainer"
-class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+class="card"
+onclick="openProduct(1)">
+
+<div class="image">
+
+<img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop">
+
+<div class="badge">
+
+Featured
 
 </div>
 
-</section>
+</div>
 
-<!-- FLOATING SELL BUTTON -->
+<div class="content">
+
+<h2 class="title">
+
+iPhone 13 Pro Max 256GB
+
+</h2>
+
+<div class="price">
+
+KSh 85,000
+
+</div>
+
+<div class="meta">
+
+<span>
+
+📍 Nairobi
+
+</span>
+
+<span>
+
+👀 1.2k
+
+</span>
+
+</div>
+
+<div class="seller">
+
+<div class="avatar">
+
+S
+
+</div>
+
+<div>
+
+<p class="font-bold text-sm">
+
+Stephani
+
+</p>
+
+<p class="text-xs text-gray-400">
+
+Verified Seller
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div
+class="card"
+onclick="openProduct(2)">
+
+<div class="image">
+
+<img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1200&auto=format&fit=crop">
+
+</div>
+
+<div class="content">
+
+<h2 class="title">
+
+MacBook Pro M2
+
+</h2>
+
+<div class="price">
+
+KSh 145,000
+
+</div>
+
+<div class="meta">
+
+<span>
+
+📍 Mombasa
+
+</span>
+
+<span>
+
+👀 892
+
+</span>
+
+</div>
+
+<div class="seller">
+
+<div class="avatar">
+
+J
+
+</div>
+
+<div>
+
+<p class="font-bold text-sm">
+
+Julian
+
+</p>
+
+<p class="text-xs text-gray-400">
+
+Top Seller
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div
+class="card"
+onclick="openProduct(3)">
+
+<div class="image">
+
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop">
+
+</div>
+
+<div class="content">
+
+<h2 class="title">
+
+Mercedes Benz C200
+
+</h2>
+
+<div class="price">
+
+KSh 2.4M
+
+</div>
+
+<div class="meta">
+
+<span>
+
+📍 Kisumu
+
+</span>
+
+<span>
+
+👀 3.4k
+
+</span>
+
+</div>
+
+<div class="seller">
+
+<div class="avatar">
+
+M
+
+</div>
+
+<div>
+
+<p class="font-bold text-sm">
+
+Mark
+
+</p>
+
+<p class="text-xs text-gray-400">
+
+Verified Seller
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div
+class="card"
+onclick="openProduct(4)">
+
+<div class="image">
+
+<img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?q=80&w=1200&auto=format&fit=crop">
+
+</div>
+
+<div class="content">
+
+<h2 class="title">
+
+Google Pixel 8 Pro
+
+</h2>
+
+<div class="price">
+
+KSh 76,000
+
+</div>
+
+<div class="meta">
+
+<span>
+
+📍 Nakuru
+
+</span>
+
+<span>
+
+👀 642
+
+</span>
+
+</div>
+
+<div class="seller">
+
+<div class="avatar">
+
+A
+
+</div>
+
+<div>
+
+<p class="font-bold text-sm">
+
+Alex
+
+</p>
+
+<p class="text-xs text-gray-400">
+
+Trusted Seller
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FLOATING UPLOAD BUTTON -->
 
 <a
 href="upload.html"
-class="fixed bottom-24 md:bottom-10 right-5 z-50 bg-green-500 hover:bg-green-600 w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-2xl font-light">
+class="upload-btn">
 
 +
 
 </a>
 
-<!-- MOBILE NAV -->
-
-<div class="md:hidden fixed bottom-0 left-0 right-0 glass border-t border-white/10 bottom-nav z-50">
-
-<div class="grid grid-cols-4">
-
-<a
-href="index.html"
-class="flex flex-col items-center py-3 text-white">
-
-<span class="text-xl">🏠</span>
-<span class="text-[11px] font-bold">Home</span>
-
-</a>
-
-<a
-href="browse.html"
-class="flex flex-col items-center py-3 text-green-400">
-
-<span class="text-xl">🛒</span>
-<span class="text-[11px] font-bold">Browse</span>
-
-</a>
-
-<a
-href="chat.html"
-class="flex flex-col items-center py-3 text-white">
-
-<span class="text-xl">💬</span>
-<span class="text-[11px] font-bold">Chat</span>
-
-</a>
-
-<a
-href="#"
-class="flex flex-col items-center py-3 text-white">
-
-<span class="text-xl">👤</span>
-<span class="text-[11px] font-bold">Profile</span>
-
-</a>
-
-</div>
-
-</div>
-
 <script>
 
-let allItems = [];
+function openProduct(id){
 
-let currentCategory = "all";
-
-/* LOGIN UI */
-
-const authButtons =
-document.getElementById(
-"authButtons"
-);
-
-if(currentUser){
-
-authButtons.innerHTML = `
-
-<div class="flex items-center gap-3">
-
-<img
-src="${
-currentUser.avatar ||
-'https://cdn-icons-png.flaticon.com/512/149/149071.png'
-}"
-class="w-11 h-11 rounded-full border-2 border-green-500 object-cover">
-
-<button
-onclick="logout()"
-class="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-2xl font-bold">
-
-Logout
-
-</button>
-
-</div>
-
-`;
+window.location.href =
+`product.html?id=${id}`;
 
 }
 
-function logout(){
+/* CATEGORY ACTIVE */
 
-localStorage.removeItem("token");
+document
+.querySelectorAll(".category")
+.forEach(cat => {
 
-localStorage.removeItem("user");
+cat.addEventListener(
+"click",
+() => {
 
-window.location.reload();
+document
+.querySelectorAll(".category")
+.forEach(c => {
 
-}
-
-/* LOAD PRODUCTS */
-
-async function loadProducts(){
-
-try{
-
-const res =
-await fetch(
-`${API}/items`
-);
-
-const items =
-await res.json();
-
-allItems = items;
-
-displayProducts(items);
-
-}catch(err){
-
-console.log(err);
-
-}
-
-}
-
-/* DISPLAY */
-
-function displayProducts(items){
-
-const container =
-document.getElementById(
-"productsContainer"
-);
-
-container.innerHTML = "";
-
-if(items.length === 0){
-
-container.innerHTML = `
-
-<div class="col-span-full">
-
-<div class="glass rounded-3xl p-14 text-center">
-
-<h2 class="text-6xl mb-5">
-
-📦
-
-</h2>
-
-<h2 class="text-3xl font-black mb-4">
-
-No Products Found
-
-</h2>
-
-<p class="text-gray-400 mb-8">
-
-Be the first to upload products.
-
-</p>
-
-<a
-href="upload.html"
-class="bg-green-500 hover:bg-green-600 px-8 py-4 rounded-2xl font-black">
-
-Upload Item
-
-</a>
-
-</div>
-
-</div>
-
-`;
-
-return;
-
-}
-
-items.forEach(item => {
-
-container.innerHTML += `
-
-<div class="glass rounded-3xl overflow-hidden card-hover">
-
-<div class="relative">
-
-<img
-src="${item.image}"
-class="w-full h-72 object-cover">
-
-<div class="absolute top-4 left-4">
-
-<div class="bg-black/70 backdrop-blur-lg px-3 py-1 rounded-full text-sm font-bold text-green-400">
-
-${item.category || "Marketplace"}
-
-</div>
-
-</div>
-
-<button
-class="absolute top-4 right-4 glass w-11 h-11 rounded-full text-xl">
-
-❤️
-
-</button>
-
-</div>
-
-<div class="p-6">
-
-<div class="flex items-start justify-between gap-3">
-
-<h2 class="text-2xl font-black line-clamp-1">
-
-${item.name}
-
-</h2>
-
-<div class="text-green-400 font-black text-xl whitespace-nowrap">
-
-KSh ${item.price}
-
-</div>
-
-</div>
-
-<p class="text-gray-400 text-sm mt-4 line-clamp-3">
-
-${item.description}
-
-</p>
-
-<div class="flex items-center justify-between mt-5">
-
-<div>
-
-<p class="text-xs text-gray-500">
-
-Seller
-
-</p>
-
-<p class="font-bold">
-
-${item.sellerName || "Anonymous"}
-
-</p>
-
-</div>
-
-<div class="text-green-400 text-sm font-bold">
-
-✔ Verified
-
-</div>
-
-</div>
-
-<div class="grid grid-cols-2 gap-3 mt-6">
-
-<a
-href="chat.html"
-class="bg-green-500 hover:bg-green-600 py-3 rounded-2xl text-center font-black">
-
-💬 Chat
-
-</a>
-
-<button
-class="glass py-3 rounded-2xl font-black">
-
-View
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-`;
+c.classList.remove("active");
 
 });
 
+cat.classList.add("active");
+
 }
-
-/* FILTER */
-
-function filterCategory(category){
-
-currentCategory = category;
-
-document.querySelectorAll(".category-btn")
-.forEach(btn => {
-
-btn.classList.remove(
-"bg-green-500"
-);
-
-btn.classList.add(
-"glass"
 );
 
 });
-
-event.target.classList.remove(
-"glass"
-);
-
-event.target.classList.add(
-"bg-green-500"
-);
-
-if(category === "all"){
-
-displayProducts(allItems);
-
-return;
-
-}
-
-const filtered =
-allItems.filter(item =>
-(item.category || "")
-.toLowerCase()
-.includes(
-category.toLowerCase()
-)
-);
-
-displayProducts(filtered);
-
-}
-
-/* SEARCH */
-
-document
-.getElementById("searchInput")
-.addEventListener("input", searchProducts);
-
-document
-.getElementById("mobileSearch")
-.addEventListener("input", searchProducts);
-
-function searchProducts(e){
-
-const query =
-e.target.value.toLowerCase();
-
-const filtered =
-allItems.filter(item =>
-
-(item.name || "")
-.toLowerCase()
-.includes(query)
-
-||
-
-(item.description || "")
-.toLowerCase()
-.includes(query)
-
-||
-
-(item.category || "")
-.toLowerCase()
-.includes(query)
-
-);
-
-displayProducts(filtered);
-
-}
-
-/* SORT */
-
-document
-.getElementById("sortSelect")
-.addEventListener("change", e => {
-
-let sorted = [...allItems];
-
-if(e.target.value === "newest"){
-
-sorted.reverse();
-
-}
-
-if(e.target.value === "oldest"){
-
-sorted = allItems;
-
-}
-
-if(e.target.value === "low"){
-
-sorted.sort(
-(a,b)=>
-Number(a.price)-Number(b.price)
-);
-
-}
-
-if(e.target.value === "high"){
-
-sorted.sort(
-(a,b)=>
-Number(b.price)-Number(a.price)
-);
-
-}
-
-displayProducts(sorted);
-
-});
-
-loadProducts();
 
 </script>
 
 </body>
-</html>
+  </html>
