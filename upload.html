@@ -7,13 +7,17 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Upload Product - Swaply</title>
+<title>
+Upload Product
+</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+rel="stylesheet">
 
 <style>
 
@@ -27,18 +31,86 @@ body{
 font-family:'Inter',sans-serif;
 background:#050505;
 overflow-x:hidden;
+color:white;
 }
+
+/* GLASS */
 
 .glass{
 background:rgba(255,255,255,.05);
 backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.07);
+border:1px solid rgba(255,255,255,.08);
 }
 
-input,
-textarea,
-select{
+/* HERO */
+
+.hero{
+background:
+linear-gradient(
+rgba(0,0,0,.82),
+rgba(0,0,0,.92)
+),
+url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop');
+
+background-size:cover;
+background-position:center;
+}
+
+/* INPUT */
+
+.input{
+width:100%;
+height:58px;
+background:#111827;
+border:none;
 outline:none;
+border-radius:18px;
+padding:0 18px;
+color:white;
+font-size:15px;
+}
+
+.textarea{
+width:100%;
+height:150px;
+background:#111827;
+border:none;
+outline:none;
+border-radius:20px;
+padding:18px;
+color:white;
+font-size:15px;
+resize:none;
+}
+
+.input::placeholder,
+.textarea::placeholder{
+color:#6b7280;
+}
+
+/* FILE */
+
+.upload-box{
+border:2px dashed rgba(255,255,255,.15);
+border-radius:30px;
+padding:40px;
+text-align:center;
+cursor:pointer;
+transition:.3s;
+}
+
+.upload-box:hover{
+border-color:#22c55e;
+background:rgba(34,197,94,.05);
+}
+
+.preview{
+width:100%;
+height:280px;
+object-fit:cover;
+border-radius:25px;
+margin-top:20px;
+display:none;
 }
 
 ::-webkit-scrollbar{
@@ -54,22 +126,21 @@ border-radius:20px;
 
 </head>
 
-<body class="text-white">
+<body>
 
 <script>
 
 const API =
 "https://traderbackend.onrender.com";
 
-const token =
-localStorage.getItem("token");
-
 const currentUser =
 JSON.parse(
-localStorage.getItem("user")
+localStorage.getItem(
+"swaplyUser"
+)
 );
 
-if(!token){
+if(!currentUser){
 
 window.location.href =
 "login.html";
@@ -80,42 +151,55 @@ window.location.href =
 
 <!-- NAVBAR -->
 
-<nav class="sticky top-0 z-50 glass border-b border-white/10">
+<nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
 
 <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
 
 <div>
 
-<h1 class="text-2xl md:text-3xl font-black">
+<h1 class="text-3xl font-black">
 
 Swaply
 
 </h1>
 
-<p class="text-green-400 text-xs font-bold">
+<p class="text-green-400 text-xs font-bold tracking-widest">
 
-Upload Product
+UPLOAD PRODUCT
 
 </p>
 
 </div>
 
-<div class="flex items-center gap-3">
+<div class="hidden md:flex items-center gap-4">
 
-<img
-src="${
-currentUser?.avatar ||
-'https://cdn-icons-png.flaticon.com/512/149/149071.png'
-}"
-class="w-11 h-11 rounded-full border-2 border-green-500 object-cover">
+<a href="index.html"
+class="text-white hover:text-green-400 font-bold">
 
-<button
-onclick="logout()"
-class="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-2xl font-bold">
+Home
 
-Logout
+</a>
 
-</button>
+<a href="browse.html"
+class="text-white hover:text-green-400 font-bold">
+
+Browse
+
+</a>
+
+<a href="chat.html"
+class="text-white hover:text-green-400 font-bold">
+
+Chat
+
+</a>
+
+<a href="profile.html"
+class="text-white hover:text-green-400 font-bold">
+
+Profile
+
+</a>
 
 </div>
 
@@ -123,171 +207,55 @@ Logout
 
 </nav>
 
-<!-- PAGE -->
+<!-- HERO -->
 
-<section class="max-w-6xl mx-auto px-5 py-10 pb-32">
+<section class="hero pt-36 pb-20">
 
-<div class="grid lg:grid-cols-2 gap-10">
+<div class="max-w-7xl mx-auto px-5">
 
-<!-- LEFT -->
+<div class="max-w-3xl">
 
-<div>
-
-<p class="text-green-400 font-black tracking-widest mb-4">
+<p class="text-green-400 font-black tracking-[5px] mb-5">
 
 SELL ON SWAPLY
 
 </p>
 
-<h1 class="text-5xl md:text-6xl font-black leading-tight">
+<h1 class="text-5xl md:text-7xl font-black leading-tight">
 
-Upload
-Your Product
+Upload Your Product
 
 </h1>
 
-<p class="text-gray-400 text-lg mt-6 leading-relaxed">
+<p class="text-gray-300 text-lg leading-relaxed mt-8">
 
-Post your products and connect instantly with buyers through real-time marketplace chat.
+Reach thousands of buyers across Kenya instantly.
 
 </p>
 
-<div class="grid grid-cols-2 gap-5 mt-10">
-
-<div class="glass rounded-3xl p-6">
-
-<h2 class="text-4xl mb-4">
-
-⚡
-
-</h2>
-
-<h2 class="font-black text-xl">
-
-Fast Uploads
-
-</h2>
-
-</div>
-
-<div class="glass rounded-3xl p-6">
-
-<h2 class="text-4xl mb-4">
-
-🤖
-
-</h2>
-
-<h2 class="font-black text-xl">
-
-AI Marketplace
-
-</h2>
-
-</div>
-
-<div class="glass rounded-3xl p-6">
-
-<h2 class="text-4xl mb-4">
-
-💬
-
-</h2>
-
-<h2 class="font-black text-xl">
-
-Instant Chat
-
-</h2>
-
-</div>
-
-<div class="glass rounded-3xl p-6">
-
-<h2 class="text-4xl mb-4">
-
-🚀
-
-</h2>
-
-<h2 class="font-black text-xl">
-
-Live Listings
-
-</h2>
-
 </div>
 
 </div>
 
-</div>
+</section>
 
 <!-- FORM -->
 
-<div class="glass rounded-[35px] p-8 md:p-10">
+<section class="pb-28">
 
-<form id="uploadForm"
-class="space-y-6">
+<div class="max-w-5xl mx-auto px-5">
 
-<!-- IMAGE -->
+<div class="glass rounded-[40px] p-8 md:p-12">
 
-<div>
+<form id="uploadForm">
 
-<label class="font-bold text-lg">
-
-Product Image
-
-</label>
-
-<div class="mt-4">
-
-<label
-for="imageInput"
-class="glass border-2 border-dashed border-white/10 rounded-3xl h-64 flex flex-col items-center justify-center cursor-pointer hover:border-green-500 transition-all">
-
-<div id="previewContainer"
-class="w-full h-full hidden">
-
-<img
-id="previewImage"
-class="w-full h-full object-cover rounded-3xl">
-
-</div>
-
-<div id="uploadText"
-class="text-center">
-
-<h2 class="text-6xl mb-4">
-
-📷
-
-</h2>
-
-<p class="text-gray-400">
-
-Tap to upload image
-
-</p>
-
-</div>
-
-</label>
-
-<input
-type="file"
-id="imageInput"
-accept="image/*"
-class="hidden">
-
-</div>
-
-</div>
+<div class="grid md:grid-cols-2 gap-6">
 
 <!-- PRODUCT NAME -->
 
 <div>
 
-<label class="font-bold text-lg">
+<label class="block mb-3 font-black text-lg">
 
 Product Name
 
@@ -296,95 +264,9 @@ Product Name
 <input
 type="text"
 id="name"
-required
-placeholder="iPhone 14 Pro Max"
-class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
-
-</div>
-
-<!-- DESCRIPTION -->
-
-<div>
-
-<label class="font-bold text-lg">
-
-Description
-
-</label>
-
-<textarea
-id="description"
-required
-rows="5"
-placeholder="Describe your product..."
-class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent resize-none"></textarea>
-
-</div>
-
-<!-- CATEGORY -->
-
-<div>
-
-<label class="font-bold text-lg">
-
-Category
-
-</label>
-
-<select
-id="category"
-required
-class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
-
-<option value="">
-
-Select Category
-
-</option>
-
-<option>
-
-Phones
-
-</option>
-
-<option>
-
-Laptops
-
-</option>
-
-<option>
-
-Cars
-
-</option>
-
-<option>
-
-Fashion
-
-</option>
-
-<option>
-
-Gaming
-
-</option>
-
-<option>
-
-Furniture
-
-</option>
-
-<option>
-
-Electronics
-
-</option>
-
-</select>
+placeholder="iPhone 15 Pro Max"
+class="input"
+required>
 
 </div>
 
@@ -392,7 +274,7 @@ Electronics
 
 <div>
 
-<label class="font-bold text-lg">
+<label class="block mb-3 font-black text-lg">
 
 Price (KSh)
 
@@ -401,27 +283,56 @@ Price (KSh)
 <input
 type="number"
 id="price"
-required
-placeholder="50000"
-class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+placeholder="150000"
+class="input"
+required>
 
 </div>
 
-<!-- WANTED -->
+<!-- CATEGORY -->
 
 <div>
 
-<label class="font-bold text-lg">
+<label class="block mb-3 font-black text-lg">
 
-Wanted Exchange (Optional)
+Category
 
 </label>
 
-<input
-type="text"
-id="wanted"
-placeholder="Looking for MacBook or cash"
-class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+<select
+id="category"
+class="input"
+required>
+
+<option value="">
+Select Category
+</option>
+
+<option>
+Phones
+</option>
+
+<option>
+Laptops
+</option>
+
+<option>
+Cars
+</option>
+
+<option>
+Gaming
+</option>
+
+<option>
+Fashion
+</option>
+
+<option>
+Furniture
+</option>
+
+</select>
 
 </div>
 
@@ -429,7 +340,7 @@ class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
 
 <div>
 
-<label class="font-bold text-lg">
+<label class="block mb-3 font-black text-lg">
 
 Location
 
@@ -439,38 +350,101 @@ Location
 type="text"
 id="location"
 placeholder="Nairobi"
-class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+class="input"
+required>
 
 </div>
 
-<!-- PHONE -->
+</div>
 
-<div>
+<!-- DESCRIPTION -->
 
-<label class="font-bold text-lg">
+<div class="mt-8">
 
-Phone Number
+<label class="block mb-3 font-black text-lg">
+
+Description
 
 </label>
 
-<input
-type="text"
-id="phone"
-placeholder="+254..."
-class="w-full mt-3 glass rounded-2xl px-5 py-4 bg-transparent">
+<textarea
+id="description"
+placeholder="Describe your product..."
+class="textarea"
+required></textarea>
 
 </div>
 
-<!-- BUTTON -->
+<!-- IMAGE -->
+
+<div class="mt-8">
+
+<label class="block mb-5 font-black text-lg">
+
+Product Image
+
+</label>
+
+<label class="upload-box block">
+
+<input
+type="file"
+id="image"
+accept="image/*"
+hidden>
+
+<div>
+
+<h2 class="text-6xl">
+
+📸
+
+</h2>
+
+<p class="text-2xl font-black mt-5">
+
+Upload Product Image
+
+</p>
+
+<p class="text-gray-400 mt-3">
+
+Tap to choose image
+
+</p>
+
+</div>
+
+<img
+id="preview"
+class="preview">
+
+</label>
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="grid md:grid-cols-2 gap-5 mt-10">
 
 <button
 type="submit"
-id="uploadBtn"
-class="w-full bg-green-500 hover:bg-green-600 py-5 rounded-2xl text-xl font-black transition-all">
+class="bg-green-500 hover:bg-green-600 h-16 rounded-2xl text-xl font-black">
 
 Upload Product
 
 </button>
+
+<button
+type="button"
+onclick="window.location.href='browse.html'"
+class="glass hover:bg-white/10 h-16 rounded-2xl text-xl font-black">
+
+Browse Products
+
+</button>
+
+</div>
 
 </form>
 
@@ -480,26 +454,153 @@ Upload Product
 
 </section>
 
+<!-- FOOTER -->
+
+<footer class="border-t border-white/10 py-12">
+
+<div class="max-w-7xl mx-auto px-5 grid md:grid-cols-4 gap-10">
+
+<div>
+
+<h2 class="text-3xl font-black">
+
+Swaply
+
+</h2>
+
+<p class="text-gray-400 leading-relaxed mt-5">
+
+Kenya’s modern marketplace.
+
+</p>
+
+</div>
+
+<div>
+
+<h3 class="font-black text-xl mb-5">
+
+Marketplace
+
+</h3>
+
+<div class="space-y-3 text-gray-400">
+
+<p>Browse</p>
+<p>Sell</p>
+<p>Chat</p>
+
+</div>
+
+</div>
+
+<div>
+
+<h3 class="font-black text-xl mb-5">
+
+Community
+
+</h3>
+
+<div class="space-y-3 text-gray-400">
+
+<p>Support</p>
+<p>Safety</p>
+<p>Help</p>
+
+</div>
+
+</div>
+
+<div>
+
+<h3 class="font-black text-xl mb-5">
+
+Contact
+
+</h3>
+
+<div class="space-y-3 text-gray-400">
+
+<p>Nairobi, Kenya</p>
+<p>support@swaply.com</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="text-center text-gray-500 mt-12 text-sm">
+
+© 2026 Swaply Marketplace
+
+</div>
+
+</footer>
+
+<!-- MOBILE NAV -->
+
+<div class="md:hidden fixed bottom-0 left-0 right-0 glass border-t border-white/10 z-50">
+
+<div class="grid grid-cols-5">
+
+<a href="index.html"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-2xl">🏠</span>
+<span class="text-[11px] font-bold">Home</span>
+
+</a>
+
+<a href="browse.html"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-2xl">🛒</span>
+<span class="text-[11px] font-bold">Browse</span>
+
+</a>
+
+<a href="upload.html"
+class="flex flex-col items-center py-3 text-green-400">
+
+<span class="text-2xl">➕</span>
+<span class="text-[11px] font-bold">Sell</span>
+
+</a>
+
+<a href="chat.html"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-2xl">💬</span>
+<span class="text-[11px] font-bold">Chat</span>
+
+</a>
+
+<a href="profile.html"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-2xl">👤</span>
+<span class="text-[11px] font-bold">Profile</span>
+
+</a>
+
+</div>
+
+</div>
+
 <script>
-
-/* LOGOUT */
-
-function logout(){
-
-localStorage.removeItem("token");
-
-localStorage.removeItem("user");
-
-window.location.href =
-"index.html";
-
-}
 
 /* IMAGE PREVIEW */
 
 const imageInput =
 document.getElementById(
-"imageInput"
+"image"
+);
+
+const preview =
+document.getElementById(
+"preview"
 );
 
 imageInput.addEventListener(
@@ -509,36 +610,15 @@ e => {
 const file =
 e.target.files[0];
 
-if(!file) return;
+if(file){
 
-const reader =
-new FileReader();
+preview.src =
+URL.createObjectURL(file);
 
-reader.onload = function(){
+preview.style.display =
+"block";
 
-document
-.getElementById(
-"previewContainer"
-)
-.classList.remove(
-"hidden"
-);
-
-document
-.getElementById(
-"uploadText"
-)
-.style.display = "none";
-
-document
-.getElementById(
-"previewImage"
-)
-.src = reader.result;
-
-};
-
-reader.readAsDataURL(file);
+}
 
 }
 );
@@ -555,116 +635,121 @@ async e => {
 
 e.preventDefault();
 
-const btn =
-document.getElementById(
-"uploadBtn"
+const submitBtn =
+e.target.querySelector(
+"button[type='submit']"
 );
 
-btn.innerHTML =
+submitBtn.innerText =
 "Uploading...";
 
-btn.disabled = true;
+submitBtn.disabled =
+true;
 
 try{
 
-const formData =
-new FormData();
+/* IMAGE */
 
-formData.append(
-"name",
-document.getElementById(
-"name"
-).value
-);
-
-formData.append(
-"description",
-document.getElementById(
-"description"
-).value
-);
-
-formData.append(
-"category",
-document.getElementById(
-"category"
-).value
-);
-
-formData.append(
-"price",
-document.getElementById(
-"price"
-).value
-);
-
-formData.append(
-"wanted",
-document.getElementById(
-"wanted"
-).value
-);
-
-formData.append(
-"sellerName",
-currentUser.username
-);
-
-formData.append(
-"sellerPhone",
-document.getElementById(
-"phone"
-).value
-);
-
-formData.append(
-"location",
-document.getElementById(
-"location"
-).value
-);
+let imageUrl =
+"https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop";
 
 if(imageInput.files[0]){
 
-formData.append(
-"image",
+imageUrl =
+URL.createObjectURL(
 imageInput.files[0]
 );
 
 }
 
+/* PRODUCT */
+
+const product = {
+
+name:
+document.getElementById(
+"name"
+).value,
+
+price:
+document.getElementById(
+"price"
+).value,
+
+category:
+document.getElementById(
+"category"
+).value,
+
+location:
+document.getElementById(
+"location"
+).value,
+
+description:
+document.getElementById(
+"description"
+).value,
+
+image:imageUrl,
+
+username:
+currentUser.username,
+
+userId:
+currentUser._id
+
+};
+
+/* SEND */
+
 const res =
 await fetch(
-`${API}/upload`,
+`${API}/items`,
 {
 method:"POST",
-body:formData
+headers:{
+"Content-Type":
+"application/json"
+},
+body:JSON.stringify(
+product
+)
 }
 );
 
-const data =
-await res.json();
+if(res.ok){
 
-btn.innerHTML =
-"Uploaded Successfully ✅";
-
-setTimeout(() => {
+alert(
+"Product uploaded successfully!"
+);
 
 window.location.href =
 "browse.html";
 
-},1500);
+}else{
+
+alert(
+"Upload failed."
+);
+
+}
 
 }catch(err){
 
 console.log(err);
 
-btn.innerHTML =
-"Upload Failed";
-
-btn.disabled = false;
+alert(
+"Something went wrong."
+);
 
 }
+
+submitBtn.innerText =
+"Upload Product";
+
+submitBtn.disabled =
+false;
 
 }
 );
@@ -672,4 +757,4 @@ btn.disabled = false;
 </script>
 
 </body>
-  </html>
+</html>
