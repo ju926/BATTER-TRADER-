@@ -7,11 +7,17 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>Swaply Marketplace</title>
+<title>
+Swaply Browse
+</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+rel="stylesheet">
 
 <style>
 
@@ -19,229 +25,56 @@ content="width=device-width, initial-scale=1.0">
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Inter',sans-serif;
 }
 
 body{
+font-family:'Inter',sans-serif;
 background:#050505;
-color:white;
-min-height:100vh;
-padding-bottom:120px;
-}
-
-/* HEADER */
-
-.header{
-position:sticky;
-top:0;
-z-index:100;
-background:rgba(5,5,5,.95);
-backdrop-filter:blur(18px);
-padding:16px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.logo{
-font-size:28px;
-font-weight:900;
-}
-
-.nav{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.nav a{
-text-decoration:none;
-color:white;
-background:#111827;
-padding:10px 14px;
-border-radius:14px;
-font-size:13px;
-font-weight:800;
-}
-
-.avatar{
-width:42px;
-height:42px;
-border-radius:50%;
-background:linear-gradient(135deg,#22c55e,#16a34a);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:16px;
-font-weight:900;
-}
-
-/* SEARCH */
-
-.search-box{
-padding:18px;
-}
-
-.search{
-width:100%;
-height:58px;
-background:#111827;
-border:none;
-outline:none;
-border-radius:18px;
-padding:0 18px;
-font-size:15px;
+overflow-x:hidden;
 color:white;
 }
 
-/* PRODUCTS */
+/* GLASS */
 
-.products{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:16px;
-padding:0 18px;
+.glass{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.08);
 }
+
+/* CARD */
 
 .card{
-background:#111827;
-border-radius:28px;
-overflow:hidden;
-cursor:pointer;
-transition:.2s;
-border:1px solid rgba(255,255,255,.05);
+transition:.35s;
 }
 
 .card:hover{
-transform:translateY(-4px);
+transform:translateY(-8px);
 }
 
-.image{
-width:100%;
-height:220px;
-overflow:hidden;
-position:relative;
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+width:5px;
 }
 
-.image img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.badge{
-position:absolute;
-top:12px;
-left:12px;
+::-webkit-scrollbar-thumb{
 background:#22c55e;
-padding:8px 12px;
-border-radius:14px;
-font-size:11px;
-font-weight:900;
+border-radius:20px;
 }
 
-.content{
-padding:16px;
-}
+/* HERO */
 
-.title{
-font-size:16px;
-font-weight:800;
-line-height:1.5;
-margin-bottom:10px;
-}
+.hero{
+background:
+linear-gradient(
+rgba(0,0,0,.80),
+rgba(0,0,0,.92)
+),
+url('https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1600&auto=format&fit=crop');
 
-.price{
-font-size:24px;
-font-weight:900;
-color:#22c55e;
-margin-bottom:12px;
-}
-
-.meta{
-display:flex;
-justify-content:space-between;
-font-size:12px;
-color:#9ca3af;
-margin-bottom:12px;
-}
-
-.seller{
-display:flex;
-align-items:center;
-gap:10px;
-}
-
-.seller-avatar{
-width:38px;
-height:38px;
-border-radius:50%;
-background:linear-gradient(135deg,#22c55e,#16a34a);
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:900;
-}
-
-/* FLOAT BUTTON */
-
-.upload-btn{
-position:fixed;
-bottom:24px;
-right:24px;
-width:68px;
-height:68px;
-border-radius:50%;
-background:linear-gradient(135deg,#22c55e,#16a34a);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:34px;
-font-weight:900;
-color:white;
-text-decoration:none;
-box-shadow:0 10px 30px rgba(34,197,94,.4);
-z-index:999;
-}
-
-/* STATES */
-
-.loading,
-.empty{
-padding:60px;
-text-align:center;
-font-size:18px;
-font-weight:700;
-color:#9ca3af;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.products{
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.image{
-height:170px;
-}
-
-.title{
-font-size:14px;
-}
-
-.price{
-font-size:18px;
-}
-
-.nav a{
-padding:8px 12px;
-font-size:12px;
-}
-
+background-size:cover;
+background-position:center;
 }
 
 </style>
@@ -250,117 +83,491 @@ font-size:12px;
 
 <body>
 
-<!-- HEADER -->
+<script>
 
-<div class="header">
+const API =
+"https://traderbackend.onrender.com";
 
-<h1 class="logo">
+const currentUser =
+JSON.parse(
+localStorage.getItem(
+"swaplyUser"
+)
+);
+
+</script>
+
+<!-- NAVBAR -->
+
+<nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
+
+<div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+
+<div>
+
+<h1 class="text-3xl font-black">
 
 Swaply
 
 </h1>
 
-<div class="nav">
+<p class="text-green-400 text-xs font-bold tracking-widest">
 
-<a href="index.html">
+MARKETPLACE
+
+</p>
+
+</div>
+
+<div class="hidden md:flex items-center gap-4">
+
+<a href="index.html"
+class="text-white hover:text-green-400 font-bold">
 
 Home
 
 </a>
 
-<a href="chat.html">
+<a href="browse.html"
+class="text-green-400 font-bold">
+
+Browse
+
+</a>
+
+<a href="upload.html"
+class="text-white hover:text-green-400 font-bold">
+
+Sell
+
+</a>
+
+<a href="chat.html"
+class="text-white hover:text-green-400 font-bold">
 
 Chat
 
 </a>
 
-<a href="profile.html">
+<a href="profile.html"
+class="text-white hover:text-green-400 font-bold">
 
 Profile
 
 </a>
 
-<a href="#"
-onclick="logout()">
-
-Logout
-
-</a>
-
-<div
-class="avatar"
-id="userAvatar">
-
-U
-
 </div>
 
 </div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero pt-36 pb-20">
+
+<div class="max-w-7xl mx-auto px-5">
+
+<div class="max-w-3xl">
+
+<p class="text-green-400 font-black tracking-[5px] mb-5">
+
+EXPLORE MARKETPLACE
+
+</p>
+
+<h1 class="text-5xl md:text-7xl font-black leading-tight">
+
+Find Amazing Products
+
+</h1>
+
+<p class="text-gray-300 text-lg leading-relaxed mt-8">
+
+Discover thousands of products from trusted sellers across Kenya.
+
+</p>
 
 </div>
 
 <!-- SEARCH -->
 
-<div class="search-box">
+<div class="glass rounded-[30px] p-4 mt-10">
+
+<div class="grid md:grid-cols-4 gap-4">
 
 <input
 type="text"
 id="searchInput"
-class="search"
-placeholder="Search products...">
+placeholder="Search products..."
+class="bg-black/30 border border-white/10 h-14 rounded-2xl px-5 outline-none text-white">
+
+<select
+id="categoryFilter"
+class="bg-black/30 border border-white/10 h-14 rounded-2xl px-5 outline-none text-white">
+
+<option value="">
+All Categories
+</option>
+
+<option>
+Phones
+</option>
+
+<option>
+Laptops
+</option>
+
+<option>
+Cars
+</option>
+
+<option>
+Gaming
+</option>
+
+<option>
+Fashion
+</option>
+
+<option>
+Furniture
+</option>
+
+</select>
+
+<select
+id="priceFilter"
+class="bg-black/30 border border-white/10 h-14 rounded-2xl px-5 outline-none text-white">
+
+<option value="">
+Any Price
+</option>
+
+<option value="10000">
+Under 10K
+</option>
+
+<option value="50000">
+Under 50K
+</option>
+
+<option value="100000">
+Under 100K
+</option>
+
+</select>
+
+<button
+onclick="filterProducts()"
+class="bg-green-500 hover:bg-green-600 rounded-2xl font-black text-lg">
+
+Search
+
+</button>
 
 </div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CATEGORIES -->
+
+<section class="pb-16">
+
+<div class="max-w-7xl mx-auto px-5">
+
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+
+<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
+
+<h2 class="text-5xl">
+
+📱
+
+</h2>
+
+<p class="font-black mt-4">
+
+Phones
+
+</p>
+
+</div>
+
+<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
+
+<h2 class="text-5xl">
+
+💻
+
+</h2>
+
+<p class="font-black mt-4">
+
+Laptops
+
+</p>
+
+</div>
+
+<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
+
+<h2 class="text-5xl">
+
+🚗
+
+</h2>
+
+<p class="font-black mt-4">
+
+Cars
+
+</p>
+
+</div>
+
+<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
+
+<h2 class="text-5xl">
+
+🎮
+
+</h2>
+
+<p class="font-black mt-4">
+
+Gaming
+
+</p>
+
+</div>
+
+<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
+
+<h2 class="text-5xl">
+
+👕
+
+</h2>
+
+<p class="font-black mt-4">
+
+Fashion
+
+</p>
+
+</div>
+
+<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
+
+<h2 class="text-5xl">
+
+🛋️
+
+</h2>
+
+<p class="font-black mt-4">
+
+Furniture
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
 
 <!-- PRODUCTS -->
 
+<section class="pb-28">
+
+<div class="max-w-7xl mx-auto px-5">
+
+<div class="flex items-center justify-between mb-12">
+
+<div>
+
+<p class="text-green-400 font-black tracking-[5px] mb-4">
+
+LATEST PRODUCTS
+
+</p>
+
+<h2 class="text-4xl md:text-5xl font-black">
+
+Marketplace Listings
+
+</h2>
+
+</div>
+
+<div class="glass px-5 py-3 rounded-2xl font-black">
+
+<span id="productCount">
+
+0
+
+</span>
+
+Products
+
+</div>
+
+</div>
+
 <div
-class="products"
-id="products">
-
-<div class="loading">
-
-Loading products...
+id="products"
+class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
 
 </div>
 
 </div>
 
-<!-- UPLOAD BUTTON -->
+</section>
 
-<a
-href="upload.html"
-class="upload-btn">
+<!-- FOOTER -->
 
-+
+<footer class="border-t border-white/10 py-12">
+
+<div class="max-w-7xl mx-auto px-5 grid md:grid-cols-4 gap-10">
+
+<div>
+
+<h2 class="text-3xl font-black">
+
+Swaply
+
+</h2>
+
+<p class="text-gray-400 leading-relaxed mt-5">
+
+Kenya’s premium marketplace platform.
+
+</p>
+
+</div>
+
+<div>
+
+<h3 class="font-black text-xl mb-5">
+
+Marketplace
+
+</h3>
+
+<div class="space-y-3 text-gray-400">
+
+<p>Browse</p>
+<p>Products</p>
+<p>Categories</p>
+
+</div>
+
+</div>
+
+<div>
+
+<h3 class="font-black text-xl mb-5">
+
+Community
+
+</h3>
+
+<div class="space-y-3 text-gray-400">
+
+<p>Chat</p>
+<p>Support</p>
+<p>Safety</p>
+
+</div>
+
+</div>
+
+<div>
+
+<h3 class="font-black text-xl mb-5">
+
+Contact
+
+</h3>
+
+<div class="space-y-3 text-gray-400">
+
+<p>Nairobi, Kenya</p>
+<p>support@swaply.com</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="text-center text-gray-500 mt-12 text-sm">
+
+© 2026 Swaply Marketplace
+
+</div>
+
+</footer>
+
+<!-- MOBILE NAV -->
+
+<div class="md:hidden fixed bottom-0 left-0 right-0 glass border-t border-white/10 z-50">
+
+<div class="grid grid-cols-5">
+
+<a href="index.html"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-2xl">🏠</span>
+<span class="text-[11px] font-bold">Home</span>
 
 </a>
 
+<a href="browse.html"
+class="flex flex-col items-center py-3 text-green-400">
+
+<span class="text-2xl">🛒</span>
+<span class="text-[11px] font-bold">Browse</span>
+
+</a>
+
+<a href="upload.html"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-2xl">➕</span>
+<span class="text-[11px] font-bold">Sell</span>
+
+</a>
+
+<a href="chat.html"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-2xl">💬</span>
+<span class="text-[11px] font-bold">Chat</span>
+
+</a>
+
+<a href="profile.html"
+class="flex flex-col items-center py-3 text-white">
+
+<span class="text-2xl">👤</span>
+<span class="text-[11px] font-bold">Profile</span>
+
+</a>
+
+</div>
+
+</div>
+
 <script>
-
-/* BACKEND */
-
-const BACKEND_URL =
-"https://traderbackend.onrender.com";
-
-/* USER */
-
-const currentUser =
-JSON.parse(
-localStorage.getItem("swaplyUser")
-);
-
-if(currentUser){
-
-document.getElementById(
-"userAvatar"
-).innerText =
-currentUser.username
-.charAt(0)
-.toUpperCase();
-
-}
-
-/* PRODUCTS */
 
 let allProducts = [];
 
@@ -372,35 +579,27 @@ try{
 
 const res =
 await fetch(
-`${BACKEND_URL}/products`
+`${API}/items`
 );
 
-const products =
+const items =
 await res.json();
 
-allProducts = products;
+allProducts = items;
 
-renderProducts(products);
+renderProducts(items);
 
 }catch(err){
 
-document.getElementById(
-"products"
-).innerHTML = `
-
-<div class="empty">
-
-Failed to load products
-
-</div>
-
-`;
+console.log(err);
 
 }
 
 }
 
-/* RENDER PRODUCTS */
+loadProducts();
+
+/* RENDER */
 
 function renderProducts(products){
 
@@ -409,13 +608,30 @@ document.getElementById(
 "products"
 );
 
+document.getElementById(
+"productCount"
+).innerText =
+products.length;
+
+container.innerHTML = "";
+
 if(products.length === 0){
 
 container.innerHTML = `
 
-<div class="empty">
+<div class="col-span-full text-center py-24">
 
-No products available
+<h2 class="text-4xl font-black">
+
+No Products Found
+
+</h2>
+
+<p class="text-gray-400 mt-4">
+
+Try another search.
+
+</p>
 
 </div>
 
@@ -425,87 +641,124 @@ return;
 
 }
 
-container.innerHTML = "";
-
-products.reverse().forEach(product => {
+products.forEach(item => {
 
 container.innerHTML += `
 
-<div
-class="card"
-onclick="openProduct('${product._id}')">
+<div class="glass rounded-[35px] overflow-hidden card">
 
-<div class="image">
+<div class="relative">
 
-<img src="${
-product.images?.[0]
-||
-'https://via.placeholder.com/500'
-}">
+<img
+src="${item.image}"
+class="w-full h-72 object-cover">
 
-${
-product.featured
-?
-'<div class="badge">Featured</div>'
-:
-''
-}
+<div class="absolute top-4 left-4 bg-green-500 px-4 py-2 rounded-full text-xs font-black">
+
+Featured
 
 </div>
 
-<div class="content">
+<button
+class="absolute top-4 right-4 w-11 h-11 rounded-full bg-black/50 backdrop-blur-lg text-white text-xl">
 
-<h2 class="title">
+❤️
 
-${product.title}
+</button>
+
+</div>
+
+<div class="p-6">
+
+<div class="flex items-center justify-between mb-4">
+
+<p class="text-green-400 text-2xl font-black">
+
+KSh ${item.price}
+
+</p>
+
+<p class="text-xs text-gray-400 font-bold">
+
+2 mins ago
+
+</p>
+
+</div>
+
+<h2 class="text-2xl font-black mb-3 line-clamp-1">
+
+${item.name}
 
 </h2>
 
-<div class="price">
+<p class="text-gray-400 leading-relaxed mb-6 line-clamp-2">
 
-KSh ${product.price}
+${item.description}
 
-</div>
+</p>
 
-<div class="meta">
+<div class="flex items-center justify-between mb-6">
 
-<span>
+<div class="flex items-center gap-3">
 
-📍 ${product.location || 'Kenya'}
-
-</span>
-
-<span>
-
-👀 ${product.views || 0}
-
-</span>
-
-</div>
-
-<div class="seller">
-
-<div class="seller-avatar">
-
-${product.sellerName?.charAt(0) || "U"}
-
-</div>
+<img
+src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+class="w-10 h-10 rounded-full border border-green-500">
 
 <div>
 
-<p class="font-bold text-sm">
+<p class="font-black text-sm">
 
-${product.sellerName || "User"}
+${item.username || "Seller"}
 
 </p>
 
-<p class="text-xs text-gray-400">
+<p class="text-green-400 text-xs">
 
-Seller
+Verified Seller
 
 </p>
 
 </div>
+
+</div>
+
+<div class="text-right">
+
+<p class="text-xs text-gray-400">
+
+Location
+
+</p>
+
+<p class="font-black text-sm">
+
+Nairobi
+
+</p>
+
+</div>
+
+</div>
+
+<div class="grid grid-cols-2 gap-3">
+
+<a
+href="chat.html"
+class="bg-green-500 hover:bg-green-600 text-center py-3 rounded-2xl font-black">
+
+Chat
+
+</a>
+
+<a
+href="product.html?id=${item._id}"
+class="glass hover:bg-white/10 text-center py-3 rounded-2xl font-black">
+
+View
+
+</a>
 
 </div>
 
@@ -519,41 +772,64 @@ Seller
 
 }
 
-/* OPEN PRODUCT */
+/* FILTER */
 
-function openProduct(id){
+function filterProducts(){
 
-window.location.href =
-`product.html?id=${id}`;
+const search =
+document.getElementById(
+"searchInput"
+).value.toLowerCase();
 
-}
+const category =
+document.getElementById(
+"categoryFilter"
+).value.toLowerCase();
 
-/* SEARCH */
+const price =
+document.getElementById(
+"priceFilter"
+).value;
 
-document
-.getElementById("searchInput")
-.addEventListener(
-"input",
-e => {
+let filtered =
+allProducts.filter(item => {
 
-const value =
-e.target.value.toLowerCase();
+const matchesSearch =
 
-const filtered =
-allProducts.filter(product => {
-
-return (
-
-product.title
+item.name
 .toLowerCase()
-.includes(value)
+.includes(search)
 
 ||
 
-product.category
-?.toLowerCase()
-.includes(value)
+item.description
+.toLowerCase()
+.includes(search);
 
+const matchesCategory =
+
+category === ""
+
+||
+
+item.category?.toLowerCase()
+.includes(category);
+
+const matchesPrice =
+
+price === ""
+
+||
+
+Number(item.price)
+<= Number(price);
+
+return (
+matchesSearch
+&&
+matchesCategory
+&&
+matchesPrice
 );
 
 });
@@ -561,26 +837,8 @@ product.category
 renderProducts(filtered);
 
 }
-);
-
-/* LOGOUT */
-
-function logout(){
-
-localStorage.removeItem(
-"swaplyUser"
-);
-
-window.location.href =
-"login.html";
-
-}
-
-/* START */
-
-loadProducts();
 
 </script>
 
 </body>
-</html>
+  </html>
