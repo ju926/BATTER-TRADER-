@@ -289,36 +289,6 @@ border-radius:20px;
 
 <body>
 
-<script>
-
-const API =
-"https://traderbackend.onrender.com";
-
-const socket =
-io(API);
-
-const currentUser =
-JSON.parse(
-localStorage.getItem("user")
-);
-
-if(!currentUser){
-
-window.location.href =
-"login.html";
-
-}
-
-const isAdmin =
-
-currentUser?.role === "admin"
-
-||
-
-currentUser?.email === "admin@swaply.com";
-
-</script>
-
 <!-- TOPBAR -->
 
 <div class="topbar">
@@ -359,6 +329,12 @@ Browse
 
 </a>
 
+<a href="profile.html">
+
+Profile
+
+</a>
+
 <a
 href="#"
 onclick="logout()">
@@ -367,19 +343,11 @@ Logout
 
 </a>
 
-<div class="avatar">
+<div
+class="avatar"
+id="avatar">
 
-<script>
-
-document.write(
-
-(currentUser?.username || "U")
-.charAt(0)
-.toUpperCase()
-
-);
-
-</script>
+U
 
 </div>
 
@@ -495,6 +463,54 @@ class="send-btn">
 
 <script>
 
+/* API */
+
+const API =
+"https://traderbackend.onrender.com";
+
+/* SOCKET */
+
+const socket =
+io(API);
+
+/* USER */
+
+const currentUser =
+JSON.parse(
+localStorage.getItem("swaplyUser")
+);
+
+/* CHECK LOGIN */
+
+if(!currentUser){
+
+window.location.href =
+"login.html";
+
+}
+
+/* AVATAR */
+
+document.getElementById(
+"avatar"
+).innerText =
+
+currentUser.username
+.charAt(0)
+.toUpperCase();
+
+/* ADMIN */
+
+const isAdmin =
+
+currentUser?.role === "admin"
+
+||
+
+currentUser?.email === "admin@swaply.com";
+
+/* ELEMENTS */
+
 const messages =
 document.getElementById(
 "messages"
@@ -592,7 +608,7 @@ messageInput.focus();
 
 }
 
-/* SEND MESSAGE */
+/* SEND */
 
 document
 .getElementById(
@@ -632,6 +648,8 @@ socket.emit(
 "sendMessage",
 msg
 );
+
+appendMessage(msg);
 
 messageInput.value = "";
 
@@ -706,7 +724,13 @@ socket.on(
 "receiveMessage",
 msg => {
 
+if(
+msg.username !== currentUser.username
+){
+
 appendMessage(msg);
+
+}
 
 }
 );
@@ -856,7 +880,7 @@ document
 
 }
 
-/* AI REPLIES */
+/* AI */
 
 function generateAIReply(text){
 
@@ -911,9 +935,9 @@ return "🤖 AI Assistant is here to help.";
 
 function logout(){
 
-localStorage.removeItem("user");
-
-localStorage.removeItem("token");
+localStorage.removeItem(
+"swaplyUser"
+);
 
 window.location.href =
 "login.html";
@@ -923,4 +947,4 @@ window.location.href =
 </script>
 
 </body>
-</html>
+  </html>
