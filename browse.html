@@ -7,14 +7,9 @@
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0">
 
-<title>
-Swaply Browse
-</title>
+<title>Swaply Browse</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
 rel="stylesheet">
@@ -25,16 +20,14 @@ rel="stylesheet">
 margin:0;
 padding:0;
 box-sizing:border-box;
+font-family:'Inter',sans-serif;
 }
 
 body{
-font-family:'Inter',sans-serif;
 background:#050505;
-overflow-x:hidden;
 color:white;
+overflow-x:hidden;
 }
-
-/* GLASS */
 
 .glass{
 background:rgba(255,255,255,.05);
@@ -42,17 +35,25 @@ backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,.08);
 }
 
-/* CARD */
-
 .card{
 transition:.35s;
 }
 
 .card:hover{
-transform:translateY(-8px);
+transform:translateY(-6px);
 }
 
-/* SCROLLBAR */
+.input{
+width:100%;
+height:58px;
+background:#111827;
+border:none;
+outline:none;
+border-radius:18px;
+padding:0 18px;
+color:white;
+font-size:15px;
+}
 
 ::-webkit-scrollbar{
 width:5px;
@@ -61,20 +62,6 @@ width:5px;
 ::-webkit-scrollbar-thumb{
 background:#22c55e;
 border-radius:20px;
-}
-
-/* HERO */
-
-.hero{
-background:
-linear-gradient(
-rgba(0,0,0,.80),
-rgba(0,0,0,.92)
-),
-url('https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1600&auto=format&fit=crop');
-
-background-size:cover;
-background-position:center;
 }
 
 </style>
@@ -90,9 +77,7 @@ const API =
 
 const currentUser =
 JSON.parse(
-localStorage.getItem(
-"swaplyUser"
-)
+localStorage.getItem("user")
 );
 
 </script>
@@ -113,44 +98,37 @@ Swaply
 
 <p class="text-green-400 text-xs font-bold tracking-widest">
 
-MARKETPLACE
+BROWSE PRODUCTS
 
 </p>
 
 </div>
 
-<div class="hidden md:flex items-center gap-4">
+<div class="hidden md:flex items-center gap-5">
 
 <a href="index.html"
-class="text-white hover:text-green-400 font-bold">
+class="hover:text-green-400 font-bold">
 
 Home
 
 </a>
 
-<a href="browse.html"
-class="text-green-400 font-bold">
-
-Browse
-
-</a>
-
 <a href="upload.html"
-class="text-white hover:text-green-400 font-bold">
+class="hover:text-green-400 font-bold">
 
 Sell
 
 </a>
 
 <a href="chat.html"
-class="text-white hover:text-green-400 font-bold">
+class="hover:text-green-400 font-bold">
 
 Chat
 
 </a>
 
 <a href="profile.html"
-class="text-white hover:text-green-400 font-bold">
+class="hover:text-green-400 font-bold">
 
 Profile
 
@@ -164,217 +142,35 @@ Profile
 
 <!-- HERO -->
 
-<section class="hero pt-36 pb-20">
+<section class="pt-36 pb-14">
 
 <div class="max-w-7xl mx-auto px-5">
 
-<div class="max-w-3xl">
+<div class="flex flex-col md:flex-row gap-5 md:items-center md:justify-between">
 
-<p class="text-green-400 font-black tracking-[5px] mb-5">
+<div>
 
-EXPLORE MARKETPLACE
+<p class="text-green-400 font-black tracking-[5px] mb-4">
+
+MARKETPLACE
 
 </p>
 
-<h1 class="text-5xl md:text-7xl font-black leading-tight">
+<h1 class="text-5xl md:text-6xl font-black">
 
-Find Amazing Products
+Browse Products
 
 </h1>
 
-<p class="text-gray-300 text-lg leading-relaxed mt-8">
-
-Discover thousands of products from trusted sellers across Kenya.
-
-</p>
-
 </div>
 
-<!-- SEARCH -->
-
-<div class="glass rounded-[30px] p-4 mt-10">
-
-<div class="grid md:grid-cols-4 gap-4">
+<div class="w-full md:w-[350px]">
 
 <input
 type="text"
 id="searchInput"
 placeholder="Search products..."
-class="bg-black/30 border border-white/10 h-14 rounded-2xl px-5 outline-none text-white">
-
-<select
-id="categoryFilter"
-class="bg-black/30 border border-white/10 h-14 rounded-2xl px-5 outline-none text-white">
-
-<option value="">
-All Categories
-</option>
-
-<option>
-Phones
-</option>
-
-<option>
-Laptops
-</option>
-
-<option>
-Cars
-</option>
-
-<option>
-Gaming
-</option>
-
-<option>
-Fashion
-</option>
-
-<option>
-Furniture
-</option>
-
-</select>
-
-<select
-id="priceFilter"
-class="bg-black/30 border border-white/10 h-14 rounded-2xl px-5 outline-none text-white">
-
-<option value="">
-Any Price
-</option>
-
-<option value="10000">
-Under 10K
-</option>
-
-<option value="50000">
-Under 50K
-</option>
-
-<option value="100000">
-Under 100K
-</option>
-
-</select>
-
-<button
-onclick="filterProducts()"
-class="bg-green-500 hover:bg-green-600 rounded-2xl font-black text-lg">
-
-Search
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- CATEGORIES -->
-
-<section class="pb-16">
-
-<div class="max-w-7xl mx-auto px-5">
-
-<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
-
-<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
-
-<h2 class="text-5xl">
-
-📱
-
-</h2>
-
-<p class="font-black mt-4">
-
-Phones
-
-</p>
-
-</div>
-
-<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
-
-<h2 class="text-5xl">
-
-💻
-
-</h2>
-
-<p class="font-black mt-4">
-
-Laptops
-
-</p>
-
-</div>
-
-<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
-
-<h2 class="text-5xl">
-
-🚗
-
-</h2>
-
-<p class="font-black mt-4">
-
-Cars
-
-</p>
-
-</div>
-
-<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
-
-<h2 class="text-5xl">
-
-🎮
-
-</h2>
-
-<p class="font-black mt-4">
-
-Gaming
-
-</p>
-
-</div>
-
-<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
-
-<h2 class="text-5xl">
-
-👕
-
-</h2>
-
-<p class="font-black mt-4">
-
-Fashion
-
-</p>
-
-</div>
-
-<div class="glass rounded-[30px] p-7 text-center card cursor-pointer">
-
-<h2 class="text-5xl">
-
-🛋️
-
-</h2>
-
-<p class="font-black mt-4">
-
-Furniture
-
-</p>
+class="input">
 
 </div>
 
@@ -386,136 +182,19 @@ Furniture
 
 <!-- PRODUCTS -->
 
-<section class="pb-28">
+<section class="pb-24">
 
 <div class="max-w-7xl mx-auto px-5">
 
-<div class="flex items-center justify-between mb-12">
-
-<div>
-
-<p class="text-green-400 font-black tracking-[5px] mb-4">
-
-LATEST PRODUCTS
-
-</p>
-
-<h2 class="text-4xl md:text-5xl font-black">
-
-Marketplace Listings
-
-</h2>
-
-</div>
-
-<div class="glass px-5 py-3 rounded-2xl font-black">
-
-<span id="productCount">
-
-0
-
-</span>
-
-Products
-
-</div>
-
-</div>
-
 <div
-id="products"
-class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+id="productsContainer"
+class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
 
 </div>
 
 </div>
 
 </section>
-
-<!-- FOOTER -->
-
-<footer class="border-t border-white/10 py-12">
-
-<div class="max-w-7xl mx-auto px-5 grid md:grid-cols-4 gap-10">
-
-<div>
-
-<h2 class="text-3xl font-black">
-
-Swaply
-
-</h2>
-
-<p class="text-gray-400 leading-relaxed mt-5">
-
-Kenya’s premium marketplace platform.
-
-</p>
-
-</div>
-
-<div>
-
-<h3 class="font-black text-xl mb-5">
-
-Marketplace
-
-</h3>
-
-<div class="space-y-3 text-gray-400">
-
-<p>Browse</p>
-<p>Products</p>
-<p>Categories</p>
-
-</div>
-
-</div>
-
-<div>
-
-<h3 class="font-black text-xl mb-5">
-
-Community
-
-</h3>
-
-<div class="space-y-3 text-gray-400">
-
-<p>Chat</p>
-<p>Support</p>
-<p>Safety</p>
-
-</div>
-
-</div>
-
-<div>
-
-<h3 class="font-black text-xl mb-5">
-
-Contact
-
-</h3>
-
-<div class="space-y-3 text-gray-400">
-
-<p>Nairobi, Kenya</p>
-<p>support@swaply.com</p>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="text-center text-gray-500 mt-12 text-sm">
-
-© 2026 Swaply Marketplace
-
-</div>
-
-</footer>
 
 <!-- MOBILE NAV -->
 
@@ -527,7 +206,12 @@ Contact
 class="flex flex-col items-center py-3 text-white">
 
 <span class="text-2xl">🏠</span>
-<span class="text-[11px] font-bold">Home</span>
+
+<span class="text-[11px] font-bold">
+
+Home
+
+</span>
 
 </a>
 
@@ -535,7 +219,12 @@ class="flex flex-col items-center py-3 text-white">
 class="flex flex-col items-center py-3 text-green-400">
 
 <span class="text-2xl">🛒</span>
-<span class="text-[11px] font-bold">Browse</span>
+
+<span class="text-[11px] font-bold">
+
+Browse
+
+</span>
 
 </a>
 
@@ -543,7 +232,12 @@ class="flex flex-col items-center py-3 text-green-400">
 class="flex flex-col items-center py-3 text-white">
 
 <span class="text-2xl">➕</span>
-<span class="text-[11px] font-bold">Sell</span>
+
+<span class="text-[11px] font-bold">
+
+Sell
+
+</span>
 
 </a>
 
@@ -551,7 +245,12 @@ class="flex flex-col items-center py-3 text-white">
 class="flex flex-col items-center py-3 text-white">
 
 <span class="text-2xl">💬</span>
-<span class="text-[11px] font-bold">Chat</span>
+
+<span class="text-[11px] font-bold">
+
+Chat
+
+</span>
 
 </a>
 
@@ -559,7 +258,12 @@ class="flex flex-col items-center py-3 text-white">
 class="flex flex-col items-center py-3 text-white">
 
 <span class="text-2xl">👤</span>
-<span class="text-[11px] font-bold">Profile</span>
+
+<span class="text-[11px] font-bold">
+
+Profile
+
+</span>
 
 </a>
 
@@ -568,6 +272,11 @@ class="flex flex-col items-center py-3 text-white">
 </div>
 
 <script>
+
+const container =
+document.getElementById(
+"productsContainer"
+);
 
 let allProducts = [];
 
@@ -579,39 +288,41 @@ try{
 
 const res =
 await fetch(
-`${API}/items`
+`${API}/products`
 );
 
-const items =
+const products =
 await res.json();
 
-allProducts = items;
+allProducts = products;
 
-renderProducts(items);
+displayProducts(products);
 
 }catch(err){
 
 console.log(err);
 
-}
+container.innerHTML = `
+
+<div class="text-center col-span-full py-20">
+
+<h2 class="text-3xl font-black text-red-400">
+
+Failed To Load Products
+
+</h2>
+
+</div>
+
+`;
 
 }
 
-loadProducts();
+}
 
-/* RENDER */
+/* DISPLAY */
 
-function renderProducts(products){
-
-const container =
-document.getElementById(
-"products"
-);
-
-document.getElementById(
-"productCount"
-).innerText =
-products.length;
+function displayProducts(products){
 
 container.innerHTML = "";
 
@@ -619,7 +330,7 @@ if(products.length === 0){
 
 container.innerHTML = `
 
-<div class="col-span-full text-center py-24">
+<div class="text-center col-span-full py-20">
 
 <h2 class="text-4xl font-black">
 
@@ -629,7 +340,7 @@ No Products Found
 
 <p class="text-gray-400 mt-4">
 
-Try another search.
+Try another search
 
 </p>
 
@@ -645,42 +356,29 @@ products.forEach(item => {
 
 container.innerHTML += `
 
-<div class="glass rounded-[35px] overflow-hidden card">
-
-<div class="relative">
+<div class="glass rounded-[30px] overflow-hidden card">
 
 <img
-src="${item.image}"
+src="${
+item.images && item.images.length
+? item.images[0]
+: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop'
+}"
 class="w-full h-72 object-cover">
-
-<div class="absolute top-4 left-4 bg-green-500 px-4 py-2 rounded-full text-xs font-black">
-
-Featured
-
-</div>
-
-<button
-class="absolute top-4 right-4 w-11 h-11 rounded-full bg-black/50 backdrop-blur-lg text-white text-xl">
-
-❤️
-
-</button>
-
-</div>
 
 <div class="p-6">
 
 <div class="flex items-center justify-between mb-4">
 
-<p class="text-green-400 text-2xl font-black">
+<p class="text-xs font-black text-green-400 tracking-widest">
 
-KSh ${item.price}
+${item.category || "PRODUCT"}
 
 </p>
 
-<p class="text-xs text-gray-400 font-bold">
+<p class="text-xs text-gray-400">
 
-2 mins ago
+👁 ${item.views || 0}
 
 </p>
 
@@ -688,11 +386,17 @@ KSh ${item.price}
 
 <h2 class="text-2xl font-black mb-3 line-clamp-1">
 
-${item.name}
+${item.title}
 
 </h2>
 
-<p class="text-gray-400 leading-relaxed mb-6 line-clamp-2">
+<p class="text-green-400 text-3xl font-black mb-4">
+
+KSh ${item.price}
+
+</p>
+
+<p class="text-gray-400 text-sm leading-relaxed mb-5 line-clamp-3">
 
 ${item.description}
 
@@ -702,41 +406,32 @@ ${item.description}
 
 <div class="flex items-center gap-3">
 
+<div class="w-11 h-11 rounded-full overflow-hidden">
+
 <img
-src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-class="w-10 h-10 rounded-full border border-green-500">
+src="${
+item.sellerAvatar ||
+'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+}"
+class="w-full h-full object-cover">
+
+</div>
 
 <div>
 
 <p class="font-black text-sm">
 
-${item.username || "Seller"}
+${item.sellerName}
 
 </p>
-
-<p class="text-green-400 text-xs">
-
-Verified Seller
-
-</p>
-
-</div>
-
-</div>
-
-<div class="text-right">
 
 <p class="text-xs text-gray-400">
 
-Location
+${item.location || "Kenya"}
 
 </p>
 
-<p class="font-black text-sm">
-
-Nairobi
-
-</p>
+</div>
 
 </div>
 
@@ -745,18 +440,18 @@ Nairobi
 <div class="grid grid-cols-2 gap-3">
 
 <a
-href="chat.html"
-class="bg-green-500 hover:bg-green-600 text-center py-3 rounded-2xl font-black">
+href="product.html?id=${item._id}"
+class="bg-green-500 hover:bg-green-600 h-12 rounded-2xl flex items-center justify-center font-black">
 
-Chat
+View
 
 </a>
 
 <a
-href="product.html?id=${item._id}"
-class="glass hover:bg-white/10 text-center py-3 rounded-2xl font-black">
+href="chat.html"
+class="glass hover:bg-white/10 h-12 rounded-2xl flex items-center justify-center font-black">
 
-View
+Chat
 
 </a>
 
@@ -772,73 +467,42 @@ View
 
 }
 
-/* FILTER */
+/* SEARCH */
 
-function filterProducts(){
-
-const search =
-document.getElementById(
+document
+.getElementById(
 "searchInput"
-).value.toLowerCase();
+)
+.addEventListener(
+"input",
+e => {
 
-const category =
-document.getElementById(
-"categoryFilter"
-).value.toLowerCase();
+const value =
+e.target.value.toLowerCase();
 
-const price =
-document.getElementById(
-"priceFilter"
-).value;
+const filtered =
+allProducts.filter(item =>
 
-let filtered =
-allProducts.filter(item => {
-
-const matchesSearch =
-
-item.name
+item.title
 .toLowerCase()
-.includes(search)
+.includes(value)
 
 ||
 
-item.description
+item.category
 .toLowerCase()
-.includes(search);
+.includes(value)
 
-const matchesCategory =
-
-category === ""
-
-||
-
-item.category?.toLowerCase()
-.includes(category);
-
-const matchesPrice =
-
-price === ""
-
-||
-
-Number(item.price)
-<= Number(price);
-
-return (
-matchesSearch
-&&
-matchesCategory
-&&
-matchesPrice
 );
 
-});
-
-renderProducts(filtered);
+displayProducts(filtered);
 
 }
+);
+
+loadProducts();
 
 </script>
 
 </body>
-  </html>
+</html>
