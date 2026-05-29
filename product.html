@@ -29,7 +29,9 @@ min-height:100vh;
 padding-bottom:120px;
 }
 
-.topbar{
+/* HEADER */
+
+.header{
 position:sticky;
 top:0;
 z-index:100;
@@ -43,23 +45,37 @@ border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .logo{
-font-size:24px;
+font-size:28px;
 font-weight:900;
 }
 
+.back-btn{
+background:#111827;
+padding:10px 14px;
+border-radius:14px;
+text-decoration:none;
+color:white;
+font-size:13px;
+font-weight:800;
+}
+
+/* CONTAINER */
+
 .container{
-padding:18px;
 max-width:1200px;
 margin:auto;
+padding:20px;
 }
+
+/* IMAGE */
 
 .image-box{
 width:100%;
 height:420px;
-border-radius:30px;
 overflow:hidden;
-margin-bottom:20px;
+border-radius:30px;
 background:#111827;
+margin-bottom:22px;
 }
 
 .image-box img{
@@ -68,10 +84,12 @@ height:100%;
 object-fit:cover;
 }
 
+/* INFO */
+
 .title{
-font-size:32px;
+font-size:34px;
 font-weight:900;
-margin-bottom:14px;
+margin-bottom:12px;
 line-height:1.4;
 }
 
@@ -79,33 +97,35 @@ line-height:1.4;
 font-size:42px;
 font-weight:900;
 color:#22c55e;
-margin-bottom:16px;
+margin-bottom:18px;
 }
 
 .meta{
 display:flex;
 gap:18px;
 flex-wrap:wrap;
-margin-bottom:20px;
-color:#9ca3af;
 font-size:14px;
+color:#9ca3af;
+margin-bottom:20px;
 }
 
 .description{
 background:#111827;
-padding:22px;
+padding:24px;
 border-radius:24px;
 line-height:1.8;
 margin-bottom:24px;
 }
 
+/* SELLER */
+
 .seller-card{
 background:#111827;
-padding:20px;
+padding:22px;
 border-radius:24px;
 display:flex;
-align-items:center;
 justify-content:space-between;
+align-items:center;
 margin-bottom:24px;
 }
 
@@ -116,14 +136,14 @@ gap:14px;
 }
 
 .avatar{
-width:60px;
-height:60px;
+width:62px;
+height:62px;
 border-radius:50%;
 background:linear-gradient(135deg,#22c55e,#16a34a);
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:22px;
+font-size:24px;
 font-weight:900;
 }
 
@@ -132,26 +152,28 @@ font-size:18px;
 font-weight:800;
 }
 
-.seller-badge{
-font-size:13px;
+.badge{
 color:#22c55e;
+font-size:13px;
 font-weight:700;
 }
+
+/* BUTTONS */
 
 .actions{
 display:flex;
 gap:14px;
-margin-top:20px;
 flex-wrap:wrap;
+margin-top:20px;
 }
 
 .btn{
 flex:1;
-height:58px;
+height:60px;
 border:none;
-border-radius:18px;
+border-radius:20px;
 font-size:15px;
-font-weight:800;
+font-weight:900;
 cursor:pointer;
 }
 
@@ -162,8 +184,8 @@ color:white;
 
 .offer-btn{
 background:#111827;
-color:white;
 border:1px solid rgba(255,255,255,.08);
+color:white;
 }
 
 .like-btn{
@@ -171,13 +193,17 @@ background:#dc2626;
 color:white;
 }
 
+/* STATS */
+
 .stats{
 display:flex;
-gap:16px;
-margin-top:14px;
+gap:18px;
+margin-top:18px;
 font-size:14px;
 color:#9ca3af;
 }
+
+/* LOADING */
 
 .loading{
 padding:80px;
@@ -187,6 +213,8 @@ font-weight:800;
 color:#9ca3af;
 }
 
+/* MOBILE */
+
 @media(max-width:768px){
 
 .image-box{
@@ -194,11 +222,11 @@ height:300px;
 }
 
 .title{
-font-size:24px;
+font-size:26px;
 }
 
 .price{
-font-size:32px;
+font-size:34px;
 }
 
 .actions{
@@ -213,7 +241,9 @@ flex-direction:column;
 
 <body>
 
-<div class="topbar">
+<!-- HEADER -->
+
+<div class="header">
 
 <h1 class="logo">
 
@@ -223,13 +253,15 @@ Swaply
 
 <a
 href="browse.html"
-class="text-sm font-bold text-green-500">
+class="back-btn">
 
 Back
 
 </a>
 
 </div>
+
+<!-- PRODUCT -->
 
 <div
 class="container"
@@ -245,8 +277,12 @@ Loading product...
 
 <script>
 
+/* BACKEND */
+
 const BACKEND_URL =
-"https://YOUR_BACKEND_URL.onrender.com";
+"https://traderbackend.onrender.com";
+
+/* GET PRODUCT ID */
 
 const params =
 new URLSearchParams(
@@ -255,6 +291,8 @@ window.location.search
 
 const productId =
 params.get("id");
+
+/* LOAD PRODUCT */
 
 async function loadProduct(){
 
@@ -287,6 +325,8 @@ Failed to load product
 }
 
 }
+
+/* RENDER PRODUCT */
 
 function renderProduct(product){
 
@@ -326,13 +366,13 @@ KSh ${product.price}
 
 <span>
 
-📦 ${product.condition || 'Used'}
+🏷 ${product.category || 'General'}
 
 </span>
 
 <span>
 
-🏷 ${product.category || 'General'}
+📦 ${product.condition || 'Used'}
 
 </span>
 
@@ -378,7 +418,7 @@ ${product.sellerName || "User"}
 
 </div>
 
-<div class="seller-badge">
+<div class="badge">
 
 Verified Seller
 
@@ -422,6 +462,8 @@ onclick="likeProduct()">
 
 }
 
+/* LIKE */
+
 async function likeProduct(){
 
 await fetch(
@@ -435,12 +477,16 @@ loadProduct();
 
 }
 
+/* CHAT */
+
 function chatSeller(){
 
 window.location.href =
 `chat.html?seller=${productId}`;
 
 }
+
+/* OFFER */
 
 function makeOffer(){
 
@@ -475,6 +521,8 @@ alert("Offer sent");
 });
 
 }
+
+/* START */
 
 loadProduct();
 
