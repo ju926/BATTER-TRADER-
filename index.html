@@ -75,15 +75,16 @@ box-shadow:0 -5px 30px rgba(0,0,0,.5);
 
 <script>
 
+/* API */
+
 const API =
 "https://traderbackend.onrender.com";
 
-const token =
-localStorage.getItem("token");
+/* USER */
 
 const currentUser =
 JSON.parse(
-localStorage.getItem("user")
+localStorage.getItem("swaplyUser")
 );
 
 </script>
@@ -145,7 +146,6 @@ class="flex items-center gap-3">
 
 <a
 href="login.html"
-id="loginBtn"
 class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-2xl font-bold transition-all">
 
 Login
@@ -153,8 +153,7 @@ Login
 </a>
 
 <a
-href="register.html"
-id="registerBtn"
+href="signup.html"
 class="glass text-white px-5 py-2 rounded-2xl font-bold transition-all hover:bg-white/10">
 
 Sign Up
@@ -312,66 +311,6 @@ Marketplace Assistant
 
 </section>
 
-<!-- CATEGORIES -->
-
-<section class="py-24">
-
-<div class="max-w-7xl mx-auto px-5">
-
-<div class="text-center mb-16">
-
-<p class="text-green-400 font-black tracking-widest mb-4">
-
-TRENDING CATEGORIES
-
-</p>
-
-<h2 class="text-4xl md:text-6xl font-black text-white">
-
-Explore Categories
-
-</h2>
-
-</div>
-
-<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-<h2 class="text-5xl">📱</h2>
-<p class="text-white font-black mt-4">Phones</p>
-</div>
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-<h2 class="text-5xl">💻</h2>
-<p class="text-white font-black mt-4">Laptops</p>
-</div>
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-<h2 class="text-5xl">🚗</h2>
-<p class="text-white font-black mt-4">Cars</p>
-</div>
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-<h2 class="text-5xl">👕</h2>
-<p class="text-white font-black mt-4">Fashion</p>
-</div>
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-<h2 class="text-5xl">🎮</h2>
-<p class="text-white font-black mt-4">Gaming</p>
-</div>
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-<h2 class="text-5xl">🛋️</h2>
-<p class="text-white font-black mt-4">Furniture</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
 <!-- FEATURED -->
 
 <section class="py-24 bg-black">
@@ -416,132 +355,6 @@ class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
 </section>
 
-<!-- TRUST -->
-
-<section class="py-24">
-
-<div class="max-w-7xl mx-auto px-5">
-
-<div class="text-center mb-16">
-
-<p class="text-green-400 font-black tracking-widest mb-4">
-
-TRUST & SAFETY
-
-</p>
-
-<h2 class="text-4xl md:text-6xl font-black text-white">
-
-Safe Marketplace
-
-</h2>
-
-</div>
-
-<div class="grid md:grid-cols-4 gap-6">
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-
-<h2 class="text-5xl mb-5">✅</h2>
-
-<p class="text-white font-black">
-
-Verified Users
-
-</p>
-
-</div>
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-
-<h2 class="text-5xl mb-5">🔒</h2>
-
-<p class="text-white font-black">
-
-Secure Platform
-
-</p>
-
-</div>
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-
-<h2 class="text-5xl mb-5">🤖</h2>
-
-<p class="text-white font-black">
-
-AI Moderation
-
-</p>
-
-</div>
-
-<div class="glass rounded-3xl p-8 text-center card-hover">
-
-<h2 class="text-5xl mb-5">⚡</h2>
-
-<p class="text-white font-black">
-
-Real-time Trading
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- APP -->
-
-<section class="py-24 bg-black">
-
-<div class="max-w-5xl mx-auto px-5">
-
-<div class="glass rounded-[40px] p-10 md:p-16 text-center">
-
-<p class="text-green-400 font-black tracking-widest mb-5">
-
-COMING SOON
-
-</p>
-
-<h2 class="text-4xl md:text-6xl font-black text-white">
-
-Swaply Mobile App
-
-</h2>
-
-<p class="text-gray-300 mt-6 text-lg leading-relaxed max-w-2xl mx-auto">
-
-Soon available on Android and iPhone with faster trading, notifications and real-time marketplace updates.
-
-</p>
-
-<div class="flex justify-center gap-5 mt-10">
-
-<div class="glass rounded-2xl px-8 py-4 text-white font-black">
-
-Android
-
-</div>
-
-<div class="glass rounded-2xl px-8 py-4 text-white font-black">
-
-iPhone
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
 <!-- FOOTER -->
 
 <footer class="border-t border-white/10 py-10">
@@ -573,27 +386,6 @@ About
 
 </a>
 
-<a href="blog.html"
-class="text-gray-400 hover:text-green-400">
-
-Blog
-
-</a>
-
-<a href="careers.html"
-class="text-gray-400 hover:text-green-400">
-
-Careers
-
-</a>
-
-<a href="help.html"
-class="text-gray-400 hover:text-green-400">
-
-Help
-
-</a>
-
 <a href="support.html"
 class="text-gray-400 hover:text-green-400">
 
@@ -605,13 +397,6 @@ Support
 class="text-gray-400 hover:text-green-400">
 
 Terms
-
-</a>
-
-<a href="safety.html"
-class="text-gray-400 hover:text-green-400">
-
-Safety
 
 </a>
 
@@ -655,7 +440,7 @@ class="flex flex-col items-center py-3 text-white">
 </a>
 
 <a
-href="#"
+href="profile.html"
 class="flex flex-col items-center py-3 text-white">
 
 <span class="text-xl">👤</span>
@@ -681,6 +466,30 @@ if(currentUser){
 authButtons.innerHTML = `
 
 <div class="flex items-center gap-3">
+
+<a
+href="browse.html"
+class="text-white hover:text-green-400 font-semibold">
+
+Browse
+
+</a>
+
+<a
+href="chat.html"
+class="text-white hover:text-green-400 font-semibold">
+
+Chat
+
+</a>
+
+<a
+href="profile.html"
+class="text-white hover:text-green-400 font-semibold">
+
+Profile
+
+</a>
 
 <div class="hidden md:block text-right">
 
@@ -723,9 +532,9 @@ Logout
 
 function logout(){
 
-localStorage.removeItem("token");
-
-localStorage.removeItem("user");
+localStorage.removeItem(
+"swaplyUser"
+);
 
 window.location.reload();
 
@@ -739,7 +548,7 @@ try{
 
 const res =
 await fetch(
-`${API}/items`
+`${API}/products`
 );
 
 const items =
@@ -760,14 +569,17 @@ container.innerHTML += `
 <div class="glass rounded-3xl overflow-hidden card-hover">
 
 <img
-src="${item.image}"
+src="${
+item.images?.[0] ||
+'https://via.placeholder.com/500'
+}"
 class="w-full h-64 object-cover">
 
 <div class="p-6">
 
 <h2 class="text-white text-2xl font-black mb-3">
 
-${item.name}
+${item.title}
 
 </h2>
 
@@ -779,7 +591,7 @@ KSh ${item.price}
 
 <p class="text-gray-400 text-sm mb-5 line-clamp-2">
 
-${item.description}
+${item.description || "No description"}
 
 </p>
 
@@ -794,7 +606,7 @@ Chat
 </a>
 
 <a
-href="browse.html"
+href="product.html?id=${item._id}"
 class="flex-1 glass text-white text-center py-3 rounded-2xl font-black">
 
 View
@@ -824,4 +636,4 @@ loadProducts();
 </script>
 
 </body>
-  </html>
+</html>
