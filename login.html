@@ -93,7 +93,7 @@ transform:translateY(0);
 }
 
 .logo{
-font-size:38px;
+font-size:40px;
 font-weight:900;
 color:white;
 text-align:center;
@@ -105,6 +105,7 @@ color:#9ca3af;
 font-size:14px;
 margin-top:8px;
 margin-bottom:28px;
+line-height:1.6;
 }
 
 /* INPUTS */
@@ -159,33 +160,10 @@ transition:.2s;
 transform:scale(1.02);
 }
 
-/* INFO */
-
-.info{
-margin-top:20px;
-padding:16px;
-background:#0f172a;
-border-radius:18px;
-border:1px solid rgba(255,255,255,.05);
-}
-
-.info-title{
-color:#22c55e;
-font-size:13px;
-font-weight:900;
-margin-bottom:10px;
-}
-
-.info p{
-color:#d1d5db;
-font-size:13px;
-line-height:1.6;
-}
-
 /* LINKS */
 
 .links{
-margin-top:22px;
+margin-top:24px;
 text-align:center;
 }
 
@@ -205,6 +183,15 @@ color:#ef4444;
 font-size:14px;
 font-weight:700;
 display:none;
+}
+
+.loading{
+display:none;
+margin-top:18px;
+text-align:center;
+color:#22c55e;
+font-size:14px;
+font-weight:700;
 }
 
 </style>
@@ -231,7 +218,9 @@ Swaply
 
 <p class="sub">
 
-Buy • Sell • Trade Securely
+Welcome back.<br>
+
+Login to continue trading safely.
 
 </p>
 
@@ -279,31 +268,17 @@ Login
 
 </button>
 
+<div
+id="loading"
+class="loading">
+
+Logging in...
+
+</div>
+
 <div id="error"></div>
 
 </form>
-
-<div class="info">
-
-<p class="info-title">
-
-🛡 Admin Login
-
-</p>
-
-<p>
-
-Email:
-<b>admin@swaply.com</b>
-
-<br><br>
-
-Password:
-<b>JULIAN254</b>
-
-</p>
-
-</div>
 
 <div class="links">
 
@@ -337,20 +312,32 @@ document
 .getElementById(
 "email"
 )
-.value;
+.value.trim();
 
 const password =
 document
 .getElementById(
 "password"
 )
-.value;
+.value.trim();
 
 const error =
 document
 .getElementById(
 "error"
 );
+
+const loading =
+document
+.getElementById(
+"loading"
+);
+
+error.style.display =
+"none";
+
+loading.style.display =
+"block";
 
 try{
 
@@ -372,6 +359,9 @@ password
 const data =
 await res.json();
 
+loading.style.display =
+"none";
+
 if(data.token){
 
 localStorage.setItem(
@@ -384,8 +374,6 @@ localStorage.setItem(
 JSON.stringify(data.user)
 );
 
-/* LAND EVERYONE TO INDEX */
-
 window.location.href =
 "index.html";
 
@@ -395,13 +383,16 @@ error.style.display =
 "block";
 
 error.innerText =
-data.message || "Login failed";
+data.message || "Invalid credentials";
 
 }
 
 }catch(err){
 
 console.log(err);
+
+loading.style.display =
+"none";
 
 error.style.display =
 "block";
