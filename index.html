@@ -621,7 +621,7 @@ Join thousands of users already buying and selling on Kenya’s fastest growing 
 
 <div class="flex flex-wrap justify-center gap-5 mt-10">
 
-<a href="register.html"
+<a href="signup.html"
 class="bg-green-500 hover:bg-green-600 px-8 py-4 rounded-2xl font-black text-lg">
 
 Create Account
@@ -729,56 +729,6 @@ Contact</h3>
 
 </footer>
 
-<!-- MOBILE NAV -->
-
-<div class="md:hidden fixed bottom-0 left-0 right-0 glass border-t border-white/10 z-50">
-
-<div class="grid grid-cols-5">
-
-<a href="index.html"
-class="flex flex-col items-center py-3 text-green-400">
-
-<span class="text-2xl">🏠</span>
-<span class="text-[11px] font-bold">Home</span>
-
-</a>
-
-<a href="browse.html"
-class="flex flex-col items-center py-3 text-white">
-
-<span class="text-2xl">🛒</span>
-<span class="text-[11px] font-bold">Browse</span>
-
-</a>
-
-<a href="upload.html"
-class="flex flex-col items-center py-3 text-white">
-
-<span class="text-2xl">➕</span>
-<span class="text-[11px] font-bold">Sell</span>
-
-</a>
-
-<a href="chat.html"
-class="flex flex-col items-center py-3 text-white">
-
-<span class="text-2xl">💬</span>
-<span class="text-[11px] font-bold">Chat</span>
-
-</a>
-
-<a href="profile.html"
-class="flex flex-col items-center py-3 text-white">
-
-<span class="text-2xl">👤</span>
-<span class="text-[11px] font-bold">Profile</span>
-
-</a>
-
-</div>
-
-</div>
-
 <script>
 
 /* LOGIN */
@@ -829,6 +779,30 @@ Logout
 
 `;
 
+}else{
+
+authArea.innerHTML = `
+
+<div class="flex items-center gap-3">
+
+<a href="login.html"
+class="bg-green-500 hover:bg-green-600 px-6 py-3 rounded-2xl font-black">
+
+Login
+
+</a>
+
+<a href="signup.html"
+class="glass hover:bg-white/10 px-6 py-3 rounded-2xl font-black">
+
+Sign Up
+
+</a>
+
+</div>
+
+`;
+
 }
 
 /* LOGOUT */
@@ -837,6 +811,10 @@ function logout(){
 
 localStorage.removeItem(
 "swaplyUser"
+);
+
+localStorage.removeItem(
+"token"
 );
 
 window.location.reload();
