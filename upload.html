@@ -1,559 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Swaply Upload</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
-
-body{
-background:#050505;
-color:white;
-overflow-x:hidden;
-}
-
-.glass{
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.08);
-}
-
-.input{
-width:100%;
-height:58px;
-background:#111827;
-border:none;
-outline:none;
-border-radius:18px;
-padding:0 18px;
-color:white;
-font-size:15px;
-}
-
-.textarea{
-width:100%;
-height:150px;
-background:#111827;
-border:none;
-outline:none;
-border-radius:20px;
-padding:18px;
-color:white;
-resize:none;
-}
-
-.upload-box{
-border:2px dashed rgba(255,255,255,.15);
-border-radius:30px;
-padding:40px;
-text-align:center;
-cursor:pointer;
-transition:.3s;
-}
-
-.upload-box:hover{
-border-color:#22c55e;
-background:rgba(34,197,94,.05);
-}
-
-.preview{
-width:100%;
-height:300px;
-object-fit:cover;
-border-radius:25px;
-margin-top:20px;
-display:none;
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swaply Upload</title>
+    <script src="https://tailwindcss.com"></script>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Inter',sans-serif;
+        }
+        body{
+            background:#050505;
+            color:white;
+            overflow-x:hidden;
+        }
+        .glass{
+            background:rgba(255,255,255,.05);
+            backdrop-filter:blur(20px);
+            border:1px solid rgba(255,255,255,.08);
+        }
+        .input{
+            width:100%;
+            height:58px;
+            background:#111827;
+            border:none;
+            outline:none;
+            border-radius:18px;
+            padding:0 18px;
+            color:white;
+            font-size:15px;
+        }
+        .textarea{
+            width:100%;
+            height:150px;
+            background:#111827;
+            border:none;
+            outline:none;
+            border-radius:20px;
+            padding:18px;
+            color:white;
+            resize:none;
+        }
+        .upload-box{
+            border:2px dashed rgba(255,255,255,.15);
+            border-radius:30px;
+            padding:40px;
+            text-align:center;
+            cursor:pointer;
+            transition:.3s;
+        }
+        .upload-box:hover{
+            border-color:#22c55e;
+            background:rgba(34,197,94,.05);
+        }
+        .preview{
+            width:100%;
+            height:300px;
+            object-fit:cover;
+            border-radius:25px;
+            margin-top:20px;
+            display:none;
+        }
+    </style>
 </head>
-
 <body>
-
-<script>
-
-const API =
-"https://traderbackend.onrender.com";
-
-const currentUser =
-JSON.parse(
-localStorage.getItem("user")
-);
-
-if(!currentUser){
-
-window.location.href =
-"login.html";
-
-}
-
-</script>
-
-<!-- NAVBAR -->
-
-<nav class="glass fixed top-0 left-0 right-0 z-50 border-b border-white/10">
-
-<div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
-
-<div>
-
-<h1 class="text-3xl font-black">
-
-Swaply
-
-</h1>
-
-<p class="text-green-400 text-xs font-bold tracking-widest">
-
-UPLOAD PRODUCT
-
-</p>
-
-</div>
-
-<div class="hidden md:flex gap-5">
-
-<a href="index.html"
-class="font-bold hover:text-green-400">
-
-Home
-
-</a>
-
-<a href="browse.html"
-class="font-bold hover:text-green-400">
-
-Browse
-
-</a>
-
-<a href="profile.html"
-class="font-bold hover:text-green-400">
-
-Profile
-
-</a>
-
-</div>
-
-</div>
-
-</nav>
-
-<!-- MAIN -->
-
-<section class="pt-36 pb-24">
-
-<div class="max-w-5xl mx-auto px-5">
-
-<div class="glass rounded-[40px] p-8 md:p-12">
-
-<div class="mb-10">
-
-<p class="text-green-400 font-black tracking-[5px] mb-4">
-
-SELL PRODUCT
-
-</p>
-
-<h1 class="text-5xl font-black">
-
-Upload New Product
-
-</h1>
-
-</div>
-
-<form id="uploadForm">
-
-<div class="grid md:grid-cols-2 gap-6">
-
-<div>
-
-<label class="block mb-3 font-black">
-
-Product Name
-
-</label>
-
-<input
-type="text"
-id="title"
-placeholder="iPhone 15 Pro"
-class="input"
-required>
-
-</div>
-
-<div>
-
-<label class="block mb-3 font-black">
-
-Price
-
-</label>
-
-<input
-type="text"
-id="price"
-placeholder="120000"
-class="input"
-required>
-
-</div>
-
-<div>
-
-<label class="block mb-3 font-black">
-
-Category
-
-</label>
-
-<select
-id="category"
-class="input"
-required>
-
-<option value="">
-Select Category
-</option>
-
-<option>
-Phones
-</option>
-
-<option>
-Laptops
-</option>
-
-<option>
-Cars
-</option>
-
-<option>
-Gaming
-</option>
-
-<option>
-Fashion
-</option>
-
-<option>
-Furniture
-</option>
-
-</select>
-
-</div>
-
-<div>
-
-<label class="block mb-3 font-black">
-
-Condition
-
-</label>
-
-<select
-id="condition"
-class="input"
-required>
-
-<option>
-New
-</option>
-
-<option>
-Used
-</option>
-
-</select>
-
-</div>
-
-<div class="md:col-span-2">
-
-<label class="block mb-3 font-black">
-
-Location
-
-</label>
-
-<input
-type="text"
-id="location"
-placeholder="Nairobi"
-class="input"
-required>
-
-</div>
-
-<div class="md:col-span-2">
-
-<label class="block mb-3 font-black">
-
-Description
-
-</label>
-
-<textarea
-id="description"
-placeholder="Describe your product..."
-class="textarea"
-required></textarea>
-
-</div>
-
-</div>
-
-<!-- IMAGE -->
-
-<div class="mt-10">
-
-<label class="block mb-4 font-black">
-
-Product Image
-
-</label>
-
-<label class="upload-box block">
-
-<input
-type="file"
-id="image"
-accept="image/*"
-hidden>
-
-<div>
-
-<h2 class="text-6xl">
-
-📸
-
-</h2>
-
-<p class="text-2xl font-black mt-5">
-
-Tap To Upload Image
-
-</p>
-
-</div>
-
-<img
-id="preview"
-class="preview">
-
-</label>
-
-</div>
-
-<!-- BUTTON -->
-
-<button
-type="submit"
-id="submitBtn"
-class="w-full mt-10 bg-green-500 hover:bg-green-600 h-16 rounded-2xl text-xl font-black">
-
-Upload Product
-
-</button>
-
-</form>
-
-</div>
-
-</div>
-
-</section>
-
-<script>
-
-/* IMAGE PREVIEW */
-
-const imageInput =
-document.getElementById(
-"image"
-);
-
-const preview =
-document.getElementById(
-"preview"
-);
-
-imageInput.addEventListener(
-"change",
-e => {
-
-const file =
-e.target.files[0];
-
-if(file){
-
-preview.src =
-URL.createObjectURL(file);
-
-preview.style.display =
-"block";
-
-}
-
-}
-);
-
-/* SUBMIT */
-
-document
-.getElementById(
-"uploadForm"
-)
-.addEventListener(
-"submit",
-async e => {
-
-e.preventDefault();
-
-const submitBtn =
-document.getElementById(
-"submitBtn"
-);
-
-submitBtn.innerText =
-"Uploading...";
-
-submitBtn.disabled = true;
-
-try{
-
-/* TEMP IMAGE */
-
-let imageUrl =
-"https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop";
-
-if(imageInput.files[0]){
-
-imageUrl =
-URL.createObjectURL(
-imageInput.files[0]
-);
-
-}
-
-const product = {
-
-title:
-document.getElementById(
-"title"
-).value,
-
-price:
-document.getElementById(
-"price"
-).value,
-
-description:
-document.getElementById(
-"description"
-).value,
-
-category:
-document.getElementById(
-"category"
-).value,
-
-condition:
-document.getElementById(
-"condition"
-).value,
-
-location:
-document.getElementById(
-"location"
-).value,
-
-images:[imageUrl],
-
-sellerId:
-currentUser._id,
-
-sellerName:
-currentUser.username,
-
-sellerAvatar:
-currentUser.avatar || ""
-
-};
-
-const res =
-await fetch(
-`${API}/products`,
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify(product)
-}
-);
-
-const data =
-await res.json();
-
-if(res.ok){
-
-alert(
-"✅ Product uploaded successfully"
-);
-
-window.location.href =
-"browse.html";
-
-}else{
-
-alert(
-data.message || "Upload failed"
-);
-
-}
-
-}catch(err){
-
-console.log(err);
-
-alert(
-"Server error"
-);
-
-}
-
-submitBtn.innerText =
-"Upload Product";
-
-submitBtn.disabled = false;
-
-}
-);
-
-</script>
-
+    <script>
+        const API = "https://onrender.com";
+        const currentUser = JSON.parse( localStorage.getItem("user") );
+        if(!currentUser){
+            window.location.href = "login.html";
+        }
+    </script>
+
+    <!-- NAVBAR -->
+    <nav class="glass fixed top-0 left-0 right-0 z-50 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-black"> Swaply </h1>
+                <p class="text-green-400 text-xs font-bold tracking-widest"> UPLOAD PRODUCT </p>
+            </div>
+            <div class="hidden md:flex gap-5">
+                <a href="index.html" class="font-bold hover:text-green-400"> Home </a>
+                <a href="browse.html" class="font-bold hover:text-green-400"> Browse </a>
+                <a href="profile.html" class="font-bold hover:text-green-400"> Profile </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <section class="pt-36 pb-24">
+        <div class="max-w-5xl mx-auto px-5">
+            <div class="glass rounded-[40px] p-8 md:p-12">
+                <div class="mb-10">
+                    <p class="text-green-400 font-black tracking-[5px] mb-4"> SELL PRODUCT </p>
+                    <h1 class="text-5xl font-black"> Upload New Product </h1>
+                </div>
+                <form id="uploadForm">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block mb-3 font-black"> Product Name </label>
+                            <input type="text" id="title" placeholder="iPhone 15 Pro" class="input" required>
+                        </div>
+                        <div>
+                            <label class="block mb-3 font-black"> Price </label>
+                            <input type="text" id="price" placeholder="120000" class="input" required>
+                        </div>
+                        <div>
+                            <label class="block mb-3 font-black"> Category </label>
+                            <select id="category" class="input" required>
+                                <option value=""> Select Category </option>
+                                <option> Phones </option>
+                                <option> Laptops </option>
+                                <option> Cars </option>
+                                <option> Gaming </option>
+                                <option> Fashion </option>
+                                <option> Furniture </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block mb-3 font-black"> Condition </label>
+                            <select id="condition" class="input" required>
+                                <option> New </option>
+                                <option> Used </option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block mb-3 font-black"> Location </label>
+                            <input type="text" id="location" placeholder="Nairobi" class="input" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block mb-3 font-black"> Description </label>
+                            <textarea id="description" placeholder="Describe your product..." class="textarea" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- IMAGE -->
+                    <div class="mt-10">
+                        <label class="block mb-4 font-black"> Product Image </label>
+                        <label class="upload-box block">
+                            <input type="file" id="image" accept="image/*" hidden>
+                            <div>
+                                <h2 class="text-6xl"> 📸 </h2>
+                                <p class="text-2xl font-black mt-5"> Tap To Upload Image </p>
+                            </div>
+                            <img id="preview" class="preview">
+                        </label>
+                    </div>
+
+                    <!-- BUTTON -->
+                    <button type="submit" id="submitBtn" class="w-full mt-10 bg-green-500 hover:bg-green-600 h-16 rounded-2xl text-xl font-black"> Upload Product </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        /* IMAGE PREVIEW */
+        const imageInput = document.getElementById( "image" );
+        const preview = document.getElementById( "preview" );
+        
+        imageInput.addEventListener( "change", e => {
+            const file = e.target.files[0];
+            if(file){
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = "block";
+            }
+        });
+
+        /* SUBMIT */
+        document.getElementById( "uploadForm" ).addEventListener( "submit", async e => {
+            e.preventDefault();
+            const submitBtn = document.getElementById( "submitBtn" );
+            submitBtn.innerText = "Uploading...";
+            submitBtn.disabled = true;
+
+            try {
+                /* CLOUDINARY IMAGE */
+                let imageUrl = "";
+
+                if(imageInput.files[0]){
+                    const formData = new FormData();
+                    formData.append("image", imageInput.files[0]);
+
+                    const uploadRes = await fetch(`${API}/upload`, {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const uploadData = await uploadRes.json();
+
+                    if(!uploadData.success){
+                        throw new Error("Image upload failed");
+                    }
+
+                    imageUrl = uploadData.imageUrl;
+                } else {
+                    throw new Error("Please select an image first");
+                }
+
+                /* CREATE PRODUCT PAYLOAD */
+                const productData = {
+                    title: document.getElementById("title").value,
+                    price: document.getElementById("price").value,
+                    category: document.getElementById("category").value,
+                    condition: document.getElementById("condition").value,
+                    location: document.getElementById("location").value,
+                    description: document.getElementById("description").value,
+                    imageUrl: imageUrl,
+                    userId: currentUser._id || currentUser.id
+                };
+
+                /* POST TO PRODUCTS ENDPOINT */
+                const productRes = await fetch(`${API}/api/products`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(productData)
+                });
+
+                const productResult = await productRes.json();
+
+                if (!productRes.ok) {
+                    throw new Error(productResult.message || "Failed to save product listing.");
+                }
+
+                alert("Product uploaded successfully!");
+                window.location.href = "browse.html";
+
+            } catch(error) {
+                alert(error.message);
+                submitBtn.innerText = "Upload Product";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
 </body>
-  </html>
+</html>
